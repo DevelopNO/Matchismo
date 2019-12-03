@@ -8,6 +8,8 @@
 
 #ifndef PlayingDeck_h
 #define PlayingDeck_h
-
+#import "Deck.h"
+@interface PlayingDeck : Deck
+@end
 
 #endif /* PlayingDeck_h */
