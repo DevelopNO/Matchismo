@@ -12,12 +12,23 @@
 @interface CardMatchingGame()
 @property (nonatomic, readwrite) NSInteger score;
 @property (nonatomic, strong) NSMutableArray* cards;
-@property (nonatomic, strong) NSMutableArray* cardForComparison; // temporary
+@property (nonatomic, strong) NSMutableArray* cardsForComparison; // temporary
 @property (nonatomic, readwrite) NSUInteger mode;
+-(void) setCardsForComparisonIsMatched: (BOOL) isMatched;
+-(void) setCardsForComparisonIsChosen: (BOOL) isChosen;
 
 @end
 
 @implementation CardMatchingGame
+
+-(NSMutableArray*) cardsForComparison
+{
+    if(!_cardsForComparison)
+    {
+        _cardsForComparison = [[NSMutableArray alloc] init];
+    }
+    return _cardsForComparison;
+}
 
 -(NSMutableArray*) cards
 {
@@ -28,7 +39,9 @@
     return _cards;
 }
 
-- (instancetype) initWithCardCount: (NSUInteger) count usingDeck:(Deck*)deck NSUInteger:mode
+static const NSUInteger MIN_COMPARISON_MODE = 2;
+
+- (instancetype) initWithCardCount: (NSUInteger) count usingDeck:(Deck*)deck inMode:(NSUInteger)mode
 {
     self = [super init];
     if(self)
@@ -46,7 +59,15 @@
                 break;
             }
         }
-        self.mode = mode;
+        
+        if(mode < MIN_COMPARISON_MODE)
+        {
+            self = nil;
+        }
+        else
+        {
+            self.mode = mode;
+        }
     }
     return self;
 }
@@ -54,6 +75,43 @@
 static const int MISMATCH_PENALTY = 2;
 static const int MATCH_BONUS = 4;
 static const int COST_TO_CHOOSE = 1;
+
+- (BOOL)CompaerAll
+{
+    BOOL isAnyMatched = NO;
+    for(int i = 0; i < [self.cardsForComparison count] - 1; ++i)
+    {
+        Card* refCard = [self.cardsForComparison objectAtIndex:i];
+        NSArray* arrayForMatching = [self.cardsForComparison subarrayWithRange:NSMakeRange(i + 1, [self.cardsForComparison count] - i - 1)];
+        int singleComparisonScore = [refCard match:arrayForMatching];
+        self.score += MATCH_BONUS * singleComparisonScore;
+        
+        if(singleComparisonScore)
+        {
+            isAnyMatched = YES;
+        }
+        else
+        {
+            self.score -= MISMATCH_PENALTY;
+        }
+    }
+    return isAnyMatched;
+}
+
+- (void)setCardsStates:(Card *)card isAnyMatched:(BOOL)isAnyMatched {
+    if(isAnyMatched)
+    {
+        [self setCardsForComparisonIsMatched:YES];
+        [self.cardsForComparison removeAllObjects];
+    }
+    else
+    {
+        [self setCardsForComparisonIsChosen:NO];
+        card.isChosen = YES;
+        [self.cardsForComparison removeAllObjects];
+        [self.cardsForComparison addObject:card];
+    }
+}
 
 - (void) chooseCardAtIndex: (NSUInteger) index
 {
@@ -64,43 +122,42 @@ static const int COST_TO_CHOOSE = 1;
         if(card.isChosen)
         {
             card.isChosen = NO;
-            [self.cardForComparison removeObject:card]; // if object not there - shouldn't be an effect
+            [self.cardsForComparison removeObject:card]; // if object not there - shouldn't be an effect
         }
         else // match against other cards
         {
-            [self.cardForComparison addObject:card];
-            if([self.cardForComparison count] == self.mode)
+            BOOL isAnyMatched = NO;
+            [self.cardsForComparison addObject:card];
+            card.isChosen = YES;
+            if([self.cardsForComparison count] == self.mode)
             {
-                for(int i = 0; i < [self.cardForComparison count] - 2; ++i)
-                {
-                    Card* refCard = [self cardAtIndex:i];
-                    NSArray* arrayForMatching = [self.cardForComparison subarrayWithRange:NSMakeRange(i + 1, [self.cardForComparison count] - 1)];
-                    [refCard match:arrayForMatching];
-                }
-            }
-            for(Card* otherCard in self.cards)
-            {
-                if(otherCard.isChosen && !otherCard.isMatched)
-                {
-                    int matchScore = [card match:@[otherCard]];
-                    if(matchScore)
-                    {
-                        self.score += matchScore * MATCH_BONUS;
-                        otherCard.isMatched = YES;
-                        card.isMatched = YES;
-                    }
-                    else
-                    {
-                        self.score -= MISMATCH_PENALTY;
-                        otherCard.isChosen = NO;
-                    }
-                }
+                isAnyMatched = [self CompaerAll];
+                [self setCardsStates:card isAnyMatched:isAnyMatched];
             }
             self.score -= COST_TO_CHOOSE;
-            card.isChosen = YES;
         }
     }
 }
+
+-(void) setCardsForComparisonIsMatched: (BOOL) isMatched
+{
+    for(Card* card in self.cardsForComparison)
+    {
+        card.isMatched = isMatched;
+    }
+
+}
+
+
+-(void) setCardsForComparisonIsChosen: (BOOL) isChosen
+{
+    for(Card* card in self.cardsForComparison)
+    {
+        card.isChosen = isChosen;
+    }
+
+}
+
 - (Card*) cardAtIndex: (NSUInteger) index
 {
     return (index < [self.cards count]) ? self.cards[index] : nil;
