@@ -11,6 +11,7 @@
 		000B52C523955A06002F0D31 /* PlayingCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 000B52C423955A06002F0D31 /* PlayingCard.m */; };
 		000B52CB23962AF8002F0D31 /* Deck.m in Sources */ = {isa = PBXBuildFile; fileRef = 000B52CA23962AF8002F0D31 /* Deck.m */; };
 		000B52CE23962DAF002F0D31 /* PlayingDeck.m in Sources */ = {isa = PBXBuildFile; fileRef = 000B52CD23962DAF002F0D31 /* PlayingDeck.m */; };
+		00140EB223965C4400A799F9 /* CardMatchingGame.m in Sources */ = {isa = PBXBuildFile; fileRef = 00140EB123965C4400A799F9 /* CardMatchingGame.m */; };
 		00193C832394EB6100E905C5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 00193C822394EB6100E905C5 /* AppDelegate.m */; };
 		00193C862394EB6100E905C5 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 00193C852394EB6100E905C5 /* SceneDelegate.m */; };
 		00193C892394EB6100E905C5 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00193C882394EB6100E905C5 /* ViewController.m */; };
@@ -48,6 +49,8 @@
 		000B52CA23962AF8002F0D31 /* Deck.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = Deck.m; path = Matchismo/Deck.m; sourceTree = "<group>"; };
 		000B52CC23962D9D002F0D31 /* PlayingDeck.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlayingDeck.h; sourceTree = "<group>"; };
 		000B52CD23962DAF002F0D31 /* PlayingDeck.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PlayingDeck.m; sourceTree = "<group>"; };
+		00140EB023965C2B00A799F9 /* CardMatchingGame.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CardMatchingGame.h; sourceTree = "<group>"; };
+		00140EB123965C4400A799F9 /* CardMatchingGame.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CardMatchingGame.m; sourceTree = "<group>"; };
 		00193C7E2394EB6100E905C5 /* Matchismo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Matchismo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		00193C812394EB6100E905C5 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		00193C822394EB6100E905C5 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -104,6 +107,8 @@
 				000B52CA23962AF8002F0D31 /* Deck.m */,
 				000B52CC23962D9D002F0D31 /* PlayingDeck.h */,
 				000B52CD23962DAF002F0D31 /* PlayingDeck.m */,
+				00140EB023965C2B00A799F9 /* CardMatchingGame.h */,
+				00140EB123965C4400A799F9 /* CardMatchingGame.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -298,6 +303,7 @@
 				000B52C523955A06002F0D31 /* PlayingCard.m in Sources */,
 				000B52CB23962AF8002F0D31 /* Deck.m in Sources */,
 				000B52C123955706002F0D31 /* Card.m in Sources */,
+				00140EB223965C4400A799F9 /* CardMatchingGame.m in Sources */,
 				000B52CE23962DAF002F0D31 /* PlayingDeck.m in Sources */,
 				00193C892394EB6100E905C5 /* ViewController.m in Sources */,
 				00193C832394EB6100E905C5 /* AppDelegate.m in Sources */,

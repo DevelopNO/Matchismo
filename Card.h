@@ -14,6 +14,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSString* contents;
 @property (nonatomic) BOOL isChosen;
 @property (nonatomic) BOOL isMatched;
+
+- (int) match:(NSArray *) otherCards;
+
 @end
 
 NS_ASSUME_NONNULL_END
