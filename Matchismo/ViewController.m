@@ -18,7 +18,6 @@
 @property (nonatomic) BOOL isModeChageAllowed;
 @property (nonatomic) BOOL isIn3CardsMatchMode;
 @property (weak, nonatomic) IBOutlet UILabel *currentEvent;
-@property (weak, nonatomic) IBOutlet UILabel *SliderIndex_debug;
 @property (weak, nonatomic) IBOutlet UISlider *movesPosition;
 @property (weak, nonatomic) IBOutlet UISwitch *modeSwitch;
 
@@ -42,16 +41,29 @@
 }
 - (IBAction)reDeal:(UIButton *)sender
 {
+    self.movesPosition.value = 0;
+    self.movesPosition.minimumValue = 0;
+    self.movesPosition.maximumValue = 0;
     self.game = nil;
     self.scoreCount.text = @"Score: 0";
+    self.currentEvent.text = @"Please pick a card";
     [self updateUI];
     [self.modeSwitch setEnabled:YES];
 }
 - (IBAction)CangeMoveTitle:(UISlider *)sender
 {
-    long sliderValue = lroundf(self.movesPosition.value);
-    [self.movesPosition setValue:sliderValue animated:YES];
-    self.SliderIndex_debug.text = [ NSString stringWithFormat:@"%d", (int)sender.value];
+    if(sender.maximumValue)
+    {
+        long sliderValue = lroundf(self.movesPosition.value);
+        [self.movesPosition setValue:sliderValue animated:YES];
+    
+        [self setMoveMessage:sliderValue];
+    }
+}
+
+-(void) setMoveMessage: (long) index
+{
+    self.currentEvent.text = [self makeMoveString:self.game.moves[index]];
 }
 
 - (CardMatchingGame*) game
@@ -89,30 +101,39 @@
         [cardButton setBackgroundImage:[self backgroundOfCard:card] forState:UIControlStateNormal];
         cardButton.enabled = !card.isMatched;
         self.scoreCount.text = [NSString stringWithFormat:@"Score: %ld", self.game.score];
-        self.movesPosition.maximumValue = [self.game.moves count] - 1;
+        if([self.game.moves count])
+        {
+            self.movesPosition.maximumValue = [self.game.moves count] - 1;
+            self.movesPosition.value = self.movesPosition.maximumValue;
+            [self setMoveMessage:self.movesPosition.maximumValue];
+        }
     }
     
-    NSString* lastMoveText = [self makeMoveString:[self.game.moves lastObject]];
-    self.currentEvent.text =lastMoveText;
 }
 
 -(NSString*) makeMoveString: (CardMatchingMove*) move
 {
     NSMutableString* moveText = [[NSMutableString alloc] init];
     
-    if(!move.moveStatus && [move.chosenCards count] == 0)
+    if(move.moveType == CARD_CLOSED)
     {
-        return @"Please pick a card";
+        [moveText appendFormat:@"%@ Unchosen", ((Card*)[move.chosenCards firstObject]).contents];
+        return moveText;
     }
-    if(move.moveStatus)
+    if(move.moveType == CARD_OPENED)
     {
-        [moveText appendFormat:@"%@ ", move.moveStatus > 0 ? @"Match between" : @"No match between"];
+        [moveText appendFormat:@"%@ chosen", ((Card*)[move.chosenCards firstObject]).contents];
+        return moveText;
     }
-    
+
+    [moveText appendFormat:@"%@ ", move.moveType == MATCH ? @"Match between" : @"No match between"];
+
     for (Card* card in move.chosenCards)
     {
         [moveText appendFormat:@"%@ ", card.contents];
     }
+    
+
     return [moveText copy];
 }
 

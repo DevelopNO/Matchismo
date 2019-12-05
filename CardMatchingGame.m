@@ -112,13 +112,13 @@ static const int COST_TO_CHOOSE = 1;
 - (void)setCardsStates:(Card *)card isAnyMatched:(BOOL)isAnyMatched {
     if(isAnyMatched)
     {
-        [self.moves addObject:[[CardMatchingMove alloc] init: 1 cardsInMove:[self.cardsForComparison copy]]];
+        [self.moves addObject:[[CardMatchingMove alloc] init: MATCH cardsInMove:[self.cardsForComparison copy]]];
         [self setCardsForComparisonIsMatched:YES];
         [self.cardsForComparison removeAllObjects];
     }
     else
     {
-        [self.moves addObject:[[CardMatchingMove alloc] init: -1 cardsInMove:[self.cardsForComparison copy]]];
+        [self.moves addObject:[[CardMatchingMove alloc] init: NO_MATCH cardsInMove:[self.cardsForComparison copy]]];
         [self setCardsForComparisonIsChosen:NO];
         card.isChosen = YES;
         [self.cardsForComparison removeAllObjects];
@@ -137,7 +137,7 @@ static const int COST_TO_CHOOSE = 1;
 
             card.isChosen = NO;
             [self.cardsForComparison removeObject:card]; // if object not there - shouldn't be an effect
-            [self.moves addObject:[[CardMatchingMove alloc] init: 0 cardsInMove:nil]];
+            [self.moves addObject:[[CardMatchingMove alloc] init: CARD_CLOSED cardsInMove:@[card]]];
         }
         else // match against other cards
         {
@@ -145,7 +145,7 @@ static const int COST_TO_CHOOSE = 1;
             BOOL isAnyMatched = NO;
             [self.cardsForComparison addObject:card];
             card.isChosen = YES;
-            [self.moves addObject:[[CardMatchingMove alloc] init: 0 cardsInMove:@[card]]];
+            [self.moves addObject:[[CardMatchingMove alloc] init: CARD_OPENED cardsInMove:@[card]]];
             if([self.cardsForComparison count] == self.mode)
             {
                 isAnyMatched = [self CompareChosenCards];
