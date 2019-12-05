@@ -21,6 +21,7 @@
 		00193C942394EB6200E905C5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 00193C932394EB6200E905C5 /* main.m */; };
 		00193C9E2394EB6200E905C5 /* MatchismoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00193C9D2394EB6200E905C5 /* MatchismoTests.m */; };
 		00193CA92394EB6200E905C5 /* MatchismoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00193CA82394EB6200E905C5 /* MatchismoUITests.m */; };
+		001B00752397E0EA003872F9 /* CardMatchingMove.m in Sources */ = {isa = PBXBuildFile; fileRef = 001B00742397E0EA003872F9 /* CardMatchingMove.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +70,8 @@
 		00193CA42394EB6200E905C5 /* MatchismoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MatchismoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00193CA82394EB6200E905C5 /* MatchismoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MatchismoUITests.m; sourceTree = "<group>"; };
 		00193CAA2394EB6200E905C5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		001B00732397E0DA003872F9 /* CardMatchingMove.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CardMatchingMove.h; sourceTree = "<group>"; };
+		001B00742397E0EA003872F9 /* CardMatchingMove.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CardMatchingMove.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +112,8 @@
 				000B52CD23962DAF002F0D31 /* PlayingDeck.m */,
 				00140EB023965C2B00A799F9 /* CardMatchingGame.h */,
 				00140EB123965C4400A799F9 /* CardMatchingGame.m */,
+				001B00732397E0DA003872F9 /* CardMatchingMove.h */,
+				001B00742397E0EA003872F9 /* CardMatchingMove.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -307,6 +312,7 @@
 				000B52CE23962DAF002F0D31 /* PlayingDeck.m in Sources */,
 				00193C892394EB6100E905C5 /* ViewController.m in Sources */,
 				00193C832394EB6100E905C5 /* AppDelegate.m in Sources */,
+				001B00752397E0EA003872F9 /* CardMatchingMove.m in Sources */,
 				00193C942394EB6200E905C5 /* main.m in Sources */,
 				00193C862394EB6100E905C5 /* SceneDelegate.m in Sources */,
 			);

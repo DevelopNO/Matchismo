@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "PlayingDeck.h"
 #import "CardMatchingGame.h"
+#import "CardMatchingMove.h"
 
 @interface ViewController ()
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
@@ -16,11 +17,16 @@
 @property (weak, nonatomic) IBOutlet UILabel *scoreCount;
 @property (nonatomic) BOOL isModeChageAllowed;
 @property (nonatomic) BOOL isIn3CardsMatchMode;
+@property (weak, nonatomic) IBOutlet UILabel *currentEvent;
+@property (weak, nonatomic) IBOutlet UILabel *SliderIndex_debug;
+@property (weak, nonatomic) IBOutlet UISlider *movesPosition;
 @property (weak, nonatomic) IBOutlet UISwitch *modeSwitch;
 
 @end
 
 @implementation ViewController
+
+
 - (IBAction)handleMode:(UISwitch *)sender
 {
     if(sender.isOn)
@@ -40,6 +46,12 @@
     self.scoreCount.text = @"Score: 0";
     [self updateUI];
     [self.modeSwitch setEnabled:YES];
+}
+- (IBAction)CangeMoveTitle:(UISlider *)sender
+{
+    long sliderValue = lroundf(self.movesPosition.value);
+    [self.movesPosition setValue:sliderValue animated:YES];
+    self.SliderIndex_debug.text = [ NSString stringWithFormat:@"%d", (int)sender.value];
 }
 
 - (CardMatchingGame*) game
@@ -77,7 +89,31 @@
         [cardButton setBackgroundImage:[self backgroundOfCard:card] forState:UIControlStateNormal];
         cardButton.enabled = !card.isMatched;
         self.scoreCount.text = [NSString stringWithFormat:@"Score: %ld", self.game.score];
+        self.movesPosition.maximumValue = [self.game.moves count] - 1;
     }
+    
+    NSString* lastMoveText = [self makeMoveString:[self.game.moves lastObject]];
+    self.currentEvent.text =lastMoveText;
+}
+
+-(NSString*) makeMoveString: (CardMatchingMove*) move
+{
+    NSMutableString* moveText = [[NSMutableString alloc] init];
+    
+    if(!move.moveStatus && [move.chosenCards count] == 0)
+    {
+        return @"Please pick a card";
+    }
+    if(move.moveStatus)
+    {
+        [moveText appendFormat:@"%@ ", move.moveStatus > 0 ? @"Match between" : @"No match between"];
+    }
+    
+    for (Card* card in move.chosenCards)
+    {
+        [moveText appendFormat:@"%@ ", card.contents];
+    }
+    return [moveText copy];
 }
 
 - (NSString* ) titleForCard: (Card*) card

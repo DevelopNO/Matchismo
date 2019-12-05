@@ -8,10 +8,12 @@
 
 #import "CardMatchingGame.h"
 #import "PlayingDeck.h"
+#import "CardMatchingMove.h"
 
 @interface CardMatchingGame()
 @property (nonatomic, readwrite) NSInteger score;
 @property (nonatomic, strong) NSMutableArray* cards;
+@property (nonatomic, readwrite, strong) NSMutableArray* moves;
 @property (nonatomic, strong) NSMutableArray* cardsForComparison; // temporary
 @property (nonatomic, readwrite) NSUInteger mode;
 -(void) setCardsForComparisonIsMatched: (BOOL) isMatched;
@@ -30,6 +32,15 @@
     return _cardsForComparison;
 }
 
+-(NSMutableArray*) moves
+{
+    if(!_moves)
+    {
+        _moves = [[NSMutableArray alloc] init];
+    }
+    return _moves;
+}
+
 -(NSMutableArray*) cards
 {
     if(!_cards)
@@ -46,7 +57,7 @@ static const NSUInteger MIN_COMPARISON_MODE = 2;
     self = [super init];
     if(self)
     {
-        for(int i = 0; i < count; ++i)
+        for(NSUInteger i = 0; i < count; ++i)
         {
             Card* card = [deck drawRandomCard];
             if(card)
@@ -76,7 +87,7 @@ static const int MISMATCH_PENALTY = 2;
 static const int MATCH_BONUS = 4;
 static const int COST_TO_CHOOSE = 1;
 
-- (BOOL)CompaerAll
+- (BOOL)CompareChosenCards
 {
     BOOL isAnyMatched = NO;
     for(int i = 0; i < [self.cardsForComparison count] - 1; ++i)
@@ -101,11 +112,13 @@ static const int COST_TO_CHOOSE = 1;
 - (void)setCardsStates:(Card *)card isAnyMatched:(BOOL)isAnyMatched {
     if(isAnyMatched)
     {
+        [self.moves addObject:[[CardMatchingMove alloc] init: 1 cardsInMove:[self.cardsForComparison copy]]];
         [self setCardsForComparisonIsMatched:YES];
         [self.cardsForComparison removeAllObjects];
     }
     else
     {
+        [self.moves addObject:[[CardMatchingMove alloc] init: -1 cardsInMove:[self.cardsForComparison copy]]];
         [self setCardsForComparisonIsChosen:NO];
         card.isChosen = YES;
         [self.cardsForComparison removeAllObjects];
@@ -121,17 +134,21 @@ static const int COST_TO_CHOOSE = 1;
     {
         if(card.isChosen)
         {
+
             card.isChosen = NO;
             [self.cardsForComparison removeObject:card]; // if object not there - shouldn't be an effect
+            [self.moves addObject:[[CardMatchingMove alloc] init: 0 cardsInMove:nil]];
         }
         else // match against other cards
         {
+            
             BOOL isAnyMatched = NO;
             [self.cardsForComparison addObject:card];
             card.isChosen = YES;
+            [self.moves addObject:[[CardMatchingMove alloc] init: 0 cardsInMove:@[card]]];
             if([self.cardsForComparison count] == self.mode)
             {
-                isAnyMatched = [self CompaerAll];
+                isAnyMatched = [self CompareChosenCards];
                 [self setCardsStates:card isAnyMatched:isAnyMatched];
             }
             self.score -= COST_TO_CHOOSE;
