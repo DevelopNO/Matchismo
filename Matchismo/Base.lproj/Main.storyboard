@@ -410,19 +410,11 @@
                                     <action selector="CangeMoveTitle:" destination="BYZ-38-t0r" eventType="valueChanged" id="q6b-19-F4n"/>
                                 </connections>
                             </slider>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Please pick a card" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5LU-Ya-tdS">
-                                <rect key="frame" x="123" y="826" width="108" height="31"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.27327288553856449" green="0.78039215689999997" blue="0.49070783063256507" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
-                        <outlet property="SliderIndex_debug" destination="5LU-Ya-tdS" id="dbD-CT-cmd"/>
                         <outlet property="currentEvent" destination="PB4-8C-lga" id="3Zt-rf-fe1"/>
                         <outlet property="modeSwitch" destination="ddp-0V-af7" id="Kja-SA-PL3"/>
                         <outlet property="movesPosition" destination="VNm-Sc-hhB" id="rjl-4Z-kQp"/>

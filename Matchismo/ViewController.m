@@ -18,7 +18,6 @@
 @property (nonatomic) BOOL isModeChageAllowed;
 @property (nonatomic) BOOL isIn3CardsMatchMode;
 @property (weak, nonatomic) IBOutlet UILabel *currentEvent;
-@property (weak, nonatomic) IBOutlet UILabel *SliderIndex_debug;
 @property (weak, nonatomic) IBOutlet UISlider *movesPosition;
 @property (weak, nonatomic) IBOutlet UISwitch *modeSwitch;
 
@@ -42,6 +41,9 @@
 }
 - (IBAction)reDeal:(UIButton *)sender
 {
+    self.movesPosition.value = 0;
+    self.movesPosition.minimumValue = 0;
+    self.movesPosition.maximumValue = 0;
     self.game = nil;
     self.scoreCount.text = @"Score: 0";
     [self updateUI];
@@ -51,7 +53,13 @@
 {
     long sliderValue = lroundf(self.movesPosition.value);
     [self.movesPosition setValue:sliderValue animated:YES];
-    self.SliderIndex_debug.text = [ NSString stringWithFormat:@"%d", (int)sender.value];
+    
+    [self setMoveMessage:sliderValue];
+}
+
+-(void) setMoveMessage: (long) index
+{
+    self.currentEvent.text = [self makeMoveString:self.game.moves[index]];
 }
 
 - (CardMatchingGame*) game
@@ -90,10 +98,10 @@
         cardButton.enabled = !card.isMatched;
         self.scoreCount.text = [NSString stringWithFormat:@"Score: %ld", self.game.score];
         self.movesPosition.maximumValue = [self.game.moves count] - 1;
+        self.movesPosition.value = self.movesPosition.maximumValue;
+        [self setMoveMessage:self.movesPosition.maximumValue];
     }
     
-    NSString* lastMoveText = [self makeMoveString:[self.game.moves lastObject]];
-    self.currentEvent.text =lastMoveText;
 }
 
 -(NSString*) makeMoveString: (CardMatchingMove*) move
