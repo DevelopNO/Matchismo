@@ -9,21 +9,21 @@
 #import "CardMatchingMove.h"
 
 @interface CardMatchingMove()
-
+@property (nonatomic, readwrite) MOVE_TYPE moveType;
 
 @end
 
 
 @implementation CardMatchingMove
 
-- (instancetype) init: (int) matchedStatus cardsInMove:(NSArray*)cards
+- (instancetype) init: (MOVE_TYPE) matchedStatus cardsInMove:(NSArray*)cards
 {
     self = [super init];
     
     if(self)
     {
         self.chosenCards = [[NSArray alloc] initWithArray:cards];
-        self.moveStatus = matchedStatus;
+        self.moveType = matchedStatus;
     }
     return self;
 }

@@ -12,19 +12,25 @@
 
 #import <Foundation/Foundation.h>
 
+typedef enum MOVE_TYPE
+{
+    CARD_OPENED,
+    CARD_CLOSED,
+    MATCH,
+    NO_MATCH
+} MOVE_TYPE;
 
 
 @interface CardMatchingMove : NSObject
 
-- (instancetype) init: (int) matchedStatus cardsInMove:(NSArray*)cards;
+- (instancetype) init: (MOVE_TYPE) matchedStatus cardsInMove:(NSArray*)cards;
 @property (nonatomic, strong) NSArray* chosenCards;
 
 // status:
 // 1 - match
 // -1 - no match
 // 0 - added new
-@property (nonatomic) int moveStatus;
- 
+@property (nonatomic, readonly) MOVE_TYPE moveType;
 
 @end
 
