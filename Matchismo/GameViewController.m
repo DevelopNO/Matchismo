@@ -6,12 +6,12 @@
 //  Copyright © 2019 Lightricks.ltd. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "GameViewController.h"
 #import "PlayingDeck.h"
 #import "CardMatchingGame.h"
 #import "CardMatchingMove.h"
 
-@interface ViewController ()
+@interface GameViewController ()
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
 @property (strong, nonatomic) CardMatchingGame* game;
 @property (weak, nonatomic) IBOutlet UILabel *scoreCount;
@@ -23,7 +23,7 @@
 
 @end
 
-@implementation ViewController
+@implementation GameViewController
 
 
 - (IBAction)handleMode:(UISwitch *)sender
