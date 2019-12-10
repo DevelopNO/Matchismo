@@ -14,30 +14,14 @@
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
 @property (strong, nonatomic) CardMatchingGame* game;
 @property (weak, nonatomic) IBOutlet UILabel *scoreCount;
-@property (nonatomic) BOOL isModeChageAllowed;
-@property (nonatomic) BOOL isIn3CardsMatchMode;
 @property (weak, nonatomic) IBOutlet UILabel *currentEvent;
 @property (weak, nonatomic) IBOutlet UISlider *movesPosition;
-@property (weak, nonatomic) IBOutlet UISwitch *modeSwitch;
 
 @end
 
 @implementation GameViewController
 
 
-- (IBAction)handleMode:(UISwitch *)sender
-{
-    if(sender.isOn)
-    {
-        self.game = nil;
-        self.isIn3CardsMatchMode = YES;
-    }
-    else
-    {
-        self.game = nil;
-        self.isIn3CardsMatchMode = NO;
-    }
-}
 - (IBAction)reDeal:(UIButton *)sender
 {
     self.movesPosition.value = 0;
@@ -47,7 +31,6 @@
     self.scoreCount.text = @"Score: 0";
     self.currentEvent.text = @"Please pick a card";
     [self updateUI];
-    [self.modeSwitch setEnabled:YES];
 }
 - (IBAction)CangeMoveTitle:(UISlider *)sender
 {
@@ -69,7 +52,7 @@
 {
     if(!_game)
     {
-        _game = [[CardMatchingGame alloc] initWithCardCount:[self.cardButtons count] usingDeck:[self createDeck] inMode:self.isIn3CardsMatchMode ? 3 : 2];
+        _game = [[CardMatchingGame alloc] initWithCardCount:[self.cardButtons count] usingDeck:[self createDeck] inMode:2];
     }
     return _game;
 }
@@ -81,10 +64,6 @@
 
 - (IBAction)touchCardButton:(UIButton *)sender
 {
-    if([self.modeSwitch isEnabled])
-    {
-        [self.modeSwitch setEnabled:NO];
-    }
     NSUInteger chosenButtonIndex = [self.cardButtons indexOfObject:sender];
     [self.game chooseCardAtIndex:chosenButtonIndex];
     [self updateUI];

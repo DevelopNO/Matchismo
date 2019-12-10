@@ -355,40 +355,6 @@
                                     <action selector="reDeal:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Ksr-q6-HQU"/>
                                 </connections>
                             </button>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="ddp-0V-af7">
-                                <rect key="frame" x="184" y="58" width="49" height="31"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="onTintColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <connections>
-                                    <action selector="handleMode:" destination="BYZ-38-t0r" eventType="valueChanged" id="Fq4-Lm-64J"/>
-                                </connections>
-                            </switch>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="awy-6C-X4D">
-                                <rect key="frame" x="251" y="61" width="132" height="24"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <attributedString key="attributedText">
-                                    <fragment content="3 cards match">
-                                        <attributes>
-                                            <font key="NSFont" size="21" name="ArialMT"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                        </attributes>
-                                    </fragment>
-                                </attributedString>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Us-sU-nfs">
-                                <rect key="frame" x="31" y="61" width="132" height="24"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <attributedString key="attributedText">
-                                    <fragment content="2 cards match">
-                                        <attributes>
-                                            <font key="NSFont" size="21" name="ArialMT"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                        </attributes>
-                                    </fragment>
-                                </attributedString>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Score: 0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T9K-L2-O5f">
                                 <rect key="frame" x="31" y="825" width="150" height="26"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -416,7 +382,6 @@
                     </view>
                     <connections>
                         <outlet property="currentEvent" destination="PB4-8C-lga" id="3Zt-rf-fe1"/>
-                        <outlet property="modeSwitch" destination="ddp-0V-af7" id="Kja-SA-PL3"/>
                         <outlet property="movesPosition" destination="VNm-Sc-hhB" id="rjl-4Z-kQp"/>
                         <outlet property="scoreCount" destination="T9K-L2-O5f" id="0LT-fr-sjk"/>
                         <outletCollection property="cardButtons" destination="450-fS-xDq" id="Kw3-ni-Hi6"/>
