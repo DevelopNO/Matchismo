@@ -8,8 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+@class Deck;
+
 @interface GameViewController : UIViewController
 
+- (Deck*) createDeck;
 
 @end
 
