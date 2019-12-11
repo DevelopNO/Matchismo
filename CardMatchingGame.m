@@ -87,29 +87,45 @@ static const int MISMATCH_PENALTY = 2;
 static const int MATCH_BONUS = 4;
 static const int COST_TO_CHOOSE = 1;
 
-- (BOOL)CompareChosenCards
+- (int)compareCards
 {
-    BOOL isAnyMatched = NO;
-    for(int i = 0; i < [self.cardsForComparison count] - 1; ++i)
-    {
-        Card* refCard = [self.cardsForComparison objectAtIndex:i];
-        NSArray* arrayForMatching = [self.cardsForComparison subarrayWithRange:NSMakeRange(i + 1, [self.cardsForComparison count] - i - 1)];
-        int singleComparisonScore = [refCard match:arrayForMatching];
-        self.score += MATCH_BONUS * singleComparisonScore;
-        
-        if(singleComparisonScore)
-        {
-            isAnyMatched = YES;
-        }
-        else
-        {
-            self.score -= MISMATCH_PENALTY;
-        }
-    }
-    return isAnyMatched;
+  Card* refCard = self.cardsForComparison[0];
+  NSArray* arrayForMatching = [self.cardsForComparison subarrayWithRange:NSMakeRange(1, [self.cardsForComparison count] - 1)];
+  int singleComparisonScore = [refCard match:arrayForMatching];
+  return singleComparisonScore;
 }
 
-- (void)setCardsStates:(Card *)card isAnyMatched:(BOOL)isAnyMatched {
+- (BOOL)setScore:(int *)moveScore singleComparisonScore:(int)singleComparisonScore
+{
+  BOOL isAnyMatched = NO;
+  if(moveScore)
+  {
+    *moveScore = singleComparisonScore;
+  }
+  
+  if(singleComparisonScore)
+  {
+    self.score += MATCH_BONUS * singleComparisonScore;
+    isAnyMatched = YES;
+  }
+  else
+  {
+    self.score -= MISMATCH_PENALTY;
+  }
+  return isAnyMatched;
+}
+
+- (BOOL)CompareChosenCards: (int *)moveScore
+{
+  int singleComparisonScore = [self compareCards];
+  
+  BOOL isAnyMatched = [self setScore:moveScore singleComparisonScore:singleComparisonScore];
+
+  return isAnyMatched;
+}
+
+- (void)setCardsStates:(Card *)card isAnyMatched:(BOOL)isAnyMatched moveScore:(int) score
+{
     if(isAnyMatched)
     {
         [self.moves addObject:[[CardMatchingMove alloc] init: MATCH cardsInMove:[self.cardsForComparison copy]]];
@@ -148,8 +164,9 @@ static const int COST_TO_CHOOSE = 1;
             [self.moves addObject:[[CardMatchingMove alloc] init: CARD_OPENED cardsInMove:@[card]]];
             if([self.cardsForComparison count] == self.mode)
             {
-                isAnyMatched = [self CompareChosenCards];
-                [self setCardsStates:card isAnyMatched:isAnyMatched];
+              int score;
+              isAnyMatched = [self CompareChosenCards:&score];
+              [self setCardsStates:card isAnyMatched:isAnyMatched moveScore:score];
             }
             self.score -= COST_TO_CHOOSE;
         }

@@ -25,6 +25,7 @@ typedef enum MOVE_TYPE
 
 - (instancetype) init: (MOVE_TYPE) matchedStatus cardsInMove:(NSArray*)cards;
 @property (nonatomic, strong) NSArray* chosenCards;
+@property (nonatomic) int moveScore;
 
 // status:
 // 1 - match

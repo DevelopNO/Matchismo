@@ -24,8 +24,9 @@
 		001B00752397E0EA003872F9 /* CardMatchingMove.m in Sources */ = {isa = PBXBuildFile; fileRef = 001B00742397E0EA003872F9 /* CardMatchingMove.m */; };
 		00D6FE76239FBE1100886EB7 /* PlayingCardGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D6FE75239FBE1100886EB7 /* PlayingCardGameViewController.m */; };
 		00D6FE79239FC13400886EB7 /* SetDeck.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D6FE78239FC13400886EB7 /* SetDeck.m */; };
-		00D6FE7C239FC1BD00886EB7 /* SetCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D6FE7B239FC1BD00886EB7 /* SetCard.m */; };
+		00D6FE7C239FC1BD00886EB7 /* SetCard.mm in Sources */ = {isa = PBXBuildFile; fileRef = 00D6FE7B239FC1BD00886EB7 /* SetCard.mm */; };
 		00D6FE7F239FCE5600886EB7 /* SetGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D6FE7E239FCE5600886EB7 /* SetGameViewController.m */; };
+		00D6FE8523A0B76400886EB7 /* SetCardPresentationBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D6FE8423A0B76400886EB7 /* SetCardPresentationBuilder.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,9 +82,11 @@
 		00D6FE77239FC0FE00886EB7 /* SetDeck.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SetDeck.h; sourceTree = "<group>"; };
 		00D6FE78239FC13400886EB7 /* SetDeck.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SetDeck.m; sourceTree = "<group>"; };
 		00D6FE7A239FC1BD00886EB7 /* SetCard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SetCard.h; sourceTree = "<group>"; };
-		00D6FE7B239FC1BD00886EB7 /* SetCard.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SetCard.m; sourceTree = "<group>"; };
+		00D6FE7B239FC1BD00886EB7 /* SetCard.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = SetCard.mm; sourceTree = "<group>"; };
 		00D6FE7D239FCE5600886EB7 /* SetGameViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SetGameViewController.h; sourceTree = "<group>"; };
 		00D6FE7E239FCE5600886EB7 /* SetGameViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SetGameViewController.m; sourceTree = "<group>"; };
+		00D6FE8323A0B76400886EB7 /* SetCardPresentationBuilder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SetCardPresentationBuilder.h; sourceTree = "<group>"; };
+		00D6FE8423A0B76400886EB7 /* SetCardPresentationBuilder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SetCardPresentationBuilder.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,7 +132,7 @@
 				00D6FE77239FC0FE00886EB7 /* SetDeck.h */,
 				00D6FE78239FC13400886EB7 /* SetDeck.m */,
 				00D6FE7A239FC1BD00886EB7 /* SetCard.h */,
-				00D6FE7B239FC1BD00886EB7 /* SetCard.m */,
+				00D6FE7B239FC1BD00886EB7 /* SetCard.mm */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -173,6 +176,8 @@
 				00D6FE75239FBE1100886EB7 /* PlayingCardGameViewController.m */,
 				00D6FE7D239FCE5600886EB7 /* SetGameViewController.h */,
 				00D6FE7E239FCE5600886EB7 /* SetGameViewController.m */,
+				00D6FE8323A0B76400886EB7 /* SetCardPresentationBuilder.h */,
+				00D6FE8423A0B76400886EB7 /* SetCardPresentationBuilder.m */,
 			);
 			path = Matchismo;
 			sourceTree = "<group>";
@@ -328,12 +333,13 @@
 				000B52C523955A06002F0D31 /* PlayingCard.m in Sources */,
 				000B52CB23962AF8002F0D31 /* Deck.m in Sources */,
 				00D6FE76239FBE1100886EB7 /* PlayingCardGameViewController.m in Sources */,
+				00D6FE8523A0B76400886EB7 /* SetCardPresentationBuilder.m in Sources */,
 				000B52C123955706002F0D31 /* Card.m in Sources */,
 				00140EB223965C4400A799F9 /* CardMatchingGame.m in Sources */,
 				000B52CE23962DAF002F0D31 /* PlayingDeck.m in Sources */,
 				00193C892394EB6100E905C5 /* GameViewController.m in Sources */,
 				00D6FE7F239FCE5600886EB7 /* SetGameViewController.m in Sources */,
-				00D6FE7C239FC1BD00886EB7 /* SetCard.m in Sources */,
+				00D6FE7C239FC1BD00886EB7 /* SetCard.mm in Sources */,
 				00193C832394EB6100E905C5 /* AppDelegate.m in Sources */,
 				001B00752397E0EA003872F9 /* CardMatchingMove.m in Sources */,
 				00193C942394EB6200E905C5 /* main.m in Sources */,

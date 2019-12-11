@@ -11,10 +11,8 @@
 #import "CardMatchingMove.h"
 
 @interface GameViewController ()
-@property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
-@property (strong, nonatomic) CardMatchingGame* game;
-@property (weak, nonatomic) IBOutlet UILabel *scoreCount;
-@property (weak, nonatomic) IBOutlet UILabel *currentEvent;
+
+
 @property (weak, nonatomic) IBOutlet UISlider *movesPosition;
 
 @end
@@ -32,7 +30,7 @@
     self.currentEvent.text = @"Please pick a card";
     [self updateUI];
 }
-- (IBAction)CangeMoveTitle:(UISlider *)sender
+- (IBAction)ChangeMoveTitle:(UISlider *)sender
 {
     if(sender.maximumValue)
     {
@@ -48,11 +46,16 @@
     self.currentEvent.text = [self makeMoveString:self.game.moves[index]];
 }
 
+- (NSInteger) getMode
+{
+  return 2;
+}
+
 - (CardMatchingGame*) game
 {
     if(!_game)
     {
-        _game = [[CardMatchingGame alloc] initWithCardCount:[self.cardButtons count] usingDeck:[self createDeck] inMode:2];
+        _game = [[CardMatchingGame alloc] initWithCardCount:[self.cardButtons count] usingDeck:[self createDeck] inMode:[self getMode]];
     }
     return _game;
 }

@@ -8,6 +8,7 @@
 
 #import "PlayingCardGameViewController.h"
 #import "PlayingDeck.h"
+#import "CardMatchingGame.h"
 
 @interface PlayingCardGameViewController()
 @end
@@ -17,6 +18,16 @@
 - (Deck*) createDeck
 {
   return [[PlayingDeck alloc] init];
+}
+
+
+- (CardMatchingGame*) game
+{
+  if(!super.game)
+  {
+      super.game = [[CardMatchingGame alloc] initWithCardCount:[self.cardButtons count] usingDeck:[self createDeck] inMode:2];
+  }
+  return super.game;
 }
 @end
 
