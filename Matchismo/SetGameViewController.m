@@ -99,16 +99,6 @@
 
 
 /// Move stuff
-
-//- (IBAction)ChangeMoveTitle:(UISlider *)sender
-//{
-//    if(sender.maximumValue)
-//    {
-//        long sliderValue = lroundf(self.movesPosition.value);
-//        [self.movesPosition setValue:sliderValue animated:YES];
-//
-//        [self setMoveMessage:sliderValue];
-//    }
 //}
 //
 //-(void) setMoveMessage: (long) index

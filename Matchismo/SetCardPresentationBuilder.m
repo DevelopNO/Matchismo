@@ -25,7 +25,7 @@
         return nil;
       }
       cardText = [[NSMutableAttributedString alloc] init];
-    NSLog(@"color: %d, shape: %d, fill: %d, number: %d", card.color, card.shape, card.fill, card.number);
+    //NSLog(@"color: %d, shape: %d, fill: %d, number: %d", card.color, card.shape, card.fill, card.number);
       for(NSInteger i = 0; i < card.number; ++i)
       {
         [cardText insertAttributedString:[[NSAttributedString alloc] initWithString:cardShape] atIndex:i];
@@ -52,7 +52,7 @@
   switch(shape)
   {
     case CIRCLE:
-      return @"♦︎";
+      return @"●";
     case TRIANGLE:
       return @"▲";
     case SQUARE:
@@ -65,7 +65,6 @@
 
 +(UIColor *)getColor:(COLOR_SET_GAME)color fill:(FILL_SET_GAME)cardFill
 {
-  CGFloat alpha = [self getAlpha:cardFill];
   switch(color)
   {
     case RED:

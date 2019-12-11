@@ -13,8 +13,6 @@
 @interface GameViewController ()
 
 
-@property (weak, nonatomic) IBOutlet UISlider *movesPosition;
-
 @end
 
 @implementation GameViewController
@@ -22,9 +20,6 @@
 
 - (IBAction)reDeal:(UIButton *)sender
 {
-    self.movesPosition.value = 0;
-    self.movesPosition.minimumValue = 0;
-    self.movesPosition.maximumValue = 0;
     self.game = nil;
     self.scoreCount.text = @"Score: 0";
     self.currentEvent.text = @"Please pick a card";
@@ -34,10 +29,7 @@
 {
     if(sender.maximumValue)
     {
-        long sliderValue = lroundf(self.movesPosition.value);
-        [self.movesPosition setValue:sliderValue animated:YES];
-    
-        [self setMoveMessage:sliderValue];
+         [self setMoveMessage:[self.game.moves count] - 1];
     }
 }
 
@@ -84,9 +76,7 @@
         self.scoreCount.text = [NSString stringWithFormat:@"Score: %ld", self.game.score];
         if([self.game.moves count])
         {
-            self.movesPosition.maximumValue = [self.game.moves count] - 1;
-            self.movesPosition.value = self.movesPosition.maximumValue;
-            [self setMoveMessage:self.movesPosition.maximumValue];
+          [self setMoveMessage:[self.game.moves count] - 1];
         }
     }
     
@@ -114,6 +104,7 @@
         [moveText appendFormat:@"%@ ", card.contents];
     }
     
+  [moveText appendFormat:@"%d points", move.moveScore];
 
     return [moveText copy];
 }
