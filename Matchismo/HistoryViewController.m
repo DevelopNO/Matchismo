@@ -27,9 +27,9 @@
     {
       self.historyText.attributedText = self.attrText;
     }
-    else if(self.text)
+    else
     {
-      
+      self.historyText.attributedText = [[NSAttributedString alloc] initWithString:@"No History"];
     }
 }
 

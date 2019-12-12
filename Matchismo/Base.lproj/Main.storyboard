@@ -664,7 +664,7 @@
                     <navigationItem key="navigationItem" id="uDb-Dw-2H7">
                         <barButtonItem key="rightBarButtonItem" title="History" id="YGP-0m-W3E">
                             <connections>
-                                <segue destination="prJ-03-1lg" kind="show" id="uCY-Xh-0V1"/>
+                                <segue destination="prJ-03-1lg" kind="show" identifier="show history" id="uCY-Xh-0V1"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

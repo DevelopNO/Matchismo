@@ -12,7 +12,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface HistoryViewController : UIViewController
 @property NSAttributedString* attrText;
-@property NSString* text;
 @end
 
 NS_ASSUME_NONNULL_END

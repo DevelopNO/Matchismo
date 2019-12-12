@@ -9,6 +9,7 @@
 #import "GameViewController.h"
 #import "CardMatchingGame.h"
 #import "CardMatchingMove.h"
+#import "HistoryViewController.h"
 
 @interface GameViewController ()
 
@@ -17,7 +18,16 @@
 
 @implementation GameViewController
 
-
+- (NSAttributedString *) createHistory
+{
+  NSMutableString* history = [[NSMutableString alloc] init];
+  for(CardMatchingMove* move in self.game.moves)
+  {
+    [history appendString:[self makeMoveString:move]];
+    [history appendString:@"\n"];
+  }
+  return [[NSAttributedString alloc] initWithString:history];
+}
 - (IBAction)reDeal:(UIButton *)sender
 {
     self.game = nil;
@@ -38,11 +48,27 @@
     self.currentEvent.text = [self makeMoveString:self.game.moves[index]];
 }
 
+
 - (NSInteger) getMode
 {
   return 2;
 }
 
+- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+  if([segue.identifier isEqualToString:@"show history"])
+  {
+    if([segue.destinationViewController isKindOfClass:[HistoryViewController class]])
+    {
+      HistoryViewController *history = (HistoryViewController *) segue.destinationViewController;
+      if([self.game.moves count])
+      {
+        history.attrText = [self createHistory];
+      }
+      // Send string
+    }
+  }
+}
 - (CardMatchingGame*) game
 {
     if(!_game)

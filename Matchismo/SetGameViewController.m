@@ -118,19 +118,6 @@
 }
 
 
-- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-  if([segue.identifier isEqualToString:@"show history"])
-  {
-    if([segue.destinationViewController isKindOfClass:[HistoryViewController class]])
-    {
-      HistoryViewController *history = (HistoryViewController *) segue.destinationViewController;
-      history.attrText = [self createHistory];
-      
-      // Send string
-    }
-  }
-}
 
 + (void) setCardsToAttributedString: (NSMutableAttributedString *) text move: (CardMatchingMove *)move
 {

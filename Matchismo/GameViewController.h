@@ -17,6 +17,7 @@
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
 @property (weak, nonatomic) IBOutlet UILabel *currentEvent;
 @property (strong, nonatomic) CardMatchingGame* game;
+- (NSAttributedString *) createHistory;
 - (Deck*) createDeck;
 -(void) setMoveMessage: (long) index;
 - (NSInteger) getMode;
