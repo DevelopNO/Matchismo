@@ -18,7 +18,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *currentEvent;
 @property (strong, nonatomic) CardMatchingGame* game;
 - (Deck*) createDeck;
-
+-(void) setMoveMessage: (long) index;
 - (NSInteger) getMode;
 - (NSString* ) titleForCard: (Card*) card;
 - (UIImage* ) backgroundOfCard: (Card*) card;

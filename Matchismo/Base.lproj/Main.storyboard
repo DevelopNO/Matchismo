@@ -17,15 +17,15 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
-                        <segue destination="sST-sd-QSS" kind="relationship" relationship="viewControllers" id="XFq-3z-h8z"/>
-                        <segue destination="PAS-Wb-Jrs" kind="relationship" relationship="viewControllers" id="Ay2-gw-Ovl"/>
+                        <segue destination="uCj-le-Kyg" kind="relationship" relationship="viewControllers" id="XFq-3z-h8z"/>
+                        <segue destination="Pk1-Rl-Q76" kind="relationship" relationship="viewControllers" id="Ay2-gw-Ovl"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ur5-2e-hlR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1833" y="-102"/>
         </scene>
-        <!--Set-->
+        <!--Set Game View Controller-->
         <scene sceneID="XcS-mw-dqQ">
             <objects>
                 <viewController id="sST-sd-QSS" customClass="SetGameViewController" sceneMemberID="viewController">
@@ -40,11 +40,16 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Please pick a card" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="equ-4t-nYg">
-                                <rect key="frame" x="31" y="630" width="338" height="31"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="equ-4t-nYg">
+                                <rect key="frame" x="31" y="630" width="338" height="63"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="Please pick a card">
+                                        <attributes>
+                                            <font key="NSFont" metaFont="system" size="17"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fAw-ik-wpM">
@@ -55,39 +60,6 @@
                                 </state>
                                 <connections>
                                     <action selector="reDeal:" destination="sST-sd-QSS" eventType="touchUpInside" id="Dtx-zn-wAh"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dKv-nO-3NB">
-                                <rect key="frame" x="95" y="56" width="73" height="96"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <state key="normal" backgroundImage="cardFront">
-                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <connections>
-                                    <action selector="touchCardButton:" destination="sST-sd-QSS" eventType="touchUpInside" id="Rwg-QG-Kez"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mex-Ii-2wL">
-                                <rect key="frame" x="170" y="56" width="73" height="96"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <state key="normal" backgroundImage="cardFront">
-                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <connections>
-                                    <action selector="touchCardButton:" destination="sST-sd-QSS" eventType="touchUpInside" id="iln-VC-AKL"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8uD-mC-HpH">
-                                <rect key="frame" x="247" y="56" width="73" height="96"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <state key="normal" backgroundImage="cardFront">
-                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <connections>
-                                    <action selector="touchCardButton:" destination="sST-sd-QSS" eventType="touchUpInside" id="hlF-5K-u6V"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qU7-b7-yZL">
@@ -211,17 +183,6 @@
                                     <action selector="touchCardButton:" destination="sST-sd-QSS" eventType="touchUpInside" id="yFP-vH-VFv"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vrl-09-8Rq">
-                                <rect key="frame" x="322" y="56" width="73" height="96"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <state key="normal" backgroundImage="cardFront">
-                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <connections>
-                                    <action selector="touchCardButton:" destination="sST-sd-QSS" eventType="touchUpInside" id="JJA-qZ-YpG"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tpa-gx-59r">
                                 <rect key="frame" x="95" y="264" width="73" height="96"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -264,17 +225,6 @@
                                 </state>
                                 <connections>
                                     <action selector="touchCardButton:" destination="sST-sd-QSS" eventType="touchUpInside" id="Nno-4z-Ywg"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="727-6R-W86">
-                                <rect key="frame" x="20" y="56" width="73" height="96"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <state key="normal" backgroundImage="cardFront">
-                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <connections>
-                                    <action selector="touchCardButton:" destination="sST-sd-QSS" eventType="touchUpInside" id="WWl-rO-WGd"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qmk-8G-0rY">
@@ -336,14 +286,16 @@
                         <color key="backgroundColor" red="0.27327288550000001" green="0.78039215689999997" blue="0.49070783060000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="YJv-6c-G7d"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Set" id="nie-ZY-nZ5"/>
+                    <navigationItem key="navigationItem" id="F0V-Nk-LtW">
+                        <barButtonItem key="rightBarButtonItem" title="History" id="8AU-P3-M3z">
+                            <connections>
+                                <segue destination="prJ-03-1lg" kind="show" identifier="show history" id="UQB-z8-lvJ"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="currentEvent" destination="equ-4t-nYg" id="ygZ-uD-Skg"/>
                         <outlet property="scoreCount" destination="an4-iB-x9S" id="7Nu-jo-heO"/>
-                        <outletCollection property="cardButtons" destination="8uD-mC-HpH" id="ow8-id-eSA"/>
-                        <outletCollection property="cardButtons" destination="Mex-Ii-2wL" id="xc2-KH-dkT"/>
-                        <outletCollection property="cardButtons" destination="dKv-nO-3NB" id="TvB-2X-XKJ"/>
-                        <outletCollection property="cardButtons" destination="727-6R-W86" id="IE5-Oh-KfQ"/>
                         <outletCollection property="cardButtons" destination="QhP-27-GcI" id="rcQ-3v-LYf"/>
                         <outletCollection property="cardButtons" destination="LMq-6p-TXg" id="gu5-dP-nHs"/>
                         <outletCollection property="cardButtons" destination="YFm-FC-9MF" id="v4P-bv-10u"/>
@@ -356,7 +308,6 @@
                         <outletCollection property="cardButtons" destination="UBu-DY-ZdL" id="srF-AE-BlY"/>
                         <outletCollection property="cardButtons" destination="ZPI-vJ-vZh" id="TGH-Us-uVG"/>
                         <outletCollection property="cardButtons" destination="ykM-rI-IMc" id="Q5n-aw-MA6"/>
-                        <outletCollection property="cardButtons" destination="Vrl-09-8Rq" id="0Td-Eq-c5M"/>
                         <outletCollection property="cardButtons" destination="B5A-8p-la6" id="DI9-op-Lti"/>
                         <outletCollection property="cardButtons" destination="1kG-Js-vqc" id="8GN-Xa-1Ye"/>
                         <outletCollection property="cardButtons" destination="0aA-uJ-SEg" id="NIn-zF-mh3"/>
@@ -369,9 +320,37 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xxK-iL-cm8" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-678.26086956521749" y="-467.41071428571428"/>
+            <point key="canvasLocation" x="231.8840579710145" y="-467.41071428571428"/>
         </scene>
-        <!--Playing Card-->
+        <!--History View Controller-->
+        <scene sceneID="6b4-II-GJf">
+            <objects>
+                <viewController id="prJ-03-1lg" customClass="HistoryViewController" sceneMemberID="viewController">
+                    <textView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" usesAttributedText="YES" id="4nC-rE-Go6">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <attributedString key="attributedText">
+                            <fragment content="No History">
+                                <attributes>
+                                    <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                    <font key="NSFont" metaFont="smallSystem"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                </attributes>
+                            </fragment>
+                        </attributedString>
+                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                    </textView>
+                    <navigationItem key="navigationItem" id="YHJ-GU-br8"/>
+                    <connections>
+                        <outlet property="historyText" destination="4nC-rE-Go6" id="cn8-fe-Grn"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BVy-Fs-9k1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1246.376811594203" y="-147.32142857142856"/>
+        </scene>
+        <!--Playing Card Game View Controller-->
         <scene sceneID="CN3-va-TYn">
             <objects>
                 <viewController id="PAS-Wb-Jrs" customClass="PlayingCardGameViewController" sceneMemberID="viewController">
@@ -682,7 +661,13 @@
                         <color key="backgroundColor" red="0.27327288550000001" green="0.78039215689999997" blue="0.49070783060000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="IzF-iS-F8F"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Playing Card" id="1Ts-x2-uB9"/>
+                    <navigationItem key="navigationItem" id="uDb-Dw-2H7">
+                        <barButtonItem key="rightBarButtonItem" title="History" id="YGP-0m-W3E">
+                            <connections>
+                                <segue destination="prJ-03-1lg" kind="show" id="uCY-Xh-0V1"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="currentEvent" destination="CTT-pT-hux" id="MjC-0a-ZTB"/>
                         <outlet property="scoreCount" destination="o4W-e8-new" id="4mn-Qw-ZZN"/>
@@ -717,11 +702,52 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iyJ-js-sUp" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-678" y="242"/>
+            <point key="canvasLocation" x="231.8840579710145" y="241.74107142857142"/>
+        </scene>
+        <!--Set-->
+        <scene sceneID="TSz-XY-Uf0">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="uCj-le-Kyg" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Set" id="nie-ZY-nZ5"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="6VQ-li-PxD">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="sST-sd-QSS" kind="relationship" relationship="rootViewController" id="ona-Ot-aPG"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VOq-xo-eIm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-678.26086956521749" y="-467.41071428571428"/>
+        </scene>
+        <!--Playing Card-->
+        <scene sceneID="8bd-Of-4XX">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Pk1-Rl-Q76" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Playing Card" id="1Ts-x2-uB9"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="o1J-Zm-ksr">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="PAS-Wb-Jrs" kind="relationship" relationship="rootViewController" id="apN-fe-l1b"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IH4-0k-Bi4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-678.26086956521749" y="241.74107142857142"/>
         </scene>
     </scenes>
     <resources>
         <image name="cardBack" width="64" height="96"/>
         <image name="cardFront" width="64" height="96"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="uCY-Xh-0V1"/>
+    </inferredMetricsTieBreakers>
 </document>
