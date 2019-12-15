@@ -23,8 +23,9 @@ typedef enum MOVE_TYPE
 
 @interface CardMatchingMove : NSObject
 
-- (instancetype) init: (MOVE_TYPE) matchedStatus cardsInMove:(NSArray*)cards;
+- (instancetype) init: (MOVE_TYPE) matchedStatus cardsInMove:(NSArray*)cards score: (int) score;
 @property (nonatomic, strong) NSArray* chosenCards;
+@property (nonatomic) int moveScore;
 
 // status:
 // 1 - match

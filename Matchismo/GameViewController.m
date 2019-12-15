@@ -6,58 +6,40 @@
 //  Copyright © 2019 Lightricks.ltd. All rights reserved.
 //
 
-#import "ViewController.h"
-#import "PlayingDeck.h"
+#import "GameViewController.h"
 #import "CardMatchingGame.h"
 #import "CardMatchingMove.h"
+#import "HistoryViewController.h"
 
-@interface ViewController ()
-@property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
-@property (strong, nonatomic) CardMatchingGame* game;
-@property (weak, nonatomic) IBOutlet UILabel *scoreCount;
-@property (nonatomic) BOOL isModeChageAllowed;
-@property (nonatomic) BOOL isIn3CardsMatchMode;
-@property (weak, nonatomic) IBOutlet UILabel *currentEvent;
-@property (weak, nonatomic) IBOutlet UISlider *movesPosition;
-@property (weak, nonatomic) IBOutlet UISwitch *modeSwitch;
+@interface GameViewController ()
+
 
 @end
 
-@implementation ViewController
+@implementation GameViewController
 
-
-- (IBAction)handleMode:(UISwitch *)sender
+- (NSAttributedString *) createHistory
 {
-    if(sender.isOn)
-    {
-        self.game = nil;
-        self.isIn3CardsMatchMode = YES;
-    }
-    else
-    {
-        self.game = nil;
-        self.isIn3CardsMatchMode = NO;
-    }
+  NSMutableString* history = [[NSMutableString alloc] init];
+  for(CardMatchingMove* move in self.game.moves)
+  {
+    [history appendString:[self makeMoveString:move]];
+    [history appendString:@"\n"];
+  }
+  return [[NSAttributedString alloc] initWithString:history];
 }
 - (IBAction)reDeal:(UIButton *)sender
 {
-    self.movesPosition.value = 0;
-    self.movesPosition.minimumValue = 0;
-    self.movesPosition.maximumValue = 0;
     self.game = nil;
     self.scoreCount.text = @"Score: 0";
     self.currentEvent.text = @"Please pick a card";
     [self updateUI];
-    [self.modeSwitch setEnabled:YES];
 }
-- (IBAction)CangeMoveTitle:(UISlider *)sender
+- (IBAction)ChangeMoveTitle:(UISlider *)sender
 {
     if(sender.maximumValue)
     {
-        long sliderValue = lroundf(self.movesPosition.value);
-        [self.movesPosition setValue:sliderValue animated:YES];
-    
-        [self setMoveMessage:sliderValue];
+         [self setMoveMessage:[self.game.moves count] - 1];
     }
 }
 
@@ -66,26 +48,43 @@
     self.currentEvent.text = [self makeMoveString:self.game.moves[index]];
 }
 
+
+- (NSInteger) getMode
+{
+  return 2;
+}
+
+- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+  if([segue.identifier isEqualToString:@"show history"])
+  {
+    if([segue.destinationViewController isKindOfClass:[HistoryViewController class]])
+    {
+      HistoryViewController *history = (HistoryViewController *) segue.destinationViewController;
+      if([self.game.moves count])
+      {
+        history.attrText = [self createHistory];
+      }
+      // Send string
+    }
+  }
+}
 - (CardMatchingGame*) game
 {
     if(!_game)
     {
-        _game = [[CardMatchingGame alloc] initWithCardCount:[self.cardButtons count] usingDeck:[self createDeck] inMode:self.isIn3CardsMatchMode ? 3 : 2];
+        _game = [[CardMatchingGame alloc] initWithCardCount:[self.cardButtons count] usingDeck:[self createDeck] inMode:[self getMode]];
     }
     return _game;
 }
 
 - (Deck*) createDeck
 {
-    return [[PlayingDeck alloc] init];
+  return nil;
 }
 
 - (IBAction)touchCardButton:(UIButton *)sender
 {
-    if([self.modeSwitch isEnabled])
-    {
-        [self.modeSwitch setEnabled:NO];
-    }
     NSUInteger chosenButtonIndex = [self.cardButtons indexOfObject:sender];
     [self.game chooseCardAtIndex:chosenButtonIndex];
     [self updateUI];
@@ -103,9 +102,7 @@
         self.scoreCount.text = [NSString stringWithFormat:@"Score: %ld", self.game.score];
         if([self.game.moves count])
         {
-            self.movesPosition.maximumValue = [self.game.moves count] - 1;
-            self.movesPosition.value = self.movesPosition.maximumValue;
-            [self setMoveMessage:self.movesPosition.maximumValue];
+          [self setMoveMessage:[self.game.moves count] - 1];
         }
     }
     
@@ -133,6 +130,7 @@
         [moveText appendFormat:@"%@ ", card.contents];
     }
     
+  [moveText appendFormat:@"%d points", move.moveScore];
 
     return [moveText copy];
 }

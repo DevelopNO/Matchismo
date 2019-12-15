@@ -16,7 +16,7 @@
 
 @implementation CardMatchingMove
 
-- (instancetype) init: (MOVE_TYPE) matchedStatus cardsInMove:(NSArray*)cards
+- (instancetype) init: (MOVE_TYPE) matchedStatus cardsInMove:(NSArray*)cards score:(int) score
 {
     self = [super init];
     
@@ -24,6 +24,7 @@
     {
         self.chosenCards = [[NSArray alloc] initWithArray:cards];
         self.moveType = matchedStatus;
+        self.moveScore = score;
     }
     return self;
 }

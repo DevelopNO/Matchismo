@@ -20,7 +20,7 @@
     
     if(self)
     {
-        for (NSString* suit in [PlayingCard validSuits])
+        for (NSString *suit in [PlayingCard validSuits])
         {
             for(NSUInteger rank = 1; rank <= [PlayingCard maxRank]; ++rank)
             {
