@@ -27,10 +27,6 @@
     {
       self.historyText.attributedText = self.attrText;
     }
-    else
-    {
-      self.historyText.attributedText = [[NSAttributedString alloc] initWithString:@"No History"];
-    }
 }
 
 
