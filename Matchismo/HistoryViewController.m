@@ -27,6 +27,7 @@
     {
       self.historyText.attributedText = self.attrText;
     }
+  [self.view sizeToFit];
 }
 
 
