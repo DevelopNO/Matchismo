@@ -17,9 +17,15 @@ static const int INITIAL_CARD_COUNT = 16;
 static const CGFloat WIDTH_HEIGHT_RATIO = 0.66;
 
 @interface PlayingCardGameViewController()
+@property (nonatomic, readonly) CGPoint leftCornerOfCardsSpace;
 @end
 
 @implementation PlayingCardGameViewController
+
+-(CGPoint) leftCornerOfCardsSpace
+{
+  return CGPointMake( self.CardsSpace.frame.size.width - self.gridOfCards.cellSize.width, self.CardsSpace.frame.size.height - self.gridOfCards.cellSize.height);
+}
 
 - (Deck*) createDeck
 {
@@ -35,18 +41,13 @@ static const CGFloat WIDTH_HEIGHT_RATIO = 0.66;
 
 - (void) cardFlipAnimation: (PlayingCardView *) cardView
 {
-  [UIView animateWithDuration:0.5 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut
+  [UIView animateWithDuration:0.9 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut
   animations:^(void) {
     CGAffineTransform currentTransform = cardView.transform;
       cardView.transform = CGAffineTransformMakeScale(-1, 1);
       cardView.transform = currentTransform;
       cardView.facedUp = !cardView.facedUp;
-  }
-                   completion:^(BOOL isFinished){
-    //if(isFinished)
-      //[cardView removeFromSuperview];
-    
-  }];
+  }completion:nil];
 }
 
 - (IBAction)flipCard:(UITapGestureRecognizer *)sender
@@ -76,7 +77,8 @@ static const CGFloat WIDTH_HEIGHT_RATIO = 0.66;
     {
       CGRect rect = [self.gridOfCards frameOfCellAtRow:row inColumn:column];
 
-      PlayingCardView *cardView = [[PlayingCardView alloc] initWithFrame:rect];
+      PlayingCardView *cardView = [[PlayingCardView alloc] initWithFrame:CGRectMake(self.leftCornerOfCardsSpace.x, self.leftCornerOfCardsSpace.y, rect.size.width, rect.size.height)];
+      
       Card* card = [self.game cardAtIndex:cardIndex];
       
       if([card isKindOfClass:[PlayingCard class]])
@@ -90,6 +92,15 @@ static const CGFloat WIDTH_HEIGHT_RATIO = 0.66;
         // currentCoulmn = IndexInArray - currentRow * nColums
         
         [self.cards addObject:cardView];
+        
+        [UIView animateWithDuration:0.5 delay:0.0 options:UIViewAnimationOptionLayoutSubviews
+        animations:^(void) {
+          cardView.frame = rect;
+
+        }completion:nil];
+        
+        
+        
         [self.CardsSpace addSubview:cardView];
         ++cardIndex;
         if(cardIndex >= INITIAL_CARD_COUNT) // should change on run time
