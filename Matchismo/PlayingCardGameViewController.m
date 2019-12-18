@@ -18,6 +18,8 @@ static const CGFloat WIDTH_HEIGHT_RATIO = 0.66;
 
 @interface PlayingCardGameViewController()
 @property (nonatomic, readonly) CGPoint leftCornerOfCardsSpace;
+
+@property (nonatomic) NSUInteger requestedCardNumber;
 @end
 
 @implementation PlayingCardGameViewController
@@ -39,14 +41,14 @@ static const CGFloat WIDTH_HEIGHT_RATIO = 0.66;
   return row * [self.gridOfCards columnCount] + column;
 }
 
-- (void) cardFlipAnimation: (PlayingCardView *) cardView
+- (void) cardFlipAnimation: (PlayingCardView *) cardView isChosen: (BOOL) chosen
 {
-  [UIView animateWithDuration:0.9 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut
+  [UIView animateWithDuration:0.3
   animations:^(void) {
     CGAffineTransform currentTransform = cardView.transform;
       cardView.transform = CGAffineTransformMakeScale(-1, 1);
       cardView.transform = currentTransform;
-      cardView.facedUp = !cardView.facedUp;
+      cardView.facedUp = chosen;
   }completion:nil];
 }
 
@@ -57,16 +59,68 @@ static const CGFloat WIDTH_HEIGHT_RATIO = 0.66;
   
   if(index < [self.cards count])
   {
-      PlayingCardView* cardView = self.cards[index];
-      [self cardFlipAnimation: cardView];
-      
+    [self.game chooseCardAtIndex:index];
+    [self updateUI];
   }
 }
 
+- (void) removeCard: (int) index
+{
+  PlayingCardView *cardToRemove = self.cards[index];
+  [UIView animateWithDuration:0.5 delay:0.0 options:UIViewAnimationOptionLayoutSubviews
+                 animations:^(void) {
+    cardToRemove.alpha = 0.0;
+  } completion: ^(BOOL isFinished)
+  {
+    [cardToRemove removeFromSuperview];
+  }];
+  
+}
+- (void) updateUI
+{
+  for(int i = 0; i < [self.cards count] ; ++i)
+  {
+    Card *card = [self.game cardAtIndex:i];
+    if(card.isMatched)
+    {
+      [self removeCard:i];
+      ++i;
+      continue;
+    }
+    
+    PlayingCardView *cardView = self.cards[i];
+    
+    if(card.isChosen != cardView.facedUp)
+    {
+      [self cardFlipAnimation:self.cards[i] isChosen:card.isChosen];
+    }
+  }
+  
+//    for(UIButton* cardButton in self.cardButtons)
+//    {
+//        [cardButton setTitle:[self titleForCard:card] forState:UIControlStateNormal];
+//        [cardButton setBackgroundImage:[self backgroundOfCard:card] forState:UIControlStateNormal];
+//        cardButton.enabled = !card.isMatched;
+//        self.scoreCount.text = [NSString stringWithFormat:@"Score: %ld", self.game.score];
+//        if([self.game.moves count])
+//        {
+//          [self setMoveMessage:[self.game.moves count] - 1];
+//        }
+//    }
+}
 - (NSInteger) getInitialNumber
 {
   return INITIAL_CARD_COUNT;
 }
+
+- (void)createAnimation:(PlayingCardView *)cardView rect:(CGRect )rect {
+  [UIView animateWithDuration:0.5 delay:0.0 options:UIViewAnimationOptionLayoutSubviews
+                   animations:^(void) {
+    cardView.frame = rect;
+    
+  }completion:nil];
+}
+
 
 - (void) createCards
 {
@@ -93,13 +147,7 @@ static const CGFloat WIDTH_HEIGHT_RATIO = 0.66;
         
         [self.cards addObject:cardView];
         
-        [UIView animateWithDuration:0.5 delay:0.0 options:UIViewAnimationOptionLayoutSubviews
-        animations:^(void) {
-          cardView.frame = rect;
-
-        }completion:nil];
-        
-        
+        [self createAnimation:cardView rect:rect];
         
         [self.CardsSpace addSubview:cardView];
         ++cardIndex;
@@ -111,7 +159,6 @@ static const CGFloat WIDTH_HEIGHT_RATIO = 0.66;
       }
     }
   }
-  //self.cards addObject:<#(nonnull id)#>
 }
 
 - (void) setGridDimensions
@@ -125,6 +172,7 @@ static const CGFloat WIDTH_HEIGHT_RATIO = 0.66;
 - (void) viewDidLoad
 {
   [super viewDidLoad];
+  self.requestedCardNumber = INITIAL_CARD_COUNT;
   [self setGridDimensions];
   [self createCards];
 }

@@ -21,10 +21,10 @@
 @property (strong, nonatomic) CardMatchingGame* game;
 - (NSAttributedString *) createHistory;
 - (Deck*) createDeck;
--(void) setMoveMessage: (long) index;
+- (void) setMoveMessage: (long) index;
 - (NSInteger) getMode;
 - (NSString* ) titleForCard: (Card*) card;
 - (UIImage* ) backgroundOfCard: (Card*) card;
-
+- (void) updateUI;
 @end
 

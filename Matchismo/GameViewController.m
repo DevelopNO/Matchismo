@@ -106,23 +106,8 @@
 //    [self.game chooseCardAtIndex:chosenButtonIndex];
     [self updateUI];
 }
-
 - (void) updateUI
 {
-//    for(UIButton* cardButton in self.cardButtons)
-//    {
-//        NSUInteger cardButtonIndex = [self.cardButtons indexOfObject:cardButton];
-//        Card* card = [self.game cardAtIndex:cardButtonIndex];
-//        [cardButton setTitle:[self titleForCard:card] forState:UIControlStateNormal];
-//        [cardButton setBackgroundImage:[self backgroundOfCard:card] forState:UIControlStateNormal];
-//        cardButton.enabled = !card.isMatched;
-//        self.scoreCount.text = [NSString stringWithFormat:@"Score: %ld", self.game.score];
-//        if([self.game.moves count])
-//        {
-//          [self setMoveMessage:[self.game.moves count] - 1];
-//        }
-//    }
-    
 }
 
 -(NSString*) makeMoveString: (CardMatchingMove*) move
