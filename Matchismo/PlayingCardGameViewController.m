@@ -26,22 +26,39 @@ static const CGFloat WIDTH_HEIGHT_RATIO = 0.66;
   return [[PlayingDeck alloc] init];
 }
 
-- (NSUInteger)calculateWhichCard: (CGPoint) location
+- (NSUInteger)calculateCardIndex: (CGPoint) location
 {
   NSUInteger row = [self.gridOfCards getRowByPoint:location];
   NSUInteger column = [self.gridOfCards getColumnByPoint:location];
   return row * [self.gridOfCards columnCount] + column;
 }
 
+- (void) cardFlipAnimation: (PlayingCardView *) cardView
+{
+  [UIView animateWithDuration:0.5 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut
+  animations:^(void) {
+    CGAffineTransform currentTransform = cardView.transform;
+      cardView.transform = CGAffineTransformMakeScale(-1, 1);
+      cardView.transform = currentTransform;
+      cardView.facedUp = !cardView.facedUp;
+  }
+                   completion:^(BOOL isFinished){
+    //if(isFinished)
+      //[cardView removeFromSuperview];
+    
+  }];
+}
+
 - (IBAction)flipCard:(UITapGestureRecognizer *)sender
 {
   CGPoint pointOfTouch = [sender locationInView:self.CardsSpace];
-  NSUInteger index = [self calculateWhichCard: pointOfTouch];
+  NSUInteger index = [self calculateCardIndex: pointOfTouch];
   
   if(index < [self.cards count])
   {
       PlayingCardView* cardView = self.cards[index];
-      cardView.facedUp = !cardView.facedUp;
+      [self cardFlipAnimation: cardView];
+      
   }
 }
 
