@@ -13,7 +13,7 @@
 #import "PlayingCard.h"
 #import "Grid.h"
 
-static const int INITIAL_CARD_COUNT = 16;
+static const int INITIAL_CARD_COUNT = 20;
 static const CGFloat WIDTH_HEIGHT_RATIO = 0.66;
 
 @interface PlayingCardGameViewController()
@@ -65,18 +65,22 @@ static const CGFloat WIDTH_HEIGHT_RATIO = 0.66;
   }
 }
 
+- (void)cardRemoveAnimation:(PlayingCardView *)cardToRemove delay:(CGFloat) delay{
+  [UIView animateWithDuration:0.5 delay:delay options:UIViewAnimationOptionLayoutSubviews
+                   animations:^(void) {
+    cardToRemove.alpha = 0.0;
+  } completion: ^(BOOL isFinished)
+   {
+    if(isFinished)
+      [cardToRemove removeFromSuperview];
+  }];
+}
+
 - (void) removeCard: (int) index
 {
   PlayingCardView *cardToRemove = self.cards[index];
   [self cardFlipAnimation:cardToRemove isChosen:YES];
-  [UIView animateWithDuration:0.5 delay:0.5 options:UIViewAnimationOptionLayoutSubviews
-                 animations:^(void) {
-    cardToRemove.alpha = 0.0;
-  } completion: ^(BOOL isFinished)
-  {
-    if(isFinished)
-      [cardToRemove removeFromSuperview];
-  }];
+  [self cardRemoveAnimation:cardToRemove delay:0.5];
   
 }
 - (void) updateUI
@@ -116,8 +120,8 @@ static const CGFloat WIDTH_HEIGHT_RATIO = 0.66;
   return INITIAL_CARD_COUNT;
 }
 
-- (void)createAnimation:(PlayingCardView *)cardView rect:(CGRect )rect {
-  [UIView animateWithDuration:0.5 delay:0.0 options:UIViewAnimationOptionLayoutSubviews
+- (void)createAnimation:(PlayingCardView *)cardView rect:(CGRect )rect delay: (CGFloat) delay{
+  [UIView animateWithDuration:0.5 delay:delay options:UIViewAnimationOptionLayoutSubviews
                    animations:^(void) {
     cardView.frame = rect;
     
@@ -125,7 +129,7 @@ static const CGFloat WIDTH_HEIGHT_RATIO = 0.66;
 }
 
 
-- (void) createCards
+- (void) createCards: (CGFloat) delay
 {
   int cardIndex = 0;
   for(int row = 0; row < self.gridOfCards.rowCount ; ++row)
@@ -150,7 +154,7 @@ static const CGFloat WIDTH_HEIGHT_RATIO = 0.66;
         
         [self.cards addObject:cardView];
         
-        [self createAnimation:cardView rect:rect];
+        [self createAnimation:cardView rect:rect delay: delay];
         
         [self.CardsSpace addSubview:cardView];
         ++cardIndex;
@@ -162,6 +166,22 @@ static const CGFloat WIDTH_HEIGHT_RATIO = 0.66;
       }
     }
   }
+}
+
+- (void) removeAllCards
+{
+  for(PlayingCardView *cardView in self.cards)
+  {
+    [self cardRemoveAnimation:cardView delay:0.0];
+  }
+  [self.cards removeAllObjects];
+}
+
+- (void) redeal
+{
+  [super redeal];
+  [self removeAllCards];
+  [self createCards:1];
 }
 
 - (void) setGridDimensions
@@ -177,7 +197,7 @@ static const CGFloat WIDTH_HEIGHT_RATIO = 0.66;
   [super viewDidLoad];
   self.requestedCardNumber = INITIAL_CARD_COUNT;
   [self setGridDimensions];
-  [self createCards];
+  [self createCards:0.0];
 }
 
 - (CardMatchingGame*) game

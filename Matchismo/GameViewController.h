@@ -25,6 +25,7 @@
 - (NSInteger) getMode;
 - (NSString* ) titleForCard: (Card*) card;
 - (UIImage* ) backgroundOfCard: (Card*) card;
+- (void)redeal;
 - (void) updateUI;
 @end
 

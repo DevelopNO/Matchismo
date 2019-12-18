@@ -39,12 +39,17 @@
   }
   return [[NSAttributedString alloc] initWithString:history];
 }
-- (IBAction)reDeal:(UIButton *)sender
+
+- (void)redeal {
+  self.game = nil;
+  self.scoreCount.text = @"Score: 0";
+  self.currentEvent.text = @"Please pick a card";
+  [self updateUI];
+}
+
+- (IBAction)redealHandler:(UIButton *)sender
 {
-    self.game = nil;
-    self.scoreCount.text = @"Score: 0";
-    self.currentEvent.text = @"Please pick a card";
-    [self updateUI];
+  [self redeal];
 }
 - (IBAction)ChangeMoveTitle:(UISlider *)sender
 {
