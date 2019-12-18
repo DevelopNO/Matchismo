@@ -160,6 +160,10 @@
                                 <rect key="frame" x="20" y="103" width="374" height="531"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="b20-sa-MwM" appends="YES" id="6Qb-BG-NzW"/>
+                                </connections>
                             </view>
                         </subviews>
                         <color key="backgroundColor" red="0.27327288550000001" green="0.78039215689999997" blue="0.49070783060000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -179,6 +183,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iyJ-js-sUp" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="b20-sa-MwM">
+                    <connections>
+                        <action selector="flipCard:" destination="PAS-Wb-Jrs" id="2sB-H3-JM8"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="231.8840579710145" y="241.74107142857142"/>
         </scene>
@@ -225,6 +234,6 @@
         <image name="cardFront" width="64" height="96"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="UQB-z8-lvJ"/>
+        <segue reference="uCY-Xh-0V1"/>
     </inferredMetricsTieBreakers>
 </document>

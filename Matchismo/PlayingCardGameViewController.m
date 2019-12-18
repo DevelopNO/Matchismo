@@ -10,10 +10,11 @@
 #import "PlayingDeck.h"
 #import "CardMatchingGame.h"
 #import "PlayingCardView.h"
+#import "PlayingCard.h"
 #import "Grid.h"
 
-static const int INITIAL_CARD_COUNT = 12;
-static const CGFloat WIDTH_HEIGHT_RATIO = 0.5;
+static const int INITIAL_CARD_COUNT = 16;
+static const CGFloat WIDTH_HEIGHT_RATIO = 0.66;
 
 @interface PlayingCardGameViewController()
 @end
@@ -25,6 +26,17 @@ static const CGFloat WIDTH_HEIGHT_RATIO = 0.5;
   return [[PlayingDeck alloc] init];
 }
 
+- (NSUInteger)calculateWhichCard
+{
+  return 0;
+}
+
+- (IBAction)flipCard:(UITapGestureRecognizer *)sender
+{
+  NSUInteger index = [self calculateWhichCard];
+  PlayingCardView* cardView = self.cards[index];
+  cardView.facedUp = !cardView.facedUp;
+}
 
 - (NSInteger) getInitialNumber
 {
@@ -33,10 +45,36 @@ static const CGFloat WIDTH_HEIGHT_RATIO = 0.5;
 
 - (void) createCards
 {
-  for(int i = 0; i < INITIAL_CARD_COUNT; ++i)
+  int cardIndex = 0;
+  for(int row = 0; row < self.gridOfCards.rowCount ; ++row)
   {
-    //PlayingCardView *cardView = [PlayingCardView alloc] ini
+    for(int column = 0; column < self.gridOfCards.columnCount; ++column)
+    {
+      CGRect rect = [self.gridOfCards frameOfCellAtRow:row inColumn:column];
 
+      PlayingCardView *cardView = [[PlayingCardView alloc] initWithFrame:rect];
+      Card* card = [self.game cardAtIndex:cardIndex];
+      
+      if([card isKindOfClass:[PlayingCard class]])
+      {
+        PlayingCard *playingCard = (PlayingCard *) card;
+        cardView.rank = playingCard.rank;
+        cardView.suit = playingCard.suit;
+        
+        // index in array would indicate position in grid
+        // currentRow = indexInArray / nColums
+        // currentCoulmn = IndexInArray - currentRow * nColums
+        
+        [self.cards addObject:cardView];
+        [self.CardsSpace addSubview:cardView];
+        ++cardIndex;
+        if(cardIndex >= INITIAL_CARD_COUNT) // should change on run time
+        {
+          return;
+        }
+        
+      }
+    }
   }
   //self.cards addObject:<#(nonnull id)#>
 }
