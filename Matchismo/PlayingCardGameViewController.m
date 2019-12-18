@@ -57,7 +57,8 @@ static const CGFloat WIDTH_HEIGHT_RATIO = 0.66;
   CGPoint pointOfTouch = [sender locationInView:self.CardsSpace];
   NSUInteger index = [self calculateCardIndex: pointOfTouch];
   
-  if(index < [self.cards count] && (![self.cards[index] isEqual:[NSNull null]]))
+
+  if(([self.cards count] > index) &&  (![self.cards[index] isEqual:[NSNull null]]))
   {
     [self.game chooseCardAtIndex:index];
     [self updateUI];
@@ -67,7 +68,8 @@ static const CGFloat WIDTH_HEIGHT_RATIO = 0.66;
 - (void) removeCard: (int) index
 {
   PlayingCardView *cardToRemove = self.cards[index];
-  [UIView animateWithDuration:0.5 delay:0.0 options:UIViewAnimationOptionLayoutSubviews
+  [self cardFlipAnimation:cardToRemove isChosen:YES];
+  [UIView animateWithDuration:0.5 delay:0.5 options:UIViewAnimationOptionLayoutSubviews
                  animations:^(void) {
     cardToRemove.alpha = 0.0;
   } completion: ^(BOOL isFinished)
@@ -87,7 +89,7 @@ static const CGFloat WIDTH_HEIGHT_RATIO = 0.66;
     }
     
     Card *card = [self.game cardAtIndex:i];
-    if(card.isMatched)
+    if(card.isMatched && ![self.cards[i] isEqual:[NSNull null]])
     {
       NSLog(@"Card is matched index: %d", i);
       [self removeCard:i];
@@ -97,7 +99,7 @@ static const CGFloat WIDTH_HEIGHT_RATIO = 0.66;
     
     PlayingCardView *cardView = self.cards[i];
     
-    if(card.isChosen != cardView.facedUp)
+    if((card.isChosen != cardView.facedUp) && ![self.cards[i] isEqual:[NSNull null]])
     {
       [self cardFlipAnimation:self.cards[i] isChosen:card.isChosen];
     }
