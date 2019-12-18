@@ -38,8 +38,11 @@ static const CGFloat WIDTH_HEIGHT_RATIO = 0.66;
   CGPoint pointOfTouch = [sender locationInView:self.CardsSpace];
   NSUInteger index = [self calculateWhichCard: pointOfTouch];
   
-  PlayingCardView* cardView = self.cards[index];
-  cardView.facedUp = !cardView.facedUp;
+  if(index < [self.cards count])
+  {
+      PlayingCardView* cardView = self.cards[index];
+      cardView.facedUp = !cardView.facedUp;
+  }
 }
 
 - (NSInteger) getInitialNumber

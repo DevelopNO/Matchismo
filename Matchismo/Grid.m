@@ -212,11 +212,11 @@
 
 - (NSUInteger) getColumnByPoint: (CGPoint) point
 {
-  return (point.x / self.size.width) * self.columnCount;
+  return (point.x / (self.columnCount * self.cellSize.width)) * self.columnCount;
 }
 - (NSUInteger) getRowByPoint: (CGPoint) point
 {
-  return (point.y / self.size.height) * self.rowCount;
+  return (point.y / (self.rowCount * self.cellSize.height)) * self.rowCount;
 }
 
 @end
