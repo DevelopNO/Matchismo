@@ -172,7 +172,10 @@ static const CGFloat WIDTH_HEIGHT_RATIO = 0.66;
 {
   for(PlayingCardView *cardView in self.cards)
   {
-    [self cardRemoveAnimation:cardView delay:0.0];
+    if(![cardView isEqual:[NSNull null]])
+    {
+      [self cardRemoveAnimation:cardView delay:0.0];
+    }
   }
   [self.cards removeAllObjects];
 }
