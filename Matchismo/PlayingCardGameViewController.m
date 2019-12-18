@@ -9,6 +9,11 @@
 #import "PlayingCardGameViewController.h"
 #import "PlayingDeck.h"
 #import "CardMatchingGame.h"
+#import "PlayingCardView.h"
+#import "Grid.h"
+
+static const int INITIAL_CARD_COUNT = 12;
+static const CGFloat WIDTH_HEIGHT_RATIO = 0.5;
 
 @interface PlayingCardGameViewController()
 @end
@@ -21,12 +26,41 @@
 }
 
 
+- (NSInteger) getInitialNumber
+{
+  return INITIAL_CARD_COUNT;
+}
+
+- (void) createCards
+{
+  for(int i = 0; i < INITIAL_CARD_COUNT; ++i)
+  {
+    //PlayingCardView *cardView = [PlayingCardView alloc] ini
+
+  }
+  //self.cards addObject:<#(nonnull id)#>
+}
+
+- (void) setGridDimensions
+{
+  self.gridOfCards.size = super.CardsSpace.bounds.size;
+  self.gridOfCards.cellAspectRatio = WIDTH_HEIGHT_RATIO;
+  self.gridOfCards.minimumNumberOfCells = INITIAL_CARD_COUNT;
+  
+}
+
+- (void) viewDidLoad
+{
+  [super viewDidLoad];
+  [self setGridDimensions];
+  [self createCards];
+}
 
 - (CardMatchingGame*) game
 {
   if(!super.game)
   {
-      super.game = [[CardMatchingGame alloc] initWithCardCount:[self.cardButtons count] usingDeck:[self createDeck] inMode:2];
+      super.game = [[CardMatchingGame alloc] initWithCardCount:INITIAL_CARD_COUNT usingDeck:[self createDeck] inMode:2];
   }
   return super.game;
 }

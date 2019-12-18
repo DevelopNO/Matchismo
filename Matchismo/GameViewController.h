@@ -10,12 +10,14 @@
 
 
 
-@class Deck, Card, CardMatchingGame;
+@class Deck, Card, CardMatchingGame, Grid;
 
 @interface GameViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UILabel *scoreCount;
-@property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
+@property (weak, nonatomic) IBOutlet UIView *CardsSpace;
 @property (weak, nonatomic) IBOutlet UILabel *currentEvent;
+@property (strong, nonatomic) NSMutableArray *cards;
+@property (strong, nonatomic) Grid *gridOfCards;
 @property (strong, nonatomic) CardMatchingGame* game;
 - (NSAttributedString *) createHistory;
 - (Deck*) createDeck;

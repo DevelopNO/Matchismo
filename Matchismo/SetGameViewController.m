@@ -22,16 +22,22 @@
 @implementation SetGameViewController
 
 - (void)setCardsHeaders {
-  for(UIButton* cardButton in self.cardButtons)
-  {
-    NSUInteger cardButtonIndex = [self.cardButtons indexOfObject:cardButton];
-    SetCard* card = (SetCard *) [[self game] cardAtIndex:cardButtonIndex];
-    [cardButton setAttributedTitle:[SetCardPresentationBuilder getCardPresentation:card] forState:UIControlStateNormal];
-  }
+//  for(UIButton* cardButton in self.cardButtons)
+//  {
+//    NSUInteger cardButtonIndex = [self.cardButtons indexOfObject:cardButton];
+//    SetCard* card = (SetCard *) [[self game] cardAtIndex:cardButtonIndex];
+//    [cardButton setAttributedTitle:[SetCardPresentationBuilder getCardPresentation:card] forState:UIControlStateNormal];
+//  }
+}
+
+- (void) createCards
+{
+  
 }
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+  [self createCards];
   [self setCardsHeaders];
 }
 
@@ -83,8 +89,8 @@
 
 - (IBAction)touchCardButton:(UIButton *)sender
 {
-  NSUInteger chosenButtonIndex = [self.cardButtons indexOfObject:sender];
-  [self.game chooseCardAtIndex:chosenButtonIndex];
+//  NSUInteger chosenButtonIndex = [self.cardButtons indexOfObject:sender];
+//  [self.game chooseCardAtIndex:chosenButtonIndex];
   [self updateUI];
 }
 
@@ -96,15 +102,15 @@
 
 - (void) updateUI
 {
-  for(UIButton* cardButton in self.cardButtons)
-  {
-    NSUInteger cardButtonIndex = [self.cardButtons indexOfObject:cardButton];
-    Card* card = [self.game cardAtIndex:cardButtonIndex];
-    [cardButton setBackgroundImage:[self backgroundOfCard:card] forState:UIControlStateNormal];
-    cardButton.enabled = !card.isMatched;
-    super.scoreCount.text = [NSString stringWithFormat:@"Score: %ld", self.game.score];
-  }
-  
+//  for(UIButton* cardButton in self.cardButtons)
+//  {
+//    NSUInteger cardButtonIndex = [self.cardButtons indexOfObject:cardButton];
+//    Card* card = [self.game cardAtIndex:cardButtonIndex];
+//    [cardButton setBackgroundImage:[self backgroundOfCard:card] forState:UIControlStateNormal];
+//    cardButton.enabled = !card.isMatched;
+//    super.scoreCount.text = [NSString stringWithFormat:@"Score: %ld", self.game.score];
+//  }
+//
   if([self.game.moves count])
   {
     [self setMoveMessage:[self.game.moves count] - 1];

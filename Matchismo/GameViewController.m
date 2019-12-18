@@ -10,6 +10,9 @@
 #import "CardMatchingGame.h"
 #import "CardMatchingMove.h"
 #import "HistoryViewController.h"
+#import "Grid.h"
+
+
 
 @interface GameViewController ()
 
@@ -17,6 +20,14 @@
 @end
 
 @implementation GameViewController
+
+- (void)viewDidLoad
+{
+  self.cards = [[NSMutableArray alloc] init];
+  self.gridOfCards = [[Grid alloc] init];
+  self.CardsSpace.backgroundColor = nil;
+  self.CardsSpace.opaque = NO;
+}
 
 - (NSAttributedString *) createHistory
 {
@@ -69,11 +80,17 @@
     }
   }
 }
+
+- (NSInteger) getInitialNumber
+{
+  return 0;
+}
+
 - (CardMatchingGame*) game
 {
     if(!_game)
     {
-        _game = [[CardMatchingGame alloc] initWithCardCount:[self.cardButtons count] usingDeck:[self createDeck] inMode:[self getMode]];
+        _game = [[CardMatchingGame alloc] initWithCardCount:[self getInitialNumber] usingDeck:[self createDeck] inMode:[self getMode]];
     }
     return _game;
 }
@@ -85,26 +102,26 @@
 
 - (IBAction)touchCardButton:(UIButton *)sender
 {
-    NSUInteger chosenButtonIndex = [self.cardButtons indexOfObject:sender];
-    [self.game chooseCardAtIndex:chosenButtonIndex];
+//    NSUInteger chosenButtonIndex = [self.cardButtons indexOfObject:sender];
+//    [self.game chooseCardAtIndex:chosenButtonIndex];
     [self updateUI];
 }
 
 - (void) updateUI
 {
-    for(UIButton* cardButton in self.cardButtons)
-    {
-        NSUInteger cardButtonIndex = [self.cardButtons indexOfObject:cardButton];
-        Card* card = [self.game cardAtIndex:cardButtonIndex];
-        [cardButton setTitle:[self titleForCard:card] forState:UIControlStateNormal];
-        [cardButton setBackgroundImage:[self backgroundOfCard:card] forState:UIControlStateNormal];
-        cardButton.enabled = !card.isMatched;
-        self.scoreCount.text = [NSString stringWithFormat:@"Score: %ld", self.game.score];
-        if([self.game.moves count])
-        {
-          [self setMoveMessage:[self.game.moves count] - 1];
-        }
-    }
+//    for(UIButton* cardButton in self.cardButtons)
+//    {
+//        NSUInteger cardButtonIndex = [self.cardButtons indexOfObject:cardButton];
+//        Card* card = [self.game cardAtIndex:cardButtonIndex];
+//        [cardButton setTitle:[self titleForCard:card] forState:UIControlStateNormal];
+//        [cardButton setBackgroundImage:[self backgroundOfCard:card] forState:UIControlStateNormal];
+//        cardButton.enabled = !card.isMatched;
+//        self.scoreCount.text = [NSString stringWithFormat:@"Score: %ld", self.game.score];
+//        if([self.game.moves count])
+//        {
+//          [self setMoveMessage:[self.game.moves count] - 1];
+//        }
+//    }
     
 }
 
