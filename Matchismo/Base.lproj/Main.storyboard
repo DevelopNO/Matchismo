@@ -162,7 +162,7 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <gestureRecognizers/>
                                 <connections>
-                                    <outletCollection property="gestureRecognizers" destination="b20-sa-MwM" appends="YES" id="6Qb-BG-NzW"/>
+                                    <outletCollection property="gestureRecognizers" destination="f2J-vi-kJ6" appends="YES" id="2Wa-Ur-qxA"/>
                                 </connections>
                             </view>
                         </subviews>
@@ -183,9 +183,9 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iyJ-js-sUp" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="b20-sa-MwM">
+                <tapGestureRecognizer id="f2J-vi-kJ6">
                     <connections>
-                        <action selector="flipCard:" destination="PAS-Wb-Jrs" id="2sB-H3-JM8"/>
+                        <action selector="flipCard:" destination="PAS-Wb-Jrs" id="QTp-05-baM"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>

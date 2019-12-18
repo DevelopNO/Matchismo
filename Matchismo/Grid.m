@@ -210,4 +210,13 @@
     return description;
 }
 
+- (NSUInteger) getColumnByPoint: (CGPoint) point
+{
+  return (point.x / self.size.width) * self.columnCount;
+}
+- (NSUInteger) getRowByPoint: (CGPoint) point
+{
+  return (point.y / self.size.height) * self.rowCount;
+}
+
 @end

@@ -26,14 +26,18 @@ static const CGFloat WIDTH_HEIGHT_RATIO = 0.66;
   return [[PlayingDeck alloc] init];
 }
 
-- (NSUInteger)calculateWhichCard
+- (NSUInteger)calculateWhichCard: (CGPoint) location
 {
-  return 0;
+  NSUInteger row = [self.gridOfCards getRowByPoint:location];
+  NSUInteger column = [self.gridOfCards getColumnByPoint:location];
+  return row * [self.gridOfCards columnCount] + column;
 }
 
 - (IBAction)flipCard:(UITapGestureRecognizer *)sender
 {
-  NSUInteger index = [self calculateWhichCard];
+  CGPoint pointOfTouch = [sender locationInView:self.CardsSpace];
+  NSUInteger index = [self calculateWhichCard: pointOfTouch];
+  
   PlayingCardView* cardView = self.cards[index];
   cardView.facedUp = !cardView.facedUp;
 }
