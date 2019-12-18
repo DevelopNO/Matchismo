@@ -176,6 +176,10 @@ static const int COST_TO_CHOOSE = 1;
             self.score -= COST_TO_CHOOSE;
         }
     }
+  else
+  {
+    NSLog(@"Card is already matched index: %lu", index);
+  }
 }
 
 -(void) setCardsForComparisonIsMatched: (BOOL) isMatched

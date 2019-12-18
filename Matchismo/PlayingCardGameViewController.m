@@ -57,7 +57,7 @@ static const CGFloat WIDTH_HEIGHT_RATIO = 0.66;
   CGPoint pointOfTouch = [sender locationInView:self.CardsSpace];
   NSUInteger index = [self calculateCardIndex: pointOfTouch];
   
-  if(index < [self.cards count])
+  if(index < [self.cards count] && (![self.cards[index] isEqual:[NSNull null]]))
   {
     [self.game chooseCardAtIndex:index];
     [self updateUI];
@@ -72,7 +72,8 @@ static const CGFloat WIDTH_HEIGHT_RATIO = 0.66;
     cardToRemove.alpha = 0.0;
   } completion: ^(BOOL isFinished)
   {
-    [cardToRemove removeFromSuperview];
+    if(isFinished)
+      [cardToRemove removeFromSuperview];
   }];
   
 }
@@ -80,11 +81,17 @@ static const CGFloat WIDTH_HEIGHT_RATIO = 0.66;
 {
   for(int i = 0; i < [self.cards count] ; ++i)
   {
+    if([self.cards[i] isEqual:[NSNull null]])
+    {
+      continue;
+    }
+    
     Card *card = [self.game cardAtIndex:i];
     if(card.isMatched)
     {
+      NSLog(@"Card is matched index: %d", i);
       [self removeCard:i];
-      ++i;
+      self.cards[i] = [NSNull null];
       continue;
     }
     
@@ -96,17 +103,11 @@ static const CGFloat WIDTH_HEIGHT_RATIO = 0.66;
     }
   }
   
-//    for(UIButton* cardButton in self.cardButtons)
-//    {
-//        [cardButton setTitle:[self titleForCard:card] forState:UIControlStateNormal];
-//        [cardButton setBackgroundImage:[self backgroundOfCard:card] forState:UIControlStateNormal];
-//        cardButton.enabled = !card.isMatched;
-//        self.scoreCount.text = [NSString stringWithFormat:@"Score: %ld", self.game.score];
-//        if([self.game.moves count])
-//        {
-//          [self setMoveMessage:[self.game.moves count] - 1];
-//        }
-//    }
+  self.scoreCount.text = [NSString stringWithFormat:@"Score: %ld", self.game.score];
+  if([self.game.moves count])
+  {
+    [self setMoveMessage:[self.game.moves count] - 1];
+  }
 }
 - (NSInteger) getInitialNumber
 {
