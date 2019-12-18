@@ -121,7 +121,7 @@ static const CGFloat WIDTH_HEIGHT_RATIO = 0.66;
 }
 
 - (void)createAnimation:(PlayingCardView *)cardView rect:(CGRect )rect delay: (CGFloat) delay{
-  [UIView animateWithDuration:0.5 delay:delay options:UIViewAnimationOptionLayoutSubviews
+  [UIView animateWithDuration:1.0 delay:delay options:UIViewAnimationOptionLayoutSubviews
                    animations:^(void) {
     cardView.frame = rect;
     
@@ -138,7 +138,7 @@ static const CGFloat WIDTH_HEIGHT_RATIO = 0.66;
     {
       CGRect rect = [self.gridOfCards frameOfCellAtRow:row inColumn:column];
 
-      PlayingCardView *cardView = [[PlayingCardView alloc] initWithFrame:CGRectMake(self.leftCornerOfCardsSpace.x, self.leftCornerOfCardsSpace.y, rect.size.width, rect.size.height)];
+      PlayingCardView *cardView = [[PlayingCardView alloc] initWithFrame:CGRectMake(3 * self.leftCornerOfCardsSpace.x, 3 * self.leftCornerOfCardsSpace.y, rect.size.width, rect.size.height)];
       
       Card* card = [self.game cardAtIndex:cardIndex];
       
