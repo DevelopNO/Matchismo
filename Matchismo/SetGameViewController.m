@@ -16,54 +16,77 @@
 #import "SetCardView.h"
 #import "Grid.h"
 
+static const int INITIAL_CARD_COUNT = 12;
+
 @interface SetGameViewController ()
 
 @end
+// add behaviour for adding cards
+// add tap (for choosing) and background change
+// add disapearing behaviour
+
 
 @implementation SetGameViewController
+- (IBAction)Addmorecards:(id)sender
+{
+  // recalculate grid
+  // if stayed - add to current grid
+    // first - add to missing spaces
+  // else - redraw all cards
+}
 
 - (void) createCards
 {
+  int cardIndex = 0;
   for(int row = 0; row < self.cardsGrid.rowCount ; ++row)
   {
     for(int column = 0; column < self.cardsGrid.columnCount; ++column)
     {
       CGRect rect = [self.cardsGrid frameOfCellAtRow:row inColumn:column];
 
-//      PlayingCardView *cardView = [[PlayingCardView alloc] initWithFrame:CGRectMake(3 * self.leftCornerOfCardsSpace.x, 3 * self.leftCornerOfCardsSpace.y, rect.size.width, rect.size.height)];
-//
-//      Card* card = [self.game cardAtIndex:cardIndex];
-//
-//      if([card isKindOfClass:[PlayingCard class]])
-//      {
-//        PlayingCard *playingCard = (PlayingCard *) card;
-//        cardView.rank = playingCard.rank;
-//        cardView.suit = playingCard.suit;
-//
-//        // index in array would indicate position in grid
-//        // currentRow = indexInArray / nColums
-//        // currentCoulmn = IndexInArray - currentRow * nColums
-//
-//        [self.cards addObject:cardView];
-//
-//        [self creationAnimation:cardView rect:rect delay: delay];
-//
-//        [self.CardsSpace addSubview:cardView];
-//        ++cardIndex;
-//        if(cardIndex >= INITIAL_CARD_COUNT) // should change on run time
-//        {
-//          return;
-//        }
+      SetCardView *cardView = [[SetCardView alloc] initWithFrame:CGRectMake(3 * self.rightBottomCornerOrigin.x, 3 * self.rightBottomCornerOrigin.y, rect.size.width, rect.size.height)];
+
+      Card* card = [self.game cardAtIndex:cardIndex];
+
+      if([card isKindOfClass:[SetCard class]])
+      {
+        SetCard *setCard = (SetCard *) card;
+        cardView.numberOfShapes = setCard.number;
+        cardView.color = setCard.color;
+        cardView.fill = setCard.fill;
+        cardView.shape = setCard.shape;
+        
+        
+        // index in array would indicate position in grid
+        // currentRow = indexInArray / nColums
+        // currentCoulmn = IndexInArray - currentRow * nColums
+
+        [self.cardViews addObject:cardView];
+
+        [self animateCreation:cardView rect:rect delay:0.0];
+
+        [self.CardsSpace addSubview:cardView];
+        ++cardIndex;
+        if(cardIndex >= INITIAL_CARD_COUNT) // should change on run time
+        {
+          return;
+        }
         
       }
     }
   }
+}
 
+- (int) initialNumberOfCards
+{
+  return 12;
+}
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+  [self setGridDimensions];
   [self createCards];
-
+  
 }
 
 
@@ -87,32 +110,13 @@
   return [[SetDeck alloc] init];
 }
 
-
-- (IBAction)touchCardButton:(UIButton *)sender
+- (void) cardChosenAnimation: (UIView *) cardView isChosen: (BOOL) chosen
 {
-//  NSUInteger chosenButtonIndex = [self.cardButtons indexOfObject:sender];
-//  [self.game chooseCardAtIndex:chosenButtonIndex];
-  [self updateUI];
-}
-
-
-
-- (void) updateUI
-{
-//  for(UIButton* cardButton in self.cardButtons)
-//  {
-//    NSUInteger cardButtonIndex = [self.cardButtons indexOfObject:cardButton];
-//    Card* card = [self.game cardAtIndex:cardButtonIndex];
-//    [cardButton setBackgroundImage:[self backgroundOfCard:card] forState:UIControlStateNormal];
-//    cardButton.enabled = !card.isMatched;
-//    super.scoreCount.text = [NSString stringWithFormat:@"Score: %ld", self.game.score];
-//  }
-//
-  if([self.game.moves count])
-  {
-    [self setMoveMessage:[self.game.moves count] - 1];
+  [UIView animateWithDuration:0.3
+  animations:^(void) {
+    cardView.backgroundColor = [UIColor systemPinkColor];
   }
-  
+  completion:nil];
 }
 
 - (UIImage* ) backgroundOfCard: (Card*) card

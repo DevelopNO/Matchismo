@@ -21,12 +21,63 @@
 
 @implementation GameViewController
 
+- (IBAction)chooseCard:(UITapGestureRecognizer *)sender
+{
+  CGPoint pointOfTouch = [sender locationInView:self.CardsSpace];
+  NSUInteger index = [self calculateCardIndex: pointOfTouch];
+  
+
+  if(([self.cardViews count] > index) &&  (![self.cardViews[index] isEqual:[NSNull null]]))
+  {
+    [self.game chooseCardAtIndex:index];
+    [self updateUI];
+  }
+}
+
+- (int) initialNumberOfCards
+{
+  return 0;
+}
+
+- (void)cardRemoveAnimation:(UIView *)cardToRemove delay:(CGFloat) delay{
+  [UIView animateWithDuration:0.5 delay:delay options:UIViewAnimationOptionLayoutSubviews
+                   animations:^(void) {
+    cardToRemove.alpha = 0.0;
+  } completion: ^(BOOL isFinished)
+   {
+    if(isFinished)
+      [cardToRemove removeFromSuperview];
+  }];
+}
+
+- (void) setGridDimensions
+{
+  self.cardsGrid.size = self.CardsSpace.bounds.size;
+  self.cardsGrid.cellAspectRatio = WIDTH_HEIGHT_RATIO;
+  self.cardsGrid.minimumNumberOfCells = [self initialNumberOfCards];
+  
+}
+
+-(CGPoint) rightBottomCornerOrigin
+{
+  return CGPointMake( self.CardsSpace.frame.size.width - self.cardsGrid.cellSize.width, self.CardsSpace.frame.size.height - self.cardsGrid.cellSize.height);
+}
 - (void)viewDidLoad
 {
-  self.cards = [[NSMutableArray alloc] init];
+  self.cardViews = [[NSMutableArray alloc] init];
   self.cardsGrid = [[Grid alloc] init];
   self.CardsSpace.backgroundColor = nil;
   self.CardsSpace.opaque = NO;
+}
+
+
+- (void)animateCreation:(UIView *)cardView rect:(CGRect )rect delay: (CGFloat) delay
+{
+  [UIView animateWithDuration:1.0 delay:delay options:UIViewAnimationOptionLayoutSubviews
+                   animations:^(void) {
+    cardView.frame = rect;
+    
+  }completion:nil];
 }
 
 - (NSUInteger)calculateCardIndex: (CGPoint) location
@@ -72,6 +123,9 @@
     self.currentEvent.text = [self makeMoveString:self.game.moves[index]];
 }
 
+- (NSInteger) getInitialNumber{
+  return 12;
+}
 
 - (NSInteger) getMode
 {
@@ -89,14 +143,8 @@
       {
         history.attrText = [self createHistory];
       }
-      // Send string
     }
   }
-}
-
-- (NSInteger) getInitialNumber
-{
-  return 0;
 }
 
 - (CardMatchingGame*) game
@@ -119,8 +167,37 @@
 //    [self.game chooseCardAtIndex:chosenButtonIndex];
     [self updateUI];
 }
+
+
+- (void) removeCard: (int) index
+{
+  UIView *cardToRemove = self.cardViews[index];
+  [self cardChosenAnimation:cardToRemove isChosen:YES];
+  [self cardRemoveAnimation:cardToRemove delay:0.5];
+}
+- (void) cardChosenAnimation: (UIView *) cardView isChosen: (BOOL) chosen
+{
+  
+}
+
 - (void) updateUI
 {
+  for(int i = 0; i < [self.cardViews count] ; ++i)
+  {
+    if([self.cardViews[i] isEqual:[NSNull null]])
+    {
+      continue;
+    }
+    
+    Card *card = [self.game cardAtIndex:i];
+    if(card.isMatched && ![self.cardViews[i] isEqual:[NSNull null]])
+    {
+      NSLog(@"Card is matched index: %d", i);
+      [self removeCard:i];
+      self.cardViews[i] = [NSNull null];
+      continue;
+    }
+  }
 }
 
 -(NSString*) makeMoveString: (CardMatchingMove*) move

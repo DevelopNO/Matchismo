@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
+static const CGFloat WIDTH_HEIGHT_RATIO = 0.66;
 
 
 @class Deck, Card, CardMatchingGame, Grid;
@@ -16,9 +17,16 @@
 @property (weak, nonatomic) IBOutlet UILabel *scoreCount;
 @property (weak, nonatomic) IBOutlet UIView *CardsSpace;
 @property (weak, nonatomic) IBOutlet UILabel *currentEvent;
-@property (strong, nonatomic) NSMutableArray *cards;
+@property (strong, nonatomic) NSMutableArray *cardViews;
 @property (strong, nonatomic) Grid *cardsGrid;
 @property (strong, nonatomic) CardMatchingGame* game;
+- (void)animateCreation:(UIView *)cardView rect:(CGRect )rect delay:
+(CGFloat) delay;
+
+
+- (void) cardChosenAnimation: (UIView *) cardView isChosen: (BOOL) chosen;
+- (void)cardRemoveAnimation:(UIView *)cardToRemove delay:(CGFloat) delay;
+- (CGPoint) rightBottomCornerOrigin;
 - (NSUInteger)calculateCardIndex: (CGPoint) location;
 - (NSAttributedString *) createHistory;
 - (Deck*) createDeck;
@@ -26,7 +34,9 @@
 - (NSInteger) getMode;
 - (NSString* ) titleForCard: (Card*) card;
 - (UIImage* ) backgroundOfCard: (Card*) card;
-- (void)redeal;
+- (void) redeal;
 - (void) updateUI;
+- (void) setGridDimensions;
+- (int) initialNumberOfCards;
 @end
 

@@ -64,10 +64,25 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yaR-va-n3y">
-                                <rect key="frame" x="20" y="97" width="374" height="531"/>
+                                <rect key="frame" x="20" y="106" width="374" height="531"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="cEP-mt-3lH" appends="YES" id="EAa-ef-0xG"/>
+                                </connections>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dZ3-5z-fb2">
+                                <rect key="frame" x="247" y="743" width="128" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Add cards" backgroundImage="cardFront">
+                                    <color key="titleShadowColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="Addmorecards:" destination="sST-sd-QSS" eventType="touchUpInside" id="vUg-k4-N2W"/>
+                                    <action selector="reDeal:" destination="sST-sd-QSS" eventType="touchUpInside" id="uSm-4s-0xe"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.27327288550000001" green="0.78039215689999997" blue="0.49070783060000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="YJv-6c-G7d"/>
@@ -86,6 +101,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xxK-iL-cm8" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="cEP-mt-3lH"/>
             </objects>
             <point key="canvasLocation" x="231.8840579710145" y="-467.41071428571428"/>
         </scene>
@@ -185,7 +201,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iyJ-js-sUp" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="f2J-vi-kJ6">
                     <connections>
-                        <action selector="flipCard:" destination="PAS-Wb-Jrs" id="QTp-05-baM"/>
+                        <action selector="chooseCard:" destination="PAS-Wb-Jrs" id="QTp-05-baM"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
@@ -234,6 +250,6 @@
         <image name="cardFront" width="64" height="96"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="uCY-Xh-0V1"/>
+        <segue reference="UQB-z8-lvJ"/>
     </inferredMetricsTieBreakers>
 </document>
