@@ -17,28 +17,77 @@ static const int INITIAL_CARD_COUNT = 20;
 static const CGFloat WIDTH_HEIGHT_RATIO = 0.66;
 
 @interface PlayingCardGameViewController()
-@property (nonatomic, readonly) CGPoint leftCornerOfCardsSpace;
-
-@property (nonatomic) NSUInteger requestedCardNumber;
+  @property (nonatomic, readonly) CGPoint leftCornerOfCardsSpace;
+  @property (nonatomic) NSUInteger requestedCardNumber;
 @end
 
 @implementation PlayingCardGameViewController
 
+
+
+- (void) viewDidLoad
+{
+  [super viewDidLoad];
+  self.requestedCardNumber = INITIAL_CARD_COUNT;
+  [self setGridDimensions];
+  [self createCards:0.0];
+}
+
+
+- (void) createCards: (CGFloat) delay
+{
+  int cardIndex = 0;
+  for(int row = 0; row < self.cardsGrid.rowCount ; ++row)
+  {
+    for(int column = 0; column < self.cardsGrid.columnCount; ++column)
+    {
+      CGRect rect = [self.cardsGrid frameOfCellAtRow:row inColumn:column];
+
+      PlayingCardView *cardView = [[PlayingCardView alloc] initWithFrame:CGRectMake(3 * self.leftCornerOfCardsSpace.x, 3 * self.leftCornerOfCardsSpace.y, rect.size.width, rect.size.height)];
+      
+      Card* card = [self.game cardAtIndex:cardIndex];
+      
+      if([card isKindOfClass:[PlayingCard class]])
+      {
+        PlayingCard *playingCard = (PlayingCard *) card;
+        cardView.rank = playingCard.rank;
+        cardView.suit = playingCard.suit;
+        
+        // index in array would indicate position in grid
+        // currentRow = indexInArray / nColums
+        // currentCoulmn = IndexInArray - currentRow * nColums
+        
+        [self.cards addObject:cardView];
+        
+        [self creationAnimation:cardView rect:rect delay: delay];
+        
+        [self.CardsSpace addSubview:cardView];
+        ++cardIndex;
+        if(cardIndex >= INITIAL_CARD_COUNT) // should change on run time
+        {
+          return;
+        }
+        
+      }
+    }
+  }
+}
+
+- (void) redeal
+{
+  [super redeal];
+  [self removeAllCards];
+  [self createCards:1];
+}
+
 -(CGPoint) leftCornerOfCardsSpace
 {
-  return CGPointMake( self.CardsSpace.frame.size.width - self.gridOfCards.cellSize.width, self.CardsSpace.frame.size.height - self.gridOfCards.cellSize.height);
+  return CGPointMake( self.CardsSpace.frame.size.width - self.cardsGrid.cellSize.width, self.CardsSpace.frame.size.height - self.cardsGrid.cellSize.height);
 }
 
 - (Deck*) createDeck
 {
   return [[PlayingDeck alloc] init];
-}
-
-- (NSUInteger)calculateCardIndex: (CGPoint) location
-{
-  NSUInteger row = [self.gridOfCards getRowByPoint:location];
-  NSUInteger column = [self.gridOfCards getColumnByPoint:location];
-  return row * [self.gridOfCards columnCount] + column;
 }
 
 - (void) cardFlipAnimation: (PlayingCardView *) cardView isChosen: (BOOL) chosen
@@ -120,7 +169,7 @@ static const CGFloat WIDTH_HEIGHT_RATIO = 0.66;
   return INITIAL_CARD_COUNT;
 }
 
-- (void)createAnimation:(PlayingCardView *)cardView rect:(CGRect )rect delay: (CGFloat) delay{
+- (void)creationAnimation:(PlayingCardView *)cardView rect:(CGRect )rect delay: (CGFloat) delay{
   [UIView animateWithDuration:1.0 delay:delay options:UIViewAnimationOptionLayoutSubviews
                    animations:^(void) {
     cardView.frame = rect;
@@ -128,45 +177,6 @@ static const CGFloat WIDTH_HEIGHT_RATIO = 0.66;
   }completion:nil];
 }
 
-
-- (void) createCards: (CGFloat) delay
-{
-  int cardIndex = 0;
-  for(int row = 0; row < self.gridOfCards.rowCount ; ++row)
-  {
-    for(int column = 0; column < self.gridOfCards.columnCount; ++column)
-    {
-      CGRect rect = [self.gridOfCards frameOfCellAtRow:row inColumn:column];
-
-      PlayingCardView *cardView = [[PlayingCardView alloc] initWithFrame:CGRectMake(3 * self.leftCornerOfCardsSpace.x, 3 * self.leftCornerOfCardsSpace.y, rect.size.width, rect.size.height)];
-      
-      Card* card = [self.game cardAtIndex:cardIndex];
-      
-      if([card isKindOfClass:[PlayingCard class]])
-      {
-        PlayingCard *playingCard = (PlayingCard *) card;
-        cardView.rank = playingCard.rank;
-        cardView.suit = playingCard.suit;
-        
-        // index in array would indicate position in grid
-        // currentRow = indexInArray / nColums
-        // currentCoulmn = IndexInArray - currentRow * nColums
-        
-        [self.cards addObject:cardView];
-        
-        [self createAnimation:cardView rect:rect delay: delay];
-        
-        [self.CardsSpace addSubview:cardView];
-        ++cardIndex;
-        if(cardIndex >= INITIAL_CARD_COUNT) // should change on run time
-        {
-          return;
-        }
-        
-      }
-    }
-  }
-}
 
 - (void) removeAllCards
 {
@@ -180,28 +190,15 @@ static const CGFloat WIDTH_HEIGHT_RATIO = 0.66;
   [self.cards removeAllObjects];
 }
 
-- (void) redeal
-{
-  [super redeal];
-  [self removeAllCards];
-  [self createCards:1];
-}
 
 - (void) setGridDimensions
 {
-  self.gridOfCards.size = super.CardsSpace.bounds.size;
-  self.gridOfCards.cellAspectRatio = WIDTH_HEIGHT_RATIO;
-  self.gridOfCards.minimumNumberOfCells = INITIAL_CARD_COUNT;
+  self.cardsGrid.size = super.CardsSpace.bounds.size;
+  self.cardsGrid.cellAspectRatio = WIDTH_HEIGHT_RATIO;
+  self.cardsGrid.minimumNumberOfCells = INITIAL_CARD_COUNT;
   
 }
 
-- (void) viewDidLoad
-{
-  [super viewDidLoad];
-  self.requestedCardNumber = INITIAL_CARD_COUNT;
-  [self setGridDimensions];
-  [self createCards:0.0];
-}
 
 - (CardMatchingGame*) game
 {

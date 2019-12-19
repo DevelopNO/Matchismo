@@ -17,8 +17,9 @@
 @property (weak, nonatomic) IBOutlet UIView *CardsSpace;
 @property (weak, nonatomic) IBOutlet UILabel *currentEvent;
 @property (strong, nonatomic) NSMutableArray *cards;
-@property (strong, nonatomic) Grid *gridOfCards;
+@property (strong, nonatomic) Grid *cardsGrid;
 @property (strong, nonatomic) CardMatchingGame* game;
+- (NSUInteger)calculateCardIndex: (CGPoint) location;
 - (NSAttributedString *) createHistory;
 - (Deck*) createDeck;
 - (void) setMoveMessage: (long) index;

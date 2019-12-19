@@ -10,10 +10,11 @@
 #import "SetGameViewController.h"
 #import "HistoryViewController.h"
 #import "CardMatchingGame.h"
-#import "SetCardPresentationBuilder.h"
 #import "SetCard.h"
 #import "SetDeck.h"
 #import "CardMatchingMove.h"
+#import "SetCardView.h"
+#import "Grid.h"
 
 @interface SetGameViewController ()
 
@@ -21,47 +22,58 @@
 
 @implementation SetGameViewController
 
-- (void)setCardsHeaders {
-//  for(UIButton* cardButton in self.cardButtons)
-//  {
-//    NSUInteger cardButtonIndex = [self.cardButtons indexOfObject:cardButton];
-//    SetCard* card = (SetCard *) [[self game] cardAtIndex:cardButtonIndex];
-//    [cardButton setAttributedTitle:[SetCardPresentationBuilder getCardPresentation:card] forState:UIControlStateNormal];
-//  }
-}
-
 - (void) createCards
 {
-  
-}
+  for(int row = 0; row < self.cardsGrid.rowCount ; ++row)
+  {
+    for(int column = 0; column < self.cardsGrid.columnCount; ++column)
+    {
+      CGRect rect = [self.cardsGrid frameOfCellAtRow:row inColumn:column];
+
+//      PlayingCardView *cardView = [[PlayingCardView alloc] initWithFrame:CGRectMake(3 * self.leftCornerOfCardsSpace.x, 3 * self.leftCornerOfCardsSpace.y, rect.size.width, rect.size.height)];
+//
+//      Card* card = [self.game cardAtIndex:cardIndex];
+//
+//      if([card isKindOfClass:[PlayingCard class]])
+//      {
+//        PlayingCard *playingCard = (PlayingCard *) card;
+//        cardView.rank = playingCard.rank;
+//        cardView.suit = playingCard.suit;
+//
+//        // index in array would indicate position in grid
+//        // currentRow = indexInArray / nColums
+//        // currentCoulmn = IndexInArray - currentRow * nColums
+//
+//        [self.cards addObject:cardView];
+//
+//        [self creationAnimation:cardView rect:rect delay: delay];
+//
+//        [self.CardsSpace addSubview:cardView];
+//        ++cardIndex;
+//        if(cardIndex >= INITIAL_CARD_COUNT) // should change on run time
+//        {
+//          return;
+//        }
+        
+      }
+    }
+  }
+
 
 - (void)viewDidLoad {
   [super viewDidLoad];
   [self createCards];
-  [self setCardsHeaders];
+
 }
 
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
 
--(NSAttributedString *) CardContentBuilder: (SetCard *) card
-{
-  return [SetCardPresentationBuilder getCardPresentation:card];
-}
 
 - (IBAction)reDeal:(UIButton *)sender
 {
   self.game = nil;
   self.scoreCount.text = @"Score: 0";
   self.currentEvent.text = @"Please pick a card";
-  [self setCardsHeaders];
+
   [self updateUI];
 }
 
@@ -75,17 +87,6 @@
   return [[SetDeck alloc] init];
 }
 
-- (NSAttributedString *) createHistory
-{
-  NSMutableAttributedString *history = [[NSMutableAttributedString alloc] init];
-  
-  for(CardMatchingMove* move in self.game.moves)
-  {
-    [history appendAttributedString:[self makeMoveString:move]];
-    [history appendAttributedString:[[NSAttributedString alloc] initWithString:@"\n"]];
-  }
-  return history;
-}
 
 - (IBAction)touchCardButton:(UIButton *)sender
 {
@@ -95,10 +96,6 @@
 }
 
 
--(void) setMoveMessage: (long) index
-{
-    self.currentEvent.attributedText = [self makeMoveString:self.game.moves[index]];
-}
 
 - (void) updateUI
 {
@@ -124,65 +121,12 @@
 }
 
 
-
-+ (void) setCardsToAttributedString: (NSMutableAttributedString *) text move: (CardMatchingMove *)move
-{
-  for(SetCard *card in move.chosenCards)
-  {
-    [text appendAttributedString:[SetCardPresentationBuilder getCardPresentation:card]];
-    [text appendAttributedString:[[NSAttributedString alloc] initWithString:@" "]];
-  }
-}
-
 + (void) appendStringToAttributed: (NSMutableAttributedString *) attr string:(NSString *) text
 {
   [attr appendAttributedString:[[NSAttributedString alloc] initWithString:[[NSString alloc] initWithString:text]]];
   
 }
 
-+ (NSMutableAttributedString *) textOfCardsAndString:(CardMatchingMove *)move string:(NSString *) string
-{
-  NSMutableAttributedString* text = [[NSMutableAttributedString alloc] init];
-  [SetGameViewController setCardsToAttributedString:text move:move];
-  [SetGameViewController appendStringToAttributed:text string:string];
-  
-  return text;
-}
 
-+ (NSMutableAttributedString *) textForScoredMove:(CardMatchingMove *)move string:(NSString *) string
-{
-  NSMutableAttributedString* text = [[NSMutableAttributedString alloc] init];
-  [SetGameViewController appendStringToAttributed:text string:string];
-  [SetGameViewController setCardsToAttributedString:text move:move];
-  [SetGameViewController appendStringToAttributed:text string:[NSString stringWithFormat:@" Score: %d", move.moveScore]];
-  
-  return text;
-}
-
--(NSAttributedString *) makeMoveString: (CardMatchingMove *) move
-{
-  if(move.moveType == CARD_CLOSED)
-  {
-    return [SetGameViewController textOfCardsAndString:move string:@" Unchosen"];
-  }
-  
-  if(move.moveType == CARD_OPENED)
-  {
-    return      [SetGameViewController textOfCardsAndString:move string:@" Chosen"];
-    
-  }
-  
-  if(move.moveType == MATCH)
-  {
-    return [SetGameViewController textForScoredMove:move string:@"Match between "];
-  }
-  
-  if(move.moveType == NO_MATCH)
-  {
-    return [SetGameViewController textForScoredMove:move string:@"No Match between "];
-  }
-  
-  return nil;
-}
 
 @end

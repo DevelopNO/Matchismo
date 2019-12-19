@@ -22,7 +22,7 @@
 {
   self = [super init];
   if (self) {
-    for (SHAPE_SET_GAME shape = TRIANGLE; shape < NO_SHAPE; ++shape) {
+    for (SHAPE_SET_GAME shape = DIAMOND; shape < NO_SHAPE; ++shape) {
       for (COLOR_SET_GAME color = RED; color < NO_COLOR; ++color) {
         for (NSNumber* number in [SetCard numOfShapes]) {
           for (FILL_SET_GAME fill = OPEN; fill < NO_FILL; ++fill) {

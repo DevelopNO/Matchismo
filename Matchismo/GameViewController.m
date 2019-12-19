@@ -24,9 +24,16 @@
 - (void)viewDidLoad
 {
   self.cards = [[NSMutableArray alloc] init];
-  self.gridOfCards = [[Grid alloc] init];
+  self.cardsGrid = [[Grid alloc] init];
   self.CardsSpace.backgroundColor = nil;
   self.CardsSpace.opaque = NO;
+}
+
+- (NSUInteger)calculateCardIndex: (CGPoint) location
+{
+  NSUInteger row = [self.cardsGrid getRowByPoint:location];
+  NSUInteger column = [self.cardsGrid getColumnByPoint:location];
+  return row * [self.cardsGrid columnCount] + column;
 }
 
 - (NSAttributedString *) createHistory
@@ -51,6 +58,7 @@
 {
   [self redeal];
 }
+
 - (IBAction)ChangeMoveTitle:(UISlider *)sender
 {
     if(sender.maximumValue)
