@@ -83,6 +83,7 @@
 		0061B24F23ABA3AE00137E38 /* SetCardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetCardView.h; sourceTree = "<group>"; };
 		0061B25023ABA3AE00137E38 /* SetCardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetCardView.m; sourceTree = "<group>"; };
 		0061B25223ABA3E400137E38 /* SetParameters.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SetParameters.h; sourceTree = "<group>"; };
+		008F9FDC23AE8672002A5F74 /* CardView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CardView.h; sourceTree = "<group>"; };
 		009C4FAB23A2901000442962 /* HistoryViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HistoryViewController.h; sourceTree = "<group>"; };
 		009C4FAC23A2901000442962 /* HistoryViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HistoryViewController.m; sourceTree = "<group>"; };
 		00B2544723AA03050040EF3D /* Grid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Grid.h; sourceTree = "<group>"; };
@@ -195,6 +196,7 @@
 				00B2544A23AA0B740040EF3D /* PlayingCardView.h */,
 				00B2544B23AA0B740040EF3D /* PlayingCardView.m */,
 				0061B25223ABA3E400137E38 /* SetParameters.h */,
+				008F9FDC23AE8672002A5F74 /* CardView.h */,
 			);
 			path = Matchismo;
 			sourceTree = "<group>";

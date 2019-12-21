@@ -44,9 +44,9 @@
   [self setNeedsDisplay];
 }
 
-- (void) setFacedUp: (BOOL) facedUp
+- (void) setIsChosen: (BOOL) isChosen
 {
-  _facedUp = facedUp;
+  _isChosen = isChosen;
   [self setNeedsDisplay];
 }
 #define CORNER_FONT_STANDARD_HEIGHT (180.0)
@@ -93,7 +93,7 @@
   [[UIColor blackColor] setStroke];
   [roundedRect stroke];
   
-  if(self.facedUp)
+  if(self.isChosen)
   {
     UIImage *faceImage = [UIImage imageNamed:[NSString stringWithFormat:@"%@%@", [self rankAsString], self.suit]];
     if(faceImage)

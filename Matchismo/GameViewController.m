@@ -10,6 +10,7 @@
 #import "CardMatchingGame.h"
 #import "CardMatchingMove.h"
 #import "HistoryViewController.h"
+#import "CardView.h"
 #import "Grid.h"
 
 
@@ -73,7 +74,7 @@
 
 - (void)animateCreation:(UIView *)cardView rect:(CGRect )rect delay: (CGFloat) delay
 {
-  [UIView animateWithDuration:1.0 delay:delay options:UIViewAnimationOptionLayoutSubviews
+  [UIView animateWithDuration:1.0 delay:delay options:UIViewAnimationOptionBeginFromCurrentState
                    animations:^(void) {
     cardView.frame = rect;
     
@@ -197,8 +198,29 @@
       self.cardViews[i] = [NSNull null];
       continue;
     }
+    
+    id <CardView> cardView = self.cardViews[i];
+    if(![self.cardViews[i] isEqual:[NSNull null]] && (card.isChosen != cardView.isChosen))
+    {
+      [self cardChosenAnimation:self.cardViews[i] isChosen:card.isChosen];
+    }
+
   }
 }
+
+
+- (void) removeAllCards
+{
+  for(UIView *cardView in self.cardViews)
+  {
+    if(![cardView isEqual:[NSNull null]])
+    {
+      [self cardRemoveAnimation:cardView delay:0.0];
+    }
+  }
+  [self.cardViews removeAllObjects];
+}
+
 
 -(NSString*) makeMoveString: (CardMatchingMove*) move
 {

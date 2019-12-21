@@ -33,6 +33,24 @@
   [self createCards:0.0];
 }
 
+- (PlayingCardView *)createInitialCard:(int)column row:(int)row
+{
+  CGRect rect = [self.cardsGrid frameOfCellAtRow:row inColumn:column];
+  PlayingCardView * cardView = [[PlayingCardView alloc] initWithFrame:CGRectMake(3 * self.rightBottomCornerOrigin.x, 3 * self.rightBottomCornerOrigin.y, rect->size.width, rect->size.height)];
+}
+
+- (void)setCardsValues:(int)cardIndex cardView:(PlayingCardView *)cardView {
+  Card* card = [self.game cardAtIndex:cardIndex];
+  
+  if(![card isKindOfClass:[PlayingCard class]])
+  {
+    return;
+  }
+  
+  PlayingCard *playingCard = (PlayingCard *) card;
+  cardView.rank = playingCard.rank;
+  cardView.suit = playingCard.suit;
+}
 
 - (void) createCards: (CGFloat) delay
 {
@@ -41,33 +59,19 @@
   {
     for(int column = 0; column < self.cardsGrid.columnCount; ++column)
     {
-      CGRect rect = [self.cardsGrid frameOfCellAtRow:row inColumn:column];
-
-      PlayingCardView *cardView = [[PlayingCardView alloc] initWithFrame:CGRectMake(3 * self.rightBottomCornerOrigin.x, 3 * self.rightBottomCornerOrigin.y, rect.size.width, rect.size.height)];
+      PlayingCardView *cardView = [self createInitialCard:column row:row];
       
-      Card* card = [self.game cardAtIndex:cardIndex];
+      [self setCardsValues:cardIndex cardView:cardView];
+            
+      [self.cardViews addObject:cardView];
       
-      if([card isKindOfClass:[PlayingCard class]])
+      [self animateCreation:cardView rect:rect delay: delay];
+      
+      [self.CardsSpace addSubview:cardView];
+      ++cardIndex;
+      if(cardIndex >= [self initialNumberOfCards]) // should change on run time
       {
-        PlayingCard *playingCard = (PlayingCard *) card;
-        cardView.rank = playingCard.rank;
-        cardView.suit = playingCard.suit;
-        
-        // index in array would indicate position in grid
-        // currentRow = indexInArray / nColums
-        // currentCoulmn = IndexInArray - currentRow * nColums
-        
-        [self.cardViews addObject:cardView];
-        
-        [self animateCreation:cardView rect:rect delay: delay];
-        
-        [self.CardsSpace addSubview:cardView];
-        ++cardIndex;
-        if(cardIndex >= [self initialNumberOfCards]) // should change on run time
-        {
-          return;
-        }
-        
+        return;
       }
     }
   }
@@ -93,51 +97,24 @@
     cardView.transform = CGAffineTransformMakeScale(-1, 1);
     cardView.transform = currentTransform;
     PlayingCardView *playingCardView = (PlayingCardView *) cardView;
-    playingCardView.facedUp = chosen;
+    playingCardView.isChosen = chosen;
   }
   completion:nil];
-}
-
-- (void) updateCardsFace
-{
-  for(int i = 0; i < [self.cardViews count]; ++i)
-  {
-    PlayingCardView *cardView = self.cardViews[i];
-    Card *card = [self.game cardAtIndex:i];
-    if((card.isChosen != cardView.facedUp) && ![self.cardViews[i] isEqual:[NSNull null]])
-    {
-      [self cardChosenAnimation:self.cardViews[i] isChosen:card.isChosen];
-    }
-  }
 }
 
 - (void) updateUI
 {
   [super updateUI];
-  [self updateCardsFace];
   self.scoreCount.text = [NSString stringWithFormat:@"Score: %ld", self.game.score];
   if([self.game.moves count])
   {
     [self setMoveMessage:[self.game.moves count] - 1];
   }
 }
+
 - (NSInteger) getInitialNumber
 {
   return [self initialNumberOfCards];
-}
-
-
-
-- (void) removeAllCards
-{
-  for(PlayingCardView *cardView in self.cardViews)
-  {
-    if(![cardView isEqual:[NSNull null]])
-    {
-      [self cardRemoveAnimation:cardView delay:0.0];
-    }
-  }
-  [self.cardViews removeAllObjects];
 }
 
 @end

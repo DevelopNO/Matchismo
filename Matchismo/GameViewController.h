@@ -23,9 +23,10 @@ static const CGFloat WIDTH_HEIGHT_RATIO = 0.66;
 - (void)animateCreation:(UIView *)cardView rect:(CGRect )rect delay:
 (CGFloat) delay;
 
-
+- (void) removeAllCards;
+- (IBAction)chooseCard:(UITapGestureRecognizer *)sender;
 - (void) cardChosenAnimation: (UIView *) cardView isChosen: (BOOL) chosen;
-- (void)cardRemoveAnimation:(UIView *)cardToRemove delay:(CGFloat) delay;
+- (void) cardRemoveAnimation:(UIView *)cardToRemove delay:(CGFloat) delay;
 - (CGPoint) rightBottomCornerOrigin;
 - (NSUInteger)calculateCardIndex: (CGPoint) location;
 - (NSAttributedString *) createHistory;

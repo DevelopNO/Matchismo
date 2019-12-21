@@ -21,6 +21,12 @@
 @synthesize fill = _fill;
 @synthesize numberOfShapes = _numberOfShapes;
 
+- (void) setIsChosen: (BOOL) isChosen
+{
+  _isChosen = isChosen;
+  [self setNeedsDisplay];
+}
+
 -(NSInteger) numberOfShapes
 {
   if(_numberOfShapes > 3 || _numberOfShapes < 0)
@@ -270,7 +276,16 @@ const CGFloat HORIZONTAL_SPACE_RATIO = 3.0 / 18.0;
   UIBezierPath *roundedRect = [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:[self cornerRadius]];
   [roundedRect addClip];
   
-  [[UIColor whiteColor] setFill];
+  if(self.isChosen)
+  {
+    [[UIColor colorWithRed: 180.0/255.0 green: 238.0/255.0 blue:180.0/255.0 alpha: 1.0] setFill];
+  }
+  else
+  {
+    [[UIColor whiteColor] setFill];
+  }
+  
+  
   [roundedRect fill];
 
   [[UIColor blackColor] setStroke];
@@ -280,6 +295,8 @@ const CGFloat HORIZONTAL_SPACE_RATIO = 3.0 / 18.0;
   {
     return;
   }
+  
+
   [self.drawingPaths removeAllObjects];
   NSArray *rectsForShapes = [self calculateRectsForShpaes];
   [self drawShapes:rectsForShapes];

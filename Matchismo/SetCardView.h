@@ -8,18 +8,19 @@
 
 #import <UIKit/UIKit.h>
 #import "SetParameters.h"
+#import "CardView.h"
 NS_ASSUME_NONNULL_BEGIN
 
 
 
 
-@interface SetCardView : UIView
+@interface SetCardView : UIView<CardView>
 
 @property (nonatomic) SHAPE_SET_GAME shape;
 @property (nonatomic) FILL_SET_GAME fill;
 @property (nonatomic) COLOR_SET_GAME color;
 @property (nonatomic) NSInteger numberOfShapes;
-
+@property (nonatomic) BOOL isChosen;
 @end
 
 NS_ASSUME_NONNULL_END

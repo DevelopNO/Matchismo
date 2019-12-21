@@ -27,12 +27,47 @@ static const int INITIAL_CARD_COUNT = 12;
 
 
 @implementation SetGameViewController
-- (IBAction)Addmorecards:(id)sender
+
+
+- (IBAction)chooseCard:(UITapGestureRecognizer *)sender {
+  [super chooseCard:sender];
+}
+
+-(NSUInteger) availableSpots
 {
-  // recalculate grid
-  // if stayed - add to current grid
-    // first - add to missing spaces
-  // else - redraw all cards
+  NSUInteger availableSpots = 0;
+  for(int i = 0; i < [self.cardViews count] ; ++i)
+  {
+    if([self.cardViews[i] isEqual:[NSNull null]])
+    {
+      ++availableSpots;
+    }
+  }
+  return availableSpots;
+}
+
+static const NSUInteger NUMBER_CARDS_IN_SINGLE_EDITION = 12;
+
+- (IBAction)Addmorecards:(UIButton *)sender
+{
+  NSUInteger available = [self availableSpots];
+  if(available >= NUMBER_CARDS_IN_SINGLE_EDITION)
+  {
+    return;
+  }
+  
+  NSUInteger availableInGrid = [self.cardsGrid rowCount] * [self.cardsGrid columnCount] - [self.cardViews count];
+  
+  if((available + availableInGrid) >= NUMBER_CARDS_IN_SINGLE_EDITION)
+  {
+    // if stayed - add to current grid
+      // first - add to missing spaces
+
+    return;
+  }
+  
+//  recalculateGrid;
+//  addAll;
 }
 
 - (void) createCards
@@ -62,10 +97,10 @@ static const int INITIAL_CARD_COUNT = 12;
         // currentCoulmn = IndexInArray - currentRow * nColums
 
         [self.cardViews addObject:cardView];
+[self.CardsSpace addSubview:cardView];
+        [self animateCreation:cardView rect:rect delay:0.5];
 
-        [self animateCreation:cardView rect:rect delay:0.0];
-
-        [self.CardsSpace addSubview:cardView];
+        
         ++cardIndex;
         if(cardIndex >= INITIAL_CARD_COUNT) // should change on run time
         {
@@ -89,15 +124,12 @@ static const int INITIAL_CARD_COUNT = 12;
   
 }
 
-
-
 - (IBAction)reDeal:(UIButton *)sender
 {
-  self.game = nil;
-  self.scoreCount.text = @"Score: 0";
-  self.currentEvent.text = @"Please pick a card";
-
+  [super redeal];
+  [self removeAllCards];
   [self updateUI];
+  [self createCards];
 }
 
 - (NSInteger) getMode
@@ -105,18 +137,20 @@ static const int INITIAL_CARD_COUNT = 12;
   return 3;
 }
 
-- (Deck*) createDeck
-{
-  return [[SetDeck alloc] init];
-}
 
 - (void) cardChosenAnimation: (UIView *) cardView isChosen: (BOOL) chosen
 {
   [UIView animateWithDuration:0.3
   animations:^(void) {
-    cardView.backgroundColor = [UIColor systemPinkColor];
+    SetCardView *setCardView = (SetCardView *) cardView;
+    setCardView.isChosen = chosen;
   }
   completion:nil];
+}
+
+- (Deck*) createDeck
+{
+  return [[SetDeck alloc] init];
 }
 
 - (UIImage* ) backgroundOfCard: (Card*) card
