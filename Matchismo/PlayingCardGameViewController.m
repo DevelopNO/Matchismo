@@ -35,8 +35,9 @@
 
 - (PlayingCardView *)createInitialCard:(int)column row:(int)row
 {
-  CGRect rect = [self.cardsGrid frameOfCellAtRow:row inColumn:column];
-  PlayingCardView * cardView = [[PlayingCardView alloc] initWithFrame:CGRectMake(3 * self.rightBottomCornerOrigin.x, 3 * self.rightBottomCornerOrigin.y, rect->size.width, rect->size.height)];
+  CGSize size = [self.cardsGrid cellSize];
+  PlayingCardView * cardView = [[PlayingCardView alloc] initWithFrame:CGRectMake(3 * self.rightBottomCornerOrigin.x, 3 * self.rightBottomCornerOrigin.y, size.width, size.height)];
+  return cardView;
 }
 
 - (void)setCardsValues:(int)cardIndex cardView:(PlayingCardView *)cardView {
@@ -52,6 +53,13 @@
   cardView.suit = playingCard.suit;
 }
 
+- (void) attachToViewAndAnimate:(PlayingCardView *)cardView withDelay:(CGFloat) delay row:(int) row column:(int) column
+{
+  CGRect position = [self.cardsGrid frameOfCellAtRow:row inColumn:column];
+  [self animateCreation:cardView rect:position delay: delay];
+  [self.CardsSpace addSubview:cardView];
+}
+
 - (void) createCards: (CGFloat) delay
 {
   int cardIndex = 0;
@@ -65,9 +73,8 @@
             
       [self.cardViews addObject:cardView];
       
-      [self animateCreation:cardView rect:rect delay: delay];
       
-      [self.CardsSpace addSubview:cardView];
+      [self  attachToViewAndAnimate:cardView withDelay:delay row:row column:column];
       ++cardIndex;
       if(cardIndex >= [self initialNumberOfCards]) // should change on run time
       {
