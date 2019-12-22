@@ -93,8 +93,8 @@
 {
   CGPoint center = {0,0};
   
-  CGFloat maxXValue = (self.CardsSpace.bounds.size.width - self.cardsGrid.cellSize.width);
-  CGFloat minXValue = (self.CardsSpace.bounds.origin.x);
+  CGFloat maxXValue = (self.CardsSpace.bounds.size.width - self.cardsGrid.cellSize.width / 2);
+  CGFloat minXValue = (self.CardsSpace.bounds.origin.x + self.cardsGrid.cellSize.width / 2);
   
   if(rawCenter.x > maxXValue)
   {
@@ -109,8 +109,8 @@
     center.x = rawCenter.x;
   }
   
-  CGFloat maxYValue = (self.CardsSpace.bounds.size.height - self.cardsGrid.cellSize.height);
-  CGFloat minYValue = (self.CardsSpace.bounds.origin.x);
+  CGFloat maxYValue = (self.CardsSpace.bounds.size.height - self.cardsGrid.cellSize.height / 2);
+  CGFloat minYValue = (self.CardsSpace.bounds.origin.y +  self.cardsGrid.cellSize.height / 2);
 
   if(rawCenter.y > maxYValue)
   {
@@ -363,6 +363,7 @@
     }
 
   }
+  self.scoreCount.text = [NSString stringWithFormat:@"Score: %ld", self.game.score];
 }
 
 

@@ -112,7 +112,7 @@
 - (void) updateUI
 {
   [super updateUI];
-  self.scoreCount.text = [NSString stringWithFormat:@"Score: %ld", self.game.score];
+  
   if([self.game.moves count])
   {
     [self setMoveMessage:[self.game.moves count] - 1];
