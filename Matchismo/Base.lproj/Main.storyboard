@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Jle-3Y-Pvr">
-    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <device id="retina4_7" orientation="landscape" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
@@ -31,29 +31,11 @@
             <objects>
                 <viewController id="sST-sd-QSS" customClass="SetGameViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ayC-AD-Fqk">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Score: 0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="an4-iB-x9S">
-                                <rect key="frame" x="16" y="541" width="150" height="26"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fAw-ik-wpM">
-                                <rect key="frame" x="223" y="491" width="128" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Re-deal" backgroundImage="cardFront">
-                                    <color key="titleShadowColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="reDeal:" destination="sST-sd-QSS" eventType="touchUpInside" id="Dtx-zn-wAh"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dZ3-5z-fb2">
-                                <rect key="frame" x="223" y="537" width="128" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dZ3-5z-fb2">
+                                <rect key="frame" x="493" y="280" width="154" height="28"/>
                                 <state key="normal" title="Add cards" backgroundImage="cardFront">
                                     <color key="titleShadowColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
@@ -61,21 +43,8 @@
                                     <action selector="Addmorecards:" destination="sST-sd-QSS" eventType="touchUpInside" id="vUg-k4-N2W"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="equ-4t-nYg">
-                                <rect key="frame" x="16" y="483" width="172" height="50"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <attributedString key="attributedText">
-                                    <fragment content="Please pick a card">
-                                        <attributes>
-                                            <font key="NSFont" metaFont="system" size="17"/>
-                                        </attributes>
-                                    </fragment>
-                                </attributedString>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yaR-va-n3y">
-                                <rect key="frame" x="25" y="87" width="325" height="396"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yaR-va-n3y">
+                                <rect key="frame" x="20" y="52" width="627" height="147"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <gestureRecognizers/>
                                 <connections>
@@ -84,8 +53,42 @@
                                     <outletCollection property="gestureRecognizers" destination="yvZ-zz-6cn" appends="YES" id="2ir-mQ-3Dy"/>
                                 </connections>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fAw-ik-wpM">
+                                <rect key="frame" x="493" y="225" width="154" height="41"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="41" id="AIt-42-0Lm"/>
+                                    <constraint firstAttribute="width" constant="154" id="abC-q7-OKA"/>
+                                </constraints>
+                                <state key="normal" title="Re-deal" backgroundImage="cardFront">
+                                    <color key="titleShadowColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="reDeal:" destination="sST-sd-QSS" eventType="touchUpInside" id="Dtx-zn-wAh"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score: 0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="an4-iB-x9S">
+                                <rect key="frame" x="20" y="225" width="71" height="23"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.27327288550000001" green="0.78039215689999997" blue="0.49070783060000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="yaR-va-n3y" firstAttribute="leading" secondItem="ayC-AD-Fqk" secondAttribute="leadingMargin" id="3VA-Jp-dDH"/>
+                            <constraint firstItem="fAw-ik-wpM" firstAttribute="trailing" secondItem="yaR-va-n3y" secondAttribute="trailing" id="F1f-Dc-pRm"/>
+                            <constraint firstItem="fAw-ik-wpM" firstAttribute="trailing" secondItem="dZ3-5z-fb2" secondAttribute="trailing" id="I1L-k4-lcb"/>
+                            <constraint firstItem="yaR-va-n3y" firstAttribute="top" secondItem="YJv-6c-G7d" secondAttribute="top" constant="20" id="ICt-dE-SGP"/>
+                            <constraint firstItem="YJv-6c-G7d" firstAttribute="bottom" secondItem="dZ3-5z-fb2" secondAttribute="bottom" constant="35" id="J9W-BD-vdP"/>
+                            <constraint firstItem="fAw-ik-wpM" firstAttribute="leading" secondItem="dZ3-5z-fb2" secondAttribute="leading" id="Mn7-2w-F9c"/>
+                            <constraint firstAttribute="bottom" secondItem="fAw-ik-wpM" secondAttribute="bottom" constant="132" id="WG8-os-f1y"/>
+                            <constraint firstItem="fAw-ik-wpM" firstAttribute="top" secondItem="yaR-va-n3y" secondAttribute="bottom" constant="26" id="ZrU-D2-P5C"/>
+                            <constraint firstItem="yaR-va-n3y" firstAttribute="trailing" secondItem="ayC-AD-Fqk" secondAttribute="trailingMargin" id="cYy-RR-LXV"/>
+                            <constraint firstItem="an4-iB-x9S" firstAttribute="leading" secondItem="yaR-va-n3y" secondAttribute="leading" id="ecA-XM-5BZ"/>
+                            <constraint firstItem="an4-iB-x9S" firstAttribute="top" secondItem="fAw-ik-wpM" secondAttribute="top" id="hvi-hK-Zgi"/>
+                            <constraint firstItem="dZ3-5z-fb2" firstAttribute="top" secondItem="fAw-ik-wpM" secondAttribute="bottom" constant="14" id="pDi-ad-Mze"/>
+                            <constraint firstAttribute="bottom" secondItem="yaR-va-n3y" secondAttribute="bottom" constant="176" id="ySc-iB-HM2"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="YJv-6c-G7d"/>
                     </view>
                     <navigationItem key="navigationItem" id="F0V-Nk-LtW">
@@ -97,7 +100,6 @@
                     </navigationItem>
                     <connections>
                         <outlet property="CardsSpace" destination="yaR-va-n3y" id="Wey-9T-oPh"/>
-                        <outlet property="currentEvent" destination="equ-4t-nYg" id="ygZ-uD-Skg"/>
                         <outlet property="scoreCount" destination="an4-iB-x9S" id="7Nu-jo-heO"/>
                     </connections>
                 </viewController>
@@ -118,14 +120,14 @@
                     </connections>
                 </panGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="229.59999999999999" y="-469.1154422788606"/>
+            <point key="canvasLocation" x="226.40000000000001" y="-471.8140929535233"/>
         </scene>
         <!--History View Controller-->
         <scene sceneID="6b4-II-GJf">
             <objects>
                 <viewController id="prJ-03-1lg" customClass="HistoryViewController" sceneMemberID="viewController">
                     <textView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" usesAttributedText="YES" id="4nC-rE-Go6">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <attributedString key="attributedText">
@@ -160,26 +162,32 @@
             <objects>
                 <viewController id="PAS-Wb-Jrs" customClass="PlayingCardGameViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="lU5-XO-GiH">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Score: 0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o4W-e8-new">
-                                <rect key="frame" x="12" y="563" width="150" height="26"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score: 0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o4W-e8-new">
+                                <rect key="frame" x="12" y="288" width="442" height="26"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="26" id="kgP-Lr-5qx"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Please pick a card" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CTT-pT-hux">
-                                <rect key="frame" x="12" y="511" width="338" height="31"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please pick a card" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CTT-pT-hux">
+                                <rect key="frame" x="12" y="236" width="630" height="31"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="31" id="Hmn-po-ib3"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="buz-fN-eah">
-                                <rect key="frame" x="207" y="563" width="128" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="buz-fN-eah">
+                                <rect key="frame" x="499" y="288" width="128" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="128" id="Iz1-dw-vOn"/>
+                                </constraints>
                                 <state key="normal" title="Re-deal" backgroundImage="cardFront">
                                     <color key="titleShadowColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
@@ -187,9 +195,8 @@
                                     <action selector="redealHandler:" destination="PAS-Wb-Jrs" eventType="touchUpInside" id="HMJ-OT-Upc"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ofu-QB-eu3">
-                                <rect key="frame" x="16" y="91" width="330" height="398"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ofu-QB-eu3">
+                                <rect key="frame" x="20" y="52" width="614" height="161"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <gestureRecognizers/>
                                 <connections>
@@ -200,6 +207,21 @@
                             </view>
                         </subviews>
                         <color key="backgroundColor" red="0.27327288550000001" green="0.78039215689999997" blue="0.49070783060000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="o4W-e8-new" firstAttribute="top" secondItem="CTT-pT-hux" secondAttribute="bottom" constant="21" id="9Rt-lL-F7b"/>
+                            <constraint firstItem="ofu-QB-eu3" firstAttribute="leading" secondItem="lU5-XO-GiH" secondAttribute="leadingMargin" id="DHT-3U-ROS"/>
+                            <constraint firstItem="IzF-iS-F8F" firstAttribute="trailing" secondItem="buz-fN-eah" secondAttribute="trailing" constant="40" id="K9h-1E-j9n"/>
+                            <constraint firstItem="CTT-pT-hux" firstAttribute="leading" secondItem="IzF-iS-F8F" secondAttribute="leading" constant="12" id="RWx-2C-i2w"/>
+                            <constraint firstItem="CTT-pT-hux" firstAttribute="leading" secondItem="o4W-e8-new" secondAttribute="leading" id="Sep-UD-hKv"/>
+                            <constraint firstItem="IzF-iS-F8F" firstAttribute="bottom" secondItem="buz-fN-eah" secondAttribute="bottom" constant="21" id="brS-e1-0Yh"/>
+                            <constraint firstItem="ofu-QB-eu3" firstAttribute="centerX" secondItem="CTT-pT-hux" secondAttribute="centerX" id="dIL-Kr-XAb"/>
+                            <constraint firstItem="IzF-iS-F8F" firstAttribute="trailing" secondItem="CTT-pT-hux" secondAttribute="trailing" constant="25" id="eDt-G2-Tl1"/>
+                            <constraint firstItem="CTT-pT-hux" firstAttribute="top" secondItem="ofu-QB-eu3" secondAttribute="bottom" constant="23" id="m8s-wu-Mbc"/>
+                            <constraint firstItem="IzF-iS-F8F" firstAttribute="bottom" secondItem="o4W-e8-new" secondAttribute="bottom" constant="29" id="qvY-r0-Ree"/>
+                            <constraint firstItem="buz-fN-eah" firstAttribute="leading" secondItem="o4W-e8-new" secondAttribute="trailing" constant="45" id="rYn-FT-g4G"/>
+                            <constraint firstItem="ofu-QB-eu3" firstAttribute="top" secondItem="IzF-iS-F8F" secondAttribute="top" constant="20" id="s7N-RH-NyB"/>
+                            <constraint firstItem="o4W-e8-new" firstAttribute="top" secondItem="buz-fN-eah" secondAttribute="top" id="tPV-3o-lau"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="IzF-iS-F8F"/>
                     </view>
                     <navigationItem key="navigationItem" id="uDb-Dw-2H7">
@@ -232,7 +254,7 @@
                     </connections>
                 </panGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="231.19999999999999" y="241.52923538230885"/>
+            <point key="canvasLocation" x="230.73463268365819" y="240.80000000000001"/>
         </scene>
         <!--Set-->
         <scene sceneID="TSz-XY-Uf0">
@@ -241,7 +263,7 @@
                     <tabBarItem key="tabBarItem" title="Set" id="nie-ZY-nZ5"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="6VQ-li-PxD">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="667" height="32"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -260,7 +282,7 @@
                     <tabBarItem key="tabBarItem" title="Playing Card" id="1Ts-x2-uB9"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="o1J-Zm-ksr">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="667" height="32"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -277,6 +299,6 @@
         <image name="cardFront" width="64" height="96"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="uCY-Xh-0V1"/>
+        <segue reference="UQB-z8-lvJ"/>
     </inferredMetricsTieBreakers>
 </document>
