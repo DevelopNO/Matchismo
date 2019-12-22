@@ -259,6 +259,7 @@
   self.game = nil;
   self.scoreCount.text = @"Score: 0";
   self.currentEvent.text = @"Please pick a card";
+  self.cardsAreBunched = NO;
   [self updateUI];
 }
 
