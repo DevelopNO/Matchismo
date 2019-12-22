@@ -29,7 +29,7 @@
   {
     [UIView animateWithDuration:0.5 delay:0.0 options:UIViewAnimationOptionLayoutSubviews
                      animations:^(void) {
-      [self bunchCards: sender];
+      [self moveAndBunchCards: sender];
     } completion: ^(BOOL isFinished)
      {
       if(isFinished)
@@ -38,6 +38,16 @@
   }
 }
 
+- (IBAction)movePileAround:(id)sender
+{
+  if(self.cardsAreBunched)
+  {
+    [UIView animateWithDuration:0.05 delay:0.0 options:UIViewAnimationOptionLayoutSubviews
+                     animations:^(void) {
+      [self moveAndBunchCards: sender];
+    } completion: nil];
+  }
+}
 
 - (CGPoint) calculatePointFromIndex: (NSUInteger) index
 {
@@ -58,14 +68,15 @@
     CGRect rectForCard = [self.cardsGrid frameOfCellAtRow:pointInGrid.y inColumn:pointInGrid.x];
     id <CardView> cardView = self.cardViews[i];
     cardView.frame = rectForCard;
+
   }
 }
 
-- (void) bunchCards: (UIPinchGestureRecognizer *) sender
+- (void) moveAndBunchCards: (UIGestureRecognizer *) sender
 {
   CGPoint rawCenterOfPile = [sender locationInView:self.CardsSpace];
   CGPoint actualCenterOfPile = [self calculateCenter: rawCenterOfPile];
-  CGRect rectForCards = CGRectMake(actualCenterOfPile.x, actualCenterOfPile.y, self.cardsGrid.cellSize.width, self.cardsGrid.cellSize.height);
+  
   for (NSUInteger i = 0; i < [self.cardViews count]; ++i)
   {
     if(self.cardViews[i] == [NSNull null])
@@ -74,7 +85,7 @@
     }
     
     id <CardView> cardView = self.cardViews[i];
-    cardView.frame = rectForCards;
+    cardView.center = actualCenterOfPile;
   }
 }
 

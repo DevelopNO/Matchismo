@@ -13,7 +13,7 @@
 
 @property (nonatomic) BOOL isChosen;
 @property (nonatomic) CGRect frame;
-
+@property(nonatomic) CGPoint center;
 @end
 
 #endif /* CardView_h */

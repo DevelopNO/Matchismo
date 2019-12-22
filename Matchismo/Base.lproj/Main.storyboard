@@ -120,6 +120,7 @@
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="IxU-ts-pgr" appends="YES" id="UvY-Ix-CNJ"/>
                                     <outletCollection property="gestureRecognizers" destination="Sbe-sF-i2V" appends="YES" id="CRy-af-BRk"/>
+                                    <outletCollection property="gestureRecognizers" destination="yvZ-zz-6cn" appends="YES" id="2ir-mQ-3Dy"/>
                                 </connections>
                             </view>
                         </subviews>
@@ -151,6 +152,11 @@
                         <action selector="gatherAndDistributeCards:" destination="sST-sd-QSS" id="X9O-nv-idn"/>
                     </connections>
                 </pinchGestureRecognizer>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="yvZ-zz-6cn">
+                    <connections>
+                        <action selector="movePileAround:" destination="sST-sd-QSS" id="crc-Cu-yEH"/>
+                    </connections>
+                </panGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="231.19999999999999" y="-468.21589205397305"/>
         </scene>
@@ -229,6 +235,7 @@
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="f2J-vi-kJ6" appends="YES" id="2Wa-Ur-qxA"/>
                                     <outletCollection property="gestureRecognizers" destination="oQK-dB-uOw" appends="YES" id="BXL-g1-Nt7"/>
+                                    <outletCollection property="gestureRecognizers" destination="mlx-Kb-gP2" appends="YES" id="bgU-ZA-6tD"/>
                                 </connections>
                             </view>
                         </subviews>
@@ -259,6 +266,11 @@
                         <action selector="gatherAndDistributeCards:" destination="PAS-Wb-Jrs" id="Vun-2H-p48"/>
                     </connections>
                 </pinchGestureRecognizer>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="mlx-Kb-gP2">
+                    <connections>
+                        <action selector="movePileAround:" destination="PAS-Wb-Jrs" id="C9W-kS-ZXh"/>
+                    </connections>
+                </panGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="231.19999999999999" y="241.52923538230885"/>
         </scene>
