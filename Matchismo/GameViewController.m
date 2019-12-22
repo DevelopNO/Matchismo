@@ -16,25 +16,16 @@
 
 
 @interface GameViewController ()
-@property (nonatomic) BOOL isBunched;
+@property (nonatomic) BOOL cardsAreBunched;
+
 
 @end
 
 @implementation GameViewController
 - (IBAction)gatherAndDistributeCards:(UIPinchGestureRecognizer *)sender
 {
-  if (self.isBunched && sender.state == UIGestureRecognizerStateEnded)
-  {
-    [UIView animateWithDuration:0.5 delay:0.0 options:UIViewAnimationOptionLayoutSubviews
-                     animations:^(void) {
-      [self distributeCards];
-    } completion: ^(BOOL isFinished)
-     {
-      if(isFinished)
-        self.isBunched = NO;
-    }];
-  }
-  else if(sender.state == UIGestureRecognizerStateEnded)
+
+  if(sender.state == UIGestureRecognizerStateEnded && !self.cardsAreBunched)
   {
     [UIView animateWithDuration:0.5 delay:0.0 options:UIViewAnimationOptionLayoutSubviews
                      animations:^(void) {
@@ -42,7 +33,7 @@
     } completion: ^(BOOL isFinished)
      {
       if(isFinished)
-        self.isBunched = YES;
+        self.cardsAreBunched = YES;
     }];
   }
 }
@@ -125,9 +116,32 @@
   return center;
 }
 
+- (void)animateCardsDistribution
+{
+  [UIView animateWithDuration:0.5 delay:0.0 options:UIViewAnimationOptionLayoutSubviews
+                   animations:^(void) {
+    [self distributeCards];
+  } completion: ^(BOOL isFinished)
+   {
+    if(isFinished)
+      self.cardsAreBunched = NO;
+  }];
+}
+
 - (IBAction)chooseCard:(UITapGestureRecognizer *)sender
 {
   CGPoint pointOfTouch = [sender locationInView:self.CardsSpace];
+  
+  if(self.cardsAreBunched)
+  {
+    if([self isPointInPile:pointOfTouch])
+    {
+      [self animateCardsDistribution];
+      self.cardsAreBunched = NO;
+    }
+    return;
+  }
+  
   NSUInteger index = [self calculateCardIndex: pointOfTouch];
   
 
@@ -136,6 +150,34 @@
     [self.game chooseCardAtIndex:index];
     [self updateUI];
   }
+}
+
+- (id <CardView>) getNonNullCard
+{
+  for(id <CardView> card in self.cardViews)
+  {
+    if(![self isNull:card])
+    {
+      return card;
+    }
+  }
+  return nil;
+}
+
+- (BOOL) isPointInPile: (CGPoint) point
+{
+  id <CardView> pile = [self getNonNullCard];
+  if(pile != nil)
+  {
+    return (point.x >= pile.frame.origin.x)
+            &&
+            point.x <= (pile.frame.origin.x + pile.frame.size.width)
+            &&
+            point.y >= pile.frame.origin.y
+            &&
+    point.y <= (pile.frame.origin.y + pile.frame.size.height);
+  }
+  return NO;
 }
 
 - (int) initialNumberOfCards
