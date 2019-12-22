@@ -18,6 +18,7 @@
 - (instancetype) initWithCardCount: (NSUInteger) count usingDeck:(Deck*)deck inMode:(NSUInteger)mode;
 - (void) chooseCardAtIndex: (NSUInteger) index;
 - (Card*) cardAtIndex: (NSUInteger) index;
+- (Card*) addCardsToGame;
 
 @property (nonatomic, readonly, strong) NSMutableArray* moves;
 @property (nonatomic, readonly) NSInteger score;

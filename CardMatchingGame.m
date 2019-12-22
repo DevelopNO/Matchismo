@@ -16,6 +16,7 @@
 @property (nonatomic, readwrite, strong) NSMutableArray* moves;
 @property (nonatomic, strong) NSMutableArray* cardsForComparison; // temporary
 @property (nonatomic, readwrite) NSUInteger mode;
+@property (nonatomic, strong) Deck *deck;
 -(void) setCardsForComparisonIsMatched: (BOOL) isMatched;
 -(void) setCardsForComparisonIsChosen: (BOOL) isChosen;
 
@@ -57,6 +58,7 @@ static const NSUInteger MIN_COMPARISON_MODE = 2;
     self = [super init];
     if(self)
     {
+        self.deck = deck;
         for(NSUInteger i = 0; i < count; ++i)
         {
             Card* card = [deck drawRandomCard];
@@ -134,48 +136,47 @@ static const int COST_TO_CHOOSE = 1;
     if(isAnyMatched)
     {
       [self.moves addObject:[[CardMatchingMove alloc] init: MATCH cardsInMove:[self.cardsForComparison copy] score:score]];
-        [self setCardsForComparisonIsMatched:YES];
-        [self.cardsForComparison removeAllObjects];
+      [self setCardsForComparisonIsMatched:YES];
+      [self.cardsForComparison removeAllObjects];
     }
     else
     {
       [self.moves addObject:[[CardMatchingMove alloc] init: NO_MATCH cardsInMove:[self.cardsForComparison copy] score:score]];
-        [self setCardsForComparisonIsChosen:NO];
-        card.isChosen = YES;
-        [self.cardsForComparison removeAllObjects];
-        [self.cardsForComparison addObject:card];
+      [self setCardsForComparisonIsChosen:NO];
+      card.isChosen = YES;
+      [self.cardsForComparison removeAllObjects];
+      [self.cardsForComparison addObject:card];
     }
 }
 
 - (void) chooseCardAtIndex: (NSUInteger) index
 {
-    Card* card = [self cardAtIndex:index];
+  Card* card = [self cardAtIndex:index];
     
-    if(!card.isMatched)
+  if(!card.isMatched)
+  {
+    if(card.isChosen)
     {
-        if(card.isChosen)
-        {
-
-            card.isChosen = NO;
-            [self.cardsForComparison removeObject:card]; // if object not there - shouldn't be an effect
-          [self.moves addObject:[[CardMatchingMove alloc] init: CARD_CLOSED cardsInMove:@[card] score:0]];
-        }
-        else // match against other cards
-        {
-            
-            BOOL isAnyMatched = NO;
-            [self.cardsForComparison addObject:card];
-            card.isChosen = YES;
-            [self.moves addObject:[[CardMatchingMove alloc] init: CARD_OPENED cardsInMove:@[card] score:0]];
-            if([self.cardsForComparison count] == self.mode)
-            {
-              int score;
-              isAnyMatched = [self CompareChosenCards:&score];
-              [self setCardsStates:card isAnyMatched:isAnyMatched moveScore:score];
-            }
-            self.score -= COST_TO_CHOOSE;
-        }
+      card.isChosen = NO;
+      [self.cardsForComparison removeObject:card]; // if object not there - shouldn't be an effect
+      [self.moves addObject:[[CardMatchingMove alloc] init: CARD_CLOSED cardsInMove:@[card] score:0]];
     }
+    else // match against other cards
+    {
+        
+      BOOL isAnyMatched = NO;
+      [self.cardsForComparison addObject:card];
+      card.isChosen = YES;
+      [self.moves addObject:[[CardMatchingMove alloc] init: CARD_OPENED cardsInMove:@[card] score:0]];
+      if([self.cardsForComparison count] == self.mode)
+      {
+        int score;
+        isAnyMatched = [self CompareChosenCards:&score];
+        [self setCardsStates:card isAnyMatched:isAnyMatched moveScore:score];
+      }
+      self.score -= COST_TO_CHOOSE;
+    }
+  }
   else
   {
     NSLog(@"Card is already matched index: %lu", index);
@@ -206,5 +207,35 @@ static const int COST_TO_CHOOSE = 1;
     return (index < [self.cards count]) ? self.cards[index] : nil;
 }
 
+- (Card*) addCardsToGame
+{
+  Card* newCard = [self.deck drawRandomCard];
+  
+  
+  int availableIndex = [self findIsMatched];
+  if(availableIndex >= 0)
+  {
+    [self.cards replaceObjectAtIndex:availableIndex withObject:newCard];
+  }
+  else
+  {
+    [self.cards addObject:newCard];
+  }
+
+  return newCard;
+}
+
+- (int) findIsMatched
+{
+  for(int i = 0; i < [self.cards count]; ++i)
+  {
+    Card *card = self.cards[i];
+    if(card && card.isMatched)
+    {
+      return i;
+    }
+  }
+  return -1;
+}
 
 @end

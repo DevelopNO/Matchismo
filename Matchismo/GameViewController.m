@@ -191,7 +191,7 @@
     }
     
     Card *card = [self.game cardAtIndex:i];
-    if(card.isMatched && ![self.cardViews[i] isEqual:[NSNull null]])
+    if(card.isMatched)
     {
       NSLog(@"Card is matched index: %d", i);
       [self removeCard:i];

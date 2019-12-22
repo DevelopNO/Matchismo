@@ -16,14 +16,13 @@
 #import "SetCardView.h"
 #import "Grid.h"
 
-static const int INITIAL_CARD_COUNT = 12;
+static const int INITIAL_CARD_COUNT = 13;
+static const NSUInteger CARDS_IN_SINGLE_EDITION = 3;
 
 @interface SetGameViewController ()
+@property (weak, nonatomic) IBOutlet UIButton *addCardButton;
 
 @end
-// add behaviour for adding cards
-// add tap (for choosing) and background change
-// add disapearing behaviour
 
 
 @implementation SetGameViewController
@@ -32,6 +31,30 @@ static const int INITIAL_CARD_COUNT = 12;
 - (IBAction)chooseCard:(UITapGestureRecognizer *)sender {
   [super chooseCard:sender];
 }
+
+- (IBAction)Addmorecards:(UIButton *)sender
+{
+  NSUInteger available = [self availableSpots];
+  if(available >= CARDS_IN_SINGLE_EDITION)
+  {
+      [self addInsteadOfMatchedCards];
+    return;
+  }
+  
+  NSUInteger availableInGrid = [self.cardsGrid rowCount] * [self.cardsGrid columnCount] - [self.cardViews count];
+  
+  if((available + availableInGrid) >= CARDS_IN_SINGLE_EDITION)
+  {
+      [self addInsteadOfMissingAndWhereAvailableOnGrid];
+    return;
+  }
+
+  //[self recalculateGridAndAddNewCards];
+  
+//  recalculateGrid;
+//  addAll;
+}
+
 
 -(NSUInteger) availableSpots
 {
@@ -46,28 +69,95 @@ static const int INITIAL_CARD_COUNT = 12;
   return availableSpots;
 }
 
-static const NSUInteger NUMBER_CARDS_IN_SINGLE_EDITION = 12;
 
-- (IBAction)Addmorecards:(UIButton *)sender
+
+- (BOOL)isNull:(SetCardView *)cardView {
+    return [cardView isEqual:[NSNull null]];
+}
+
+- (void)createSetCard:(Card *)card fromRect:(CGRect)cellRect atIndex:(int)i {
+  SetCardView *cardView = [self createSetCardView:cellRect.size];
+  [self updateSetCardValues:card cardView:cardView];
+  [self.cardViews replaceObjectAtIndex:i withObject:cardView];
+  [self saveAndPresentCard:cardView rect:cellRect];
+}
+
+- (int) addInsteadOfMatchedCards
 {
-  NSUInteger available = [self availableSpots];
-  if(available >= NUMBER_CARDS_IN_SINGLE_EDITION)
+  int viewsThatAdded = 0;
+  for(int i = 0; i < [self.cardViews count] && viewsThatAdded < CARDS_IN_SINGLE_EDITION; ++i)
   {
-    return;
+    if(![self isNull:self.cardViews[i]])
+    {
+      continue;
+    }
+    Card *card = [self.game addCardsToGame];
+    if(card == nil)
+    {
+      self.addCardButton.enabled = NO;
+      return viewsThatAdded;
+    }
+        
+    if([card isKindOfClass:[SetCard class]])
+    {
+      CGPoint point = [self calculatePointFromIndex:i];
+      CGRect cellRect = [self.cardsGrid frameOfCellAtRow:point.y inColumn:point.x];
+      [self createSetCard:card fromRect:cellRect atIndex:i];
+      ++viewsThatAdded;
+    }
   }
-  
-  NSUInteger availableInGrid = [self.cardsGrid rowCount] * [self.cardsGrid columnCount] - [self.cardViews count];
-  
-  if((available + availableInGrid) >= NUMBER_CARDS_IN_SINGLE_EDITION)
-  {
-    // if stayed - add to current grid
-      // first - add to missing spaces
+  return viewsThatAdded;
+}
 
-    return;
+-(int) addInsteadOfMissingAndWhereAvailableOnGrid
+{
+  int viewsThatAdded = [self addInsteadOfMatchedCards];
+  int viewsThatAddedToGrid = 0;
+  while(viewsThatAdded < CARDS_IN_SINGLE_EDITION)
+  {
+    CGPoint point = [self calculatePointFromIndex:[self.cardViews count]];
+    CGRect rect = [self.cardsGrid frameOfCellAtRow:point.y inColumn:point.x];
+    Card *card = [self.game addCardsToGame];
+    if([card isKindOfClass:[SetCard class]])
+    {
+      [self addCardViewToTheEndOfCollection:card rect:rect];
+      ++viewsThatAdded;
+      ++viewsThatAddedToGrid;
+    }
   }
+  return viewsThatAdded;
   
-//  recalculateGrid;
-//  addAll;
+}
+
+- (CGPoint) calculatePointFromIndex: (NSUInteger) index
+{
+    NSUInteger row = index / self.cardsGrid.columnCount;
+    NSUInteger column = index - row * self.cardsGrid.columnCount;
+    return CGPointMake(column, row);
+}
+
+- (void)updateSetCardValues:(Card *)card cardView:(SetCardView *)cardView {
+    SetCard *setCard = (SetCard *) card;
+    cardView.numberOfShapes = setCard.number;
+    cardView.color = setCard.color;
+    cardView.fill = setCard.fill;
+    cardView.shape = setCard.shape;
+}
+
+- (SetCardView *)createSetCardView:(CGSize) size {
+    return [[SetCardView alloc] initWithFrame:CGRectMake(3 * self.rightBottomCornerOrigin.x, 3 * self.rightBottomCornerOrigin.y, size.width, size.height)];
+}
+
+- (void)saveAndPresentCard:(SetCardView *)cardView rect:(CGRect)rect {
+    [self.CardsSpace addSubview:cardView];
+    [self animateCreation:cardView rect:rect delay:0.5];
+}
+
+- (void)addCardViewToTheEndOfCollection:(Card *)card rect:(const CGRect)rect {
+  SetCardView *cardView = [self createSetCardView:rect.size];
+  [self updateSetCardValues:card cardView:cardView];
+  [self.cardViews addObject:cardView];
+  [self saveAndPresentCard:cardView rect:rect];
 }
 
 - (void) createCards
@@ -79,42 +169,30 @@ static const NSUInteger NUMBER_CARDS_IN_SINGLE_EDITION = 12;
     {
       CGRect rect = [self.cardsGrid frameOfCellAtRow:row inColumn:column];
 
-      SetCardView *cardView = [[SetCardView alloc] initWithFrame:CGRectMake(3 * self.rightBottomCornerOrigin.x, 3 * self.rightBottomCornerOrigin.y, rect.size.width, rect.size.height)];
-
       Card* card = [self.game cardAtIndex:cardIndex];
 
       if([card isKindOfClass:[SetCard class]])
       {
-        SetCard *setCard = (SetCard *) card;
-        cardView.numberOfShapes = setCard.number;
-        cardView.color = setCard.color;
-        cardView.fill = setCard.fill;
-        cardView.shape = setCard.shape;
-        
-        
-        // index in array would indicate position in grid
-        // currentRow = indexInArray / nColums
-        // currentCoulmn = IndexInArray - currentRow * nColums
+        [self addCardViewToTheEndOfCollection:card rect:rect];
 
-        [self.cardViews addObject:cardView];
-[self.CardsSpace addSubview:cardView];
-        [self animateCreation:cardView rect:rect delay:0.5];
-
-        
         ++cardIndex;
         if(cardIndex >= INITIAL_CARD_COUNT) // should change on run time
         {
           return;
         }
-        
+
       }
     }
   }
 }
 
+- (NSInteger) getInitialNumber{
+  return [self initialNumberOfCards];
+}
+
 - (int) initialNumberOfCards
 {
-  return 12;
+  return INITIAL_CARD_COUNT;
 }
 
 - (void)viewDidLoad {
