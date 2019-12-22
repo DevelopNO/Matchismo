@@ -16,11 +16,114 @@
 
 
 @interface GameViewController ()
-
+@property (nonatomic) BOOL isBunched;
 
 @end
 
 @implementation GameViewController
+- (IBAction)gatherAndDistributeCards:(UIPinchGestureRecognizer *)sender
+{
+  if (self.isBunched && sender.state == UIGestureRecognizerStateEnded)
+  {
+    [UIView animateWithDuration:0.5 delay:0.0 options:UIViewAnimationOptionLayoutSubviews
+                     animations:^(void) {
+      [self distributeCards];
+    } completion: ^(BOOL isFinished)
+     {
+      if(isFinished)
+        self.isBunched = NO;
+    }];
+  }
+  else if(sender.state == UIGestureRecognizerStateEnded)
+  {
+    [UIView animateWithDuration:0.5 delay:0.0 options:UIViewAnimationOptionLayoutSubviews
+                     animations:^(void) {
+      [self bunchCards: sender];
+    } completion: ^(BOOL isFinished)
+     {
+      if(isFinished)
+        self.isBunched = YES;
+    }];
+  }
+}
+
+
+- (CGPoint) calculatePointFromIndex: (NSUInteger) index
+{
+    NSUInteger row = index / self.cardsGrid.columnCount;
+    NSUInteger column = index - row * self.cardsGrid.columnCount;
+    return CGPointMake(column, row);
+}
+
+- (void) distributeCards
+{
+  for (NSUInteger i = 0; i < [self.cardViews count]; ++i)
+  {
+    if([self isNull:self.cardViews[i]])
+    {
+      continue;
+    }
+    CGPoint pointInGrid = [self calculatePointFromIndex:i];
+    CGRect rectForCard = [self.cardsGrid frameOfCellAtRow:pointInGrid.y inColumn:pointInGrid.x];
+    id <CardView> cardView = self.cardViews[i];
+    cardView.frame = rectForCard;
+  }
+}
+
+- (void) bunchCards: (UIPinchGestureRecognizer *) sender
+{
+  CGPoint rawCenterOfPile = [sender locationInView:self.CardsSpace];
+  CGPoint actualCenterOfPile = [self calculateCenter: rawCenterOfPile];
+  CGRect rectForCards = CGRectMake(actualCenterOfPile.x, actualCenterOfPile.y, self.cardsGrid.cellSize.width, self.cardsGrid.cellSize.height);
+  for (NSUInteger i = 0; i < [self.cardViews count]; ++i)
+  {
+    if(self.cardViews[i] == [NSNull null])
+    {
+      continue;
+    }
+    
+    id <CardView> cardView = self.cardViews[i];
+    cardView.frame = rectForCards;
+  }
+}
+
+- (CGPoint) calculateCenter: (CGPoint) rawCenter
+{
+  CGPoint center = {0,0};
+  
+  CGFloat maxXValue = (self.CardsSpace.bounds.size.width - self.cardsGrid.cellSize.width);
+  CGFloat minXValue = (self.CardsSpace.bounds.origin.x);
+  
+  if(rawCenter.x > maxXValue)
+  {
+    center.x = maxXValue;
+  }
+  else if(rawCenter.x < minXValue)
+  {
+    center.x = minXValue;
+  }
+  else
+  {
+    center.x = rawCenter.x;
+  }
+  
+  CGFloat maxYValue = (self.CardsSpace.bounds.size.height - self.cardsGrid.cellSize.height);
+  CGFloat minYValue = (self.CardsSpace.bounds.origin.x);
+
+  if(rawCenter.y > maxYValue)
+  {
+    center.y = maxYValue;
+  }
+  else if(rawCenter.y < minYValue)
+  {
+    center.y = minYValue;
+  }
+  else
+  {
+    center.y = rawCenter.y;
+  }
+  return center;
+}
 
 - (IBAction)chooseCard:(UITapGestureRecognizer *)sender
 {
@@ -208,6 +311,11 @@
   }
 }
 
+
+- (BOOL)isNull:(id <CardView>)cardView
+{
+    return [cardView isEqual:[NSNull null]];
+}
 
 - (void) removeAllCards
 {

@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol CardView;
+
 static const CGFloat WIDTH_HEIGHT_RATIO = 0.66;
 
 
@@ -39,5 +41,8 @@ static const CGFloat WIDTH_HEIGHT_RATIO = 0.66;
 - (void) updateUI;
 - (void) setGridDimensions;
 - (int) initialNumberOfCards;
+- (CGPoint) calculatePointFromIndex: (NSUInteger) index;
+- (BOOL)isNull:(id <CardView>)cardView;
+
 @end
 

@@ -28,12 +28,18 @@ static const NSUInteger MAX_NUMBER_OF_CARDS = 81;
 
 @implementation SetGameViewController
 
+- (void) viewDidLayoutSubviews
+{
+  
+}
 
-- (IBAction)chooseCard:(UITapGestureRecognizer *)sender {
+- (IBAction)chooseCard:(UITapGestureRecognizer *)sender
+{
   [super chooseCard:sender];
 }
 
-- (void)disableIfWillExceedMaxAfterAddition:(UIButton *)sender {
+- (void)disableIfWillExceedMaxAfterAddition:(UIButton *)sender
+{
   if([self.cardViews count] + CARDS_IN_SINGLE_EDITION * 2 > MAX_NUMBER_OF_CARDS)
   {
     sender.enabled = NO;
@@ -103,10 +109,6 @@ static const NSUInteger MAX_NUMBER_OF_CARDS = 81;
   return viewsThatAdded;
 }
 
-- (BOOL)isNull:(SetCardView *)cardView {
-    return [cardView isEqual:[NSNull null]];
-}
-
 - (void)createSetCard:(Card *)card fromRect:(CGRect)cellRect atIndex:(int)i
 {
   SetCardView *cardView = [self createSetCardView:cellRect.size];
@@ -159,13 +161,6 @@ static const NSUInteger MAX_NUMBER_OF_CARDS = 81;
     SetCardView *cardView = self.cardViews[i];
     cardView.frame = newRectForCard;
   }
-}
-
-- (CGPoint) calculatePointFromIndex: (NSUInteger) index
-{
-    NSUInteger row = index / self.cardsGrid.columnCount;
-    NSUInteger column = index - row * self.cardsGrid.columnCount;
-    return CGPointMake(column, row);
 }
 
 - (void)updateSetCardValues:(Card *)card cardView:(SetCardView *)cardView

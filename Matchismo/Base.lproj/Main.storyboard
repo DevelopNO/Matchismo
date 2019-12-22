@@ -119,6 +119,7 @@
                                 <gestureRecognizers/>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="IxU-ts-pgr" appends="YES" id="UvY-Ix-CNJ"/>
+                                    <outletCollection property="gestureRecognizers" destination="Sbe-sF-i2V" appends="YES" id="CRy-af-BRk"/>
                                 </connections>
                             </view>
                         </subviews>
@@ -145,6 +146,11 @@
                         <action selector="chooseCard:" destination="sST-sd-QSS" id="0e7-ud-91i"/>
                     </connections>
                 </tapGestureRecognizer>
+                <pinchGestureRecognizer id="Sbe-sF-i2V">
+                    <connections>
+                        <action selector="gatherAndDistributeCards:" destination="sST-sd-QSS" id="X9O-nv-idn"/>
+                    </connections>
+                </pinchGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="231.19999999999999" y="-468.21589205397305"/>
         </scene>
@@ -222,6 +228,7 @@
                                 <gestureRecognizers/>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="f2J-vi-kJ6" appends="YES" id="2Wa-Ur-qxA"/>
+                                    <outletCollection property="gestureRecognizers" destination="oQK-dB-uOw" appends="YES" id="BXL-g1-Nt7"/>
                                 </connections>
                             </view>
                         </subviews>
@@ -247,6 +254,11 @@
                         <action selector="chooseCard:" destination="PAS-Wb-Jrs" id="QTp-05-baM"/>
                     </connections>
                 </tapGestureRecognizer>
+                <pinchGestureRecognizer id="oQK-dB-uOw">
+                    <connections>
+                        <action selector="gatherAndDistributeCards:" destination="PAS-Wb-Jrs" id="Vun-2H-p48"/>
+                    </connections>
+                </pinchGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="231.19999999999999" y="241.52923538230885"/>
         </scene>
@@ -293,6 +305,6 @@
         <image name="cardFront" width="64" height="96"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="UQB-z8-lvJ"/>
+        <segue reference="uCY-Xh-0V1"/>
     </inferredMetricsTieBreakers>
 </document>

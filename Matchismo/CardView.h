@@ -12,6 +12,7 @@
 @protocol CardView <NSObject> 
 
 @property (nonatomic) BOOL isChosen;
+@property (nonatomic) CGRect frame;
 
 @end
 
