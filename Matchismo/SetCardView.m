@@ -151,7 +151,7 @@ const CGFloat HORIZONTAL_SPACE_RATIO = 3.0 / 18.0;
 - (void) drawStripes: (CGRect) drawingRect
 {
   UIBezierPath *stripes = [UIBezierPath bezierPath];
-  for ( CGFloat barPosition = 0.0; barPosition < drawingRect.size.width; barPosition += drawingRect.size.width / 20.0 )
+  for ( CGFloat barPosition = 0.0; barPosition < drawingRect.size.width; barPosition += drawingRect.size.width / 25.0 )
   {
       [stripes moveToPoint:CGPointMake( drawingRect.origin.x + barPosition, drawingRect.origin.y )];
       [stripes addLineToPoint:CGPointMake( drawingRect.origin.x + barPosition, drawingRect.origin.y + drawingRect.size.height)];

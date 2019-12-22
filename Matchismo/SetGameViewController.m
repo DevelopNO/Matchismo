@@ -16,8 +16,9 @@
 #import "SetCardView.h"
 #import "Grid.h"
 
-static const int INITIAL_CARD_COUNT = 13;
+static const int INITIAL_CARD_COUNT = 12;
 static const NSUInteger CARDS_IN_SINGLE_EDITION = 3;
+static const NSUInteger MAX_NUMBER_OF_CARDS = 81;
 
 @interface SetGameViewController ()
 @property (weak, nonatomic) IBOutlet UIButton *addCardButton;
@@ -32,9 +33,18 @@ static const NSUInteger CARDS_IN_SINGLE_EDITION = 3;
   [super chooseCard:sender];
 }
 
+- (void)disableIfWillExceedMaxAfterAddition:(UIButton *)sender {
+  if([self.cardViews count] + CARDS_IN_SINGLE_EDITION * 2 > MAX_NUMBER_OF_CARDS)
+  {
+    sender.enabled = NO;
+    return;
+  }
+}
+
 - (IBAction)Addmorecards:(UIButton *)sender
 {
-  NSUInteger available = [self availableSpots];
+  [self disableIfWillExceedMaxAfterAddition:sender];
+  NSUInteger available = [self getNumberOfAvailableSpots];
   if(available >= CARDS_IN_SINGLE_EDITION)
   {
       [self addInsteadOfMatchedCards];
@@ -49,14 +59,11 @@ static const NSUInteger CARDS_IN_SINGLE_EDITION = 3;
     return;
   }
 
-  //[self recalculateGridAndAddNewCards];
+  [self recalculateGridAndAddNewCards];
   
-//  recalculateGrid;
-//  addAll;
 }
 
-
--(NSUInteger) availableSpots
+-(NSUInteger) getNumberOfAvailableSpots
 {
   NSUInteger availableSpots = 0;
   for(int i = 0; i < [self.cardViews count] ; ++i)
@@ -67,19 +74,6 @@ static const NSUInteger CARDS_IN_SINGLE_EDITION = 3;
     }
   }
   return availableSpots;
-}
-
-
-
-- (BOOL)isNull:(SetCardView *)cardView {
-    return [cardView isEqual:[NSNull null]];
-}
-
-- (void)createSetCard:(Card *)card fromRect:(CGRect)cellRect atIndex:(int)i {
-  SetCardView *cardView = [self createSetCardView:cellRect.size];
-  [self updateSetCardValues:card cardView:cardView];
-  [self.cardViews replaceObjectAtIndex:i withObject:cardView];
-  [self saveAndPresentCard:cardView rect:cellRect];
 }
 
 - (int) addInsteadOfMatchedCards
@@ -109,10 +103,19 @@ static const NSUInteger CARDS_IN_SINGLE_EDITION = 3;
   return viewsThatAdded;
 }
 
--(int) addInsteadOfMissingAndWhereAvailableOnGrid
+- (BOOL)isNull:(SetCardView *)cardView {
+    return [cardView isEqual:[NSNull null]];
+}
+
+- (void)createSetCard:(Card *)card fromRect:(CGRect)cellRect atIndex:(int)i
 {
-  int viewsThatAdded = [self addInsteadOfMatchedCards];
-  int viewsThatAddedToGrid = 0;
+  SetCardView *cardView = [self createSetCardView:cellRect.size];
+  [self updateSetCardValues:card cardView:cardView];
+  [self.cardViews replaceObjectAtIndex:i withObject:cardView];
+  [self saveAndPresentCard:cardView rect:cellRect];
+}
+
+- (int)addToGrid:(int)viewsThatAdded {
   while(viewsThatAdded < CARDS_IN_SINGLE_EDITION)
   {
     CGPoint point = [self calculatePointFromIndex:[self.cardViews count]];
@@ -122,11 +125,40 @@ static const NSUInteger CARDS_IN_SINGLE_EDITION = 3;
     {
       [self addCardViewToTheEndOfCollection:card rect:rect];
       ++viewsThatAdded;
-      ++viewsThatAddedToGrid;
     }
   }
   return viewsThatAdded;
+}
+
+-(int) addInsteadOfMissingAndWhereAvailableOnGrid
+{
+  int viewsThatAdded = [self addInsteadOfMatchedCards];
+  return [self addToGrid:viewsThatAdded];
+}
+
+
+- (void) recalculateGridAndAddNewCards
+{
+  self.cardsGrid.minimumNumberOfCells = [self.cardViews count] + CARDS_IN_SINGLE_EDITION;
+  if(self.cardsGrid.inputsAreValid)
+  {
+    [self repositionCards];
+    [self addToGrid:0];
+    return;
+  }
+  self.cardsGrid.minimumNumberOfCells = [self.cardViews count];
   
+}
+
+- (void) repositionCards
+{
+  for(NSUInteger i = 0; i < [self.cardViews count]; ++i)
+  {
+    CGPoint pointInGrid = [self calculatePointFromIndex:i];
+    CGRect newRectForCard = [self.cardsGrid frameOfCellAtRow:pointInGrid.y inColumn:pointInGrid.x];
+    SetCardView *cardView = self.cardViews[i];
+    cardView.frame = newRectForCard;
+  }
 }
 
 - (CGPoint) calculatePointFromIndex: (NSUInteger) index
@@ -136,7 +168,8 @@ static const NSUInteger CARDS_IN_SINGLE_EDITION = 3;
     return CGPointMake(column, row);
 }
 
-- (void)updateSetCardValues:(Card *)card cardView:(SetCardView *)cardView {
+- (void)updateSetCardValues:(Card *)card cardView:(SetCardView *)cardView
+{
     SetCard *setCard = (SetCard *) card;
     cardView.numberOfShapes = setCard.number;
     cardView.color = setCard.color;
@@ -144,16 +177,19 @@ static const NSUInteger CARDS_IN_SINGLE_EDITION = 3;
     cardView.shape = setCard.shape;
 }
 
-- (SetCardView *)createSetCardView:(CGSize) size {
+- (SetCardView *)createSetCardView:(CGSize) size
+{
     return [[SetCardView alloc] initWithFrame:CGRectMake(3 * self.rightBottomCornerOrigin.x, 3 * self.rightBottomCornerOrigin.y, size.width, size.height)];
 }
 
-- (void)saveAndPresentCard:(SetCardView *)cardView rect:(CGRect)rect {
+- (void)saveAndPresentCard:(SetCardView *)cardView rect:(CGRect)rect
+{
     [self.CardsSpace addSubview:cardView];
     [self animateCreation:cardView rect:rect delay:0.5];
 }
 
-- (void)addCardViewToTheEndOfCollection:(Card *)card rect:(const CGRect)rect {
+- (void)addCardViewToTheEndOfCollection:(Card *)card rect:(const CGRect)rect
+{
   SetCardView *cardView = [self createSetCardView:rect.size];
   [self updateSetCardValues:card cardView:cardView];
   [self.cardViews addObject:cardView];
@@ -186,7 +222,8 @@ static const NSUInteger CARDS_IN_SINGLE_EDITION = 3;
   }
 }
 
-- (NSInteger) getInitialNumber{
+- (NSInteger) getInitialNumber
+{
   return [self initialNumberOfCards];
 }
 
@@ -195,7 +232,8 @@ static const NSUInteger CARDS_IN_SINGLE_EDITION = 3;
   return INITIAL_CARD_COUNT;
 }
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
   [super viewDidLoad];
   [self setGridDimensions];
   [self createCards];
@@ -206,8 +244,20 @@ static const NSUInteger CARDS_IN_SINGLE_EDITION = 3;
 {
   [super redeal];
   [self removeAllCards];
+  [self resetGrid];
+  [self enableCardsAddition];
   [self updateUI];
   [self createCards];
+}
+
+- (void) resetGrid
+{
+  self.cardsGrid.minimumNumberOfCells = INITIAL_CARD_COUNT;
+}
+
+-(void) enableCardsAddition
+{
+  self.addCardButton.enabled = YES;
 }
 
 - (NSInteger) getMode
