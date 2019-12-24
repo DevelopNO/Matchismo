@@ -22,9 +22,10 @@
 @end
 
 @implementation GameViewController
+
+#pragma mark - Gestures
 - (IBAction)gatherAndDistributeCards:(UIPinchGestureRecognizer *)sender
 {
-
   if(sender.state == UIGestureRecognizerStateEnded && !self.cardsAreBunched)
   {
     [UIView animateWithDuration:0.5 delay:0.0 options:UIViewAnimationOptionLayoutSubviews
@@ -36,24 +37,6 @@
         self.cardsAreBunched = YES;
     }];
   }
-}
-
-- (IBAction)movePileAround:(id)sender
-{
-  if(self.cardsAreBunched)
-  {
-    [UIView animateWithDuration:0.05 delay:0.0 options:UIViewAnimationOptionLayoutSubviews
-                     animations:^(void) {
-      [self moveAndBunchCards: sender];
-    } completion: nil];
-  }
-}
-
-- (CGPoint) calculatePointFromIndex: (NSUInteger) index
-{
-    NSUInteger row = index / self.cardsGrid.columnCount;
-    NSUInteger column = index - row * self.cardsGrid.columnCount;
-    return CGPointMake(column, row);
 }
 
 - (void) distributeCards
@@ -70,6 +53,19 @@
     cardView.frame = rectForCard;
 
   }
+}
+
+
+- (void)animateCardsDistribution
+{
+  [UIView animateWithDuration:0.5 delay:0.0 options:UIViewAnimationOptionLayoutSubviews
+                   animations:^(void) {
+    [self distributeCards];
+  } completion: ^(BOOL isFinished)
+   {
+    if(isFinished)
+      self.cardsAreBunched = NO;
+  }];
 }
 
 - (void) moveAndBunchCards: (UIGestureRecognizer *) sender
@@ -89,9 +85,36 @@
   }
 }
 
+- (IBAction)movePileAround:(id)sender
+{
+  if(self.cardsAreBunched)
+  {
+    [UIView animateWithDuration:0.05 delay:0.0 options:UIViewAnimationOptionLayoutSubviews
+                     animations:^(void) {
+      [self moveAndBunchCards: sender];
+    } completion: nil];
+  }
+}
+
+#pragma mark - utils
+
+- (BOOL)isNull:(id <CardView>)cardView
+{
+    return [cardView isEqual:[NSNull null]];
+}
+
+- (CGPoint) calculatePointFromIndex: (NSUInteger) index
+{
+    NSUInteger row = index / self.cardsGrid.columnCount;
+    NSUInteger column = index - row * self.cardsGrid.columnCount;
+    return CGPointMake(column, row);
+}
+
+
+
 - (CGPoint) calculateCenter: (CGPoint) rawCenter
 {
-  CGPoint center = {0,0};
+  CGPoint center = {rawCenter.x, rawCenter.y};
   
   CGFloat maxXValue = (self.CardsSpace.bounds.size.width - self.cardsGrid.cellSize.width / 2);
   CGFloat minXValue = (self.CardsSpace.bounds.origin.x + self.cardsGrid.cellSize.width / 2);
@@ -103,10 +126,6 @@
   else if(rawCenter.x < minXValue)
   {
     center.x = minXValue;
-  }
-  else
-  {
-    center.x = rawCenter.x;
   }
   
   CGFloat maxYValue = (self.CardsSpace.bounds.size.height - self.cardsGrid.cellSize.height / 2);
@@ -120,25 +139,10 @@
   {
     center.y = minYValue;
   }
-  else
-  {
-    center.y = rawCenter.y;
-  }
   return center;
 }
 
-- (void)animateCardsDistribution
-{
-  [UIView animateWithDuration:0.5 delay:0.0 options:UIViewAnimationOptionLayoutSubviews
-                   animations:^(void) {
-    [self distributeCards];
-  } completion: ^(BOOL isFinished)
-   {
-    if(isFinished)
-      self.cardsAreBunched = NO;
-  }];
-}
-
+# pragma mark - choose card
 - (IBAction)chooseCard:(UITapGestureRecognizer *)sender
 {
   CGPoint pointOfTouch = [sender locationInView:self.CardsSpace];
@@ -163,17 +167,6 @@
   }
 }
 
-- (id <CardView>) getNonNullCard
-{
-  for(id <CardView> card in self.cardViews)
-  {
-    if(![self isNull:card])
-    {
-      return card;
-    }
-  }
-  return nil;
-}
 
 - (BOOL) isPointInPile: (CGPoint) point
 {
@@ -189,6 +182,18 @@
     point.y <= (pile.frame.origin.y + pile.frame.size.height);
   }
   return NO;
+}
+
+- (id <CardView>) getNonNullCard
+{
+  for(id <CardView> card in self.cardViews)
+  {
+    if(![self isNull:card])
+    {
+      return card;
+    }
+  }
+  return nil;
 }
 
 - (int) initialNumberOfCards
@@ -244,6 +249,8 @@
   return row * [self.cardsGrid columnCount] + column;
 }
 
+#pragma mark - History and moves
+
 - (NSAttributedString *) createHistory
 {
   NSMutableString* history = [[NSMutableString alloc] init];
@@ -254,6 +261,55 @@
   }
   return [[NSAttributedString alloc] initWithString:history];
 }
+
+- (IBAction)ChangeMoveTitle:(UISlider *)sender
+{
+    if(sender.maximumValue)
+    {
+         [self setMoveMessage:[self.game.moves count] - 1];
+    }
+}
+
+
+- (NSString *) makeMoveString: (CardMatchingMove*) move
+{
+    NSMutableString* moveText = [[NSMutableString alloc] init];
+    
+    if(move.moveType == CARD_CLOSED)
+    {
+        [moveText appendFormat:@"%@ Unchosen", ((Card *)[move.chosenCards firstObject]).contents];
+        return moveText;
+    }
+    if(move.moveType == CARD_OPENED)
+    {
+        [moveText appendFormat:@"%@ chosen", ((Card *)[move.chosenCards firstObject]).contents];
+        return moveText;
+    }
+
+    [moveText appendFormat:@"%@ ", move.moveType == MATCH ? @"Match between" : @"No match between"];
+
+    for (Card* card in move.chosenCards)
+    {
+        [moveText appendFormat:@"%@ ", card.contents];
+    }
+    
+  [moveText appendFormat:@"%d points", move.moveScore];
+
+    return [moveText copy];
+}
+
+- (NSString * ) titleForCard: (Card *) card
+{
+    return card.isChosen ? card.contents : @"";
+}
+
+- (UIImage *) backgroundOfCard: (Card *) card
+{
+    return [UIImage imageNamed:card.isChosen ? @"cardFront" : @"cardBack"];
+}
+
+
+#pragma mark - redeal
 
 - (void)redeal {
   self.game = nil;
@@ -268,27 +324,12 @@
   [self redeal];
 }
 
-- (IBAction)ChangeMoveTitle:(UISlider *)sender
-{
-    if(sender.maximumValue)
-    {
-         [self setMoveMessage:[self.game.moves count] - 1];
-    }
-}
 
 -(void) setMoveMessage: (long) index
 {
     self.currentEvent.text = [self makeMoveString:self.game.moves[index]];
 }
 
-- (NSInteger) getInitialNumber{
-  return 12;
-}
-
-- (NSInteger) getMode
-{
-  return 2;
-}
 
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -314,20 +355,9 @@
     return _game;
 }
 
-- (Deck*) createDeck
-{
-  return nil;
-}
-
-- (IBAction)touchCardButton:(UIButton *)sender
-{
-//    NSUInteger chosenButtonIndex = [self.cardButtons indexOfObject:sender];
-//    [self.game chooseCardAtIndex:chosenButtonIndex];
-    [self updateUI];
-}
 
 
-- (void) removeCard: (int) index
+- (void) removeMatchedCard: (int) index
 {
   UIView *cardToRemove = self.cardViews[index];
   [self cardChosenAnimation:cardToRemove isChosen:YES];
@@ -351,7 +381,7 @@
     if(card.isMatched)
     {
       NSLog(@"Card is matched index: %d", i);
-      [self removeCard:i];
+      [self removeMatchedCard:i];
       self.cardViews[i] = [NSNull null];
       continue;
     }
@@ -366,12 +396,6 @@
   self.scoreCount.text = [NSString stringWithFormat:@"Score: %ld", self.game.score];
 }
 
-
-- (BOOL)isNull:(id <CardView>)cardView
-{
-    return [cardView isEqual:[NSNull null]];
-}
-
 - (void) removeAllCards
 {
   for(UIView *cardView in self.cardViews)
@@ -384,42 +408,21 @@
   [self.cardViews removeAllObjects];
 }
 
-
--(NSString*) makeMoveString: (CardMatchingMove*) move
+#pragma mark - Type of game dependent functions
+- (Deck*) createDeck
 {
-    NSMutableString* moveText = [[NSMutableString alloc] init];
-    
-    if(move.moveType == CARD_CLOSED)
-    {
-        [moveText appendFormat:@"%@ Unchosen", ((Card*)[move.chosenCards firstObject]).contents];
-        return moveText;
-    }
-    if(move.moveType == CARD_OPENED)
-    {
-        [moveText appendFormat:@"%@ chosen", ((Card*)[move.chosenCards firstObject]).contents];
-        return moveText;
-    }
-
-    [moveText appendFormat:@"%@ ", move.moveType == MATCH ? @"Match between" : @"No match between"];
-
-    for (Card* card in move.chosenCards)
-    {
-        [moveText appendFormat:@"%@ ", card.contents];
-    }
-    
-  [moveText appendFormat:@"%d points", move.moveScore];
-
-    return [moveText copy];
+  return nil;
 }
 
-- (NSString* ) titleForCard: (Card*) card
-{
-    return card.isChosen ? card.contents : @"";
+
+- (NSInteger) getInitialNumber{
+  return 12;
 }
 
-- (UIImage* ) backgroundOfCard: (Card*) card
+- (NSInteger) getMode
 {
-    return [UIImage imageNamed:card.isChosen ? @"cardFront" : @"cardBack"];
+  return 2;
 }
+
 
 @end

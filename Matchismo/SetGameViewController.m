@@ -38,18 +38,15 @@ static const NSUInteger MAX_NUMBER_OF_CARDS = 81;
   [super chooseCard:sender];
 }
 
-- (void)disableIfWillExceedMaxAfterAddition:(UIButton *)sender
+#pragma mark Add Cards
+
+- (IBAction)addMoreCards:(UIButton *)sender
 {
-  if([self.cardViews count] + CARDS_IN_SINGLE_EDITION * 2 > MAX_NUMBER_OF_CARDS)
+  [self disableAddingCardsIfExceedsMax:sender];
+  if([self.cardViews count] + CARDS_IN_SINGLE_EDITION > MAX_NUMBER_OF_CARDS)
   {
-    sender.enabled = NO;
     return;
   }
-}
-
-- (IBAction)Addmorecards:(UIButton *)sender
-{
-  [self disableIfWillExceedMaxAfterAddition:sender];
   NSUInteger available = [self getNumberOfAvailableSpots];
   if(available >= CARDS_IN_SINGLE_EDITION)
   {
@@ -67,6 +64,14 @@ static const NSUInteger MAX_NUMBER_OF_CARDS = 81;
 
   [self recalculateGridAndAddNewCards];
   
+}
+- (void)disableAddingCardsIfExceedsMax:(UIButton *)sender
+{
+  if([self.cardViews count] + CARDS_IN_SINGLE_EDITION * 2 > MAX_NUMBER_OF_CARDS)
+  {
+    sender.enabled = NO;
+    return;
+  }
 }
 
 -(NSUInteger) getNumberOfAvailableSpots
@@ -163,6 +168,8 @@ static const NSUInteger MAX_NUMBER_OF_CARDS = 81;
   }
 }
 
+#pragma mark - Create cards
+
 - (void)updateSetCardValues:(Card *)card cardView:(SetCardView *)cardView
 {
     SetCard *setCard = (SetCard *) card;
@@ -217,6 +224,8 @@ static const NSUInteger MAX_NUMBER_OF_CARDS = 81;
   }
 }
 
+#pragma mark - Game configurations
+
 - (NSInteger) getInitialNumber
 {
   return [self initialNumberOfCards];
@@ -227,6 +236,17 @@ static const NSUInteger MAX_NUMBER_OF_CARDS = 81;
   return INITIAL_CARD_COUNT;
 }
 
+- (NSInteger) getMode
+{
+  return 3;
+}
+
+- (Deck*) createDeck
+{
+  return [[SetDeck alloc] init];
+}
+
+#pragma mark - UIView class overrides
 - (void)viewDidLoad
 {
   [super viewDidLoad];
@@ -234,6 +254,8 @@ static const NSUInteger MAX_NUMBER_OF_CARDS = 81;
   [self createCards];
   
 }
+
+# pragma mark Redeal
 
 - (IBAction)reDeal:(UIButton *)sender
 {
@@ -255,12 +277,6 @@ static const NSUInteger MAX_NUMBER_OF_CARDS = 81;
   self.addCardButton.enabled = YES;
 }
 
-- (NSInteger) getMode
-{
-  return 3;
-}
-
-
 - (void) cardChosenAnimation: (UIView *) cardView isChosen: (BOOL) chosen
 {
   [UIView animateWithDuration:0.3
@@ -270,24 +286,5 @@ static const NSUInteger MAX_NUMBER_OF_CARDS = 81;
   }
   completion:nil];
 }
-
-- (Deck*) createDeck
-{
-  return [[SetDeck alloc] init];
-}
-
-- (UIImage* ) backgroundOfCard: (Card*) card
-{
-  return [UIImage imageNamed:card.isChosen ? @"setCardSelected" : @"cardFront"];
-}
-
-
-+ (void) appendStringToAttributed: (NSMutableAttributedString *) attr string:(NSString *) text
-{
-  [attr appendAttributedString:[[NSAttributedString alloc] initWithString:[[NSString alloc] initWithString:text]]];
-  
-}
-
-
 
 @end
