@@ -16,7 +16,7 @@
 #import "SetCardView.h"
 #import "Grid.h"
 
-static const int INITIAL_CARD_COUNT = 12;
+static const int INITIAL_NUMBER_OF_CARDS = 12;
 static const NSUInteger CARDS_IN_SINGLE_EDITION = 3;
 static const NSUInteger MAX_NUMBER_OF_CARDS = 81;
 
@@ -163,7 +163,7 @@ static const NSUInteger MAX_NUMBER_OF_CARDS = 81;
   {
     CGPoint pointInGrid = [self calculatePointFromIndex:i];
     CGRect newRectForCard = [self.cardsGrid frameOfCellAtRow:pointInGrid.y inColumn:pointInGrid.x];
-    SetCardView *cardView = self.cardViews[i];
+    UIView *cardView = self.cardViews[i];
     cardView.frame = newRectForCard;
   }
 }
@@ -214,7 +214,7 @@ static const NSUInteger MAX_NUMBER_OF_CARDS = 81;
         [self addCardViewToTheEndOfCollection:card rect:rect];
 
         ++cardIndex;
-        if(cardIndex >= INITIAL_CARD_COUNT) // should change on run time
+        if(cardIndex >= INITIAL_NUMBER_OF_CARDS) // should change on run time
         {
           return;
         }
@@ -233,7 +233,7 @@ static const NSUInteger MAX_NUMBER_OF_CARDS = 81;
 
 - (int) initialNumberOfCards
 {
-  return INITIAL_CARD_COUNT;
+  return INITIAL_NUMBER_OF_CARDS;
 }
 
 - (NSInteger) getMode
@@ -252,7 +252,24 @@ static const NSUInteger MAX_NUMBER_OF_CARDS = 81;
   [super viewDidLoad];
   [self setGridDimensions];
   [self createCards];
-  
+  [self subscribeToLayoutChange];
+}
+
+- (void) subscribeToLayoutChange
+{
+  [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
+  [[NSNotificationCenter defaultCenter]
+     addObserver:self selector:@selector(recalculateGrid:)
+     name:UIDeviceOrientationDidChangeNotification
+     object:[UIDevice currentDevice]];
+}
+
+- (void) recalculateGrid:(NSNotification *)note
+{
+  NSLog(@"width: %f height: %f", self.CardsSpace.frame.size.width, self.CardsSpace.frame.size.height);
+  NSLog(@"general view: width: %f height: %f", self.view.frame.size.width, self.view.frame.size.height);
+  [self setGridDimensions:[self.cardViews count]];
+  [self repositionCards];
 }
 
 # pragma mark Redeal
@@ -269,7 +286,7 @@ static const NSUInteger MAX_NUMBER_OF_CARDS = 81;
 
 - (void) resetGrid
 {
-  self.cardsGrid.minimumNumberOfCells = INITIAL_CARD_COUNT;
+  self.cardsGrid.minimumNumberOfCells = INITIAL_NUMBER_OF_CARDS;
 }
 
 -(void) enableCardsAddition

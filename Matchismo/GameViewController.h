@@ -40,6 +40,7 @@ static const CGFloat WIDTH_HEIGHT_RATIO = 0.66;
 - (void) redeal;
 - (void) updateUI;
 - (void) setGridDimensions;
+- (void) setGridDimensions: (NSUInteger) minNOfCells;
 - (int) initialNumberOfCards;
 - (CGPoint) calculatePointFromIndex: (NSUInteger) index;
 - (BOOL)isNull:(id <CardView>)cardView;

@@ -212,11 +212,18 @@
   }];
 }
 
+
 - (void) setGridDimensions
+{
+  [self setGridDimensions: [self initialNumberOfCards]];
+  
+}
+
+- (void) setGridDimensions: (NSUInteger) minNOfCells
 {
   self.cardsGrid.size = self.CardsSpace.bounds.size;
   self.cardsGrid.cellAspectRatio = WIDTH_HEIGHT_RATIO;
-  self.cardsGrid.minimumNumberOfCells = [self initialNumberOfCards];
+  self.cardsGrid.minimumNumberOfCells = minNOfCells;
   
 }
 
