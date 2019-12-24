@@ -34,17 +34,19 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dZ3-5z-fb2">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dZ3-5z-fb2">
                                 <rect key="frame" x="205" y="549" width="154" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Add cards" backgroundImage="cardFront">
                                     <color key="titleShadowColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="Addmorecards:" destination="sST-sd-QSS" eventType="touchUpInside" id="vUg-k4-N2W"/>
+                                    <action selector="addMoreCards:" destination="sST-sd-QSS" eventType="touchUpInside" id="vdm-Ky-ImH"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yaR-va-n3y">
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yaR-va-n3y">
                                 <rect key="frame" x="16" y="64" width="343" height="404"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <gestureRecognizers/>
                                 <connections>
@@ -53,12 +55,9 @@
                                     <outletCollection property="gestureRecognizers" destination="yvZ-zz-6cn" appends="YES" id="2ir-mQ-3Dy"/>
                                 </connections>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fAw-ik-wpM">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fAw-ik-wpM">
                                 <rect key="frame" x="205" y="494" width="154" height="41"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="41" id="AIt-42-0Lm"/>
-                                    <constraint firstAttribute="width" constant="154" id="abC-q7-OKA"/>
-                                </constraints>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Re-deal" backgroundImage="cardFront">
                                     <color key="titleShadowColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
@@ -66,29 +65,15 @@
                                     <action selector="reDeal:" destination="sST-sd-QSS" eventType="touchUpInside" id="Dtx-zn-wAh"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score: 0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="an4-iB-x9S">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Score: 0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="an4-iB-x9S">
                                 <rect key="frame" x="16" y="494" width="71" height="23"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" red="0.27327288550000001" green="0.78039215689999997" blue="0.49070783060000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstItem="yaR-va-n3y" firstAttribute="leading" secondItem="ayC-AD-Fqk" secondAttribute="leadingMargin" id="3VA-Jp-dDH"/>
-                            <constraint firstItem="fAw-ik-wpM" firstAttribute="trailing" secondItem="yaR-va-n3y" secondAttribute="trailing" id="F1f-Dc-pRm"/>
-                            <constraint firstItem="fAw-ik-wpM" firstAttribute="trailing" secondItem="dZ3-5z-fb2" secondAttribute="trailing" id="I1L-k4-lcb"/>
-                            <constraint firstItem="yaR-va-n3y" firstAttribute="top" secondItem="YJv-6c-G7d" secondAttribute="top" constant="20" id="ICt-dE-SGP"/>
-                            <constraint firstItem="YJv-6c-G7d" firstAttribute="bottom" secondItem="dZ3-5z-fb2" secondAttribute="bottom" constant="35" id="J9W-BD-vdP"/>
-                            <constraint firstItem="fAw-ik-wpM" firstAttribute="leading" secondItem="dZ3-5z-fb2" secondAttribute="leading" id="Mn7-2w-F9c"/>
-                            <constraint firstAttribute="bottom" secondItem="fAw-ik-wpM" secondAttribute="bottom" constant="132" id="WG8-os-f1y"/>
-                            <constraint firstItem="fAw-ik-wpM" firstAttribute="top" secondItem="yaR-va-n3y" secondAttribute="bottom" constant="26" id="ZrU-D2-P5C"/>
-                            <constraint firstItem="yaR-va-n3y" firstAttribute="trailing" secondItem="ayC-AD-Fqk" secondAttribute="trailingMargin" id="cYy-RR-LXV"/>
-                            <constraint firstItem="an4-iB-x9S" firstAttribute="leading" secondItem="yaR-va-n3y" secondAttribute="leading" id="ecA-XM-5BZ"/>
-                            <constraint firstItem="an4-iB-x9S" firstAttribute="top" secondItem="fAw-ik-wpM" secondAttribute="top" id="hvi-hK-Zgi"/>
-                            <constraint firstItem="dZ3-5z-fb2" firstAttribute="top" secondItem="fAw-ik-wpM" secondAttribute="bottom" constant="14" id="pDi-ad-Mze"/>
-                            <constraint firstAttribute="bottom" secondItem="yaR-va-n3y" secondAttribute="bottom" constant="176" id="ySc-iB-HM2"/>
-                        </constraints>
                         <viewLayoutGuide key="safeArea" id="YJv-6c-G7d"/>
                     </view>
                     <navigationItem key="navigationItem" id="F0V-Nk-LtW">
@@ -100,7 +85,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="CardsSpace" destination="yaR-va-n3y" id="Wey-9T-oPh"/>
-                        <outlet property="addCardButton" destination="dZ3-5z-fb2" id="fi5-Bd-67q"/>
+                        <outlet property="addCardButton" destination="dZ3-5z-fb2" id="TKk-s3-kQh"/>
                         <outlet property="scoreCount" destination="an4-iB-x9S" id="7Nu-jo-heO"/>
                     </connections>
                 </viewController>
