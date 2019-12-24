@@ -266,7 +266,7 @@
 - (void) animateRedrawing: (NSUInteger) index
 {
 
-  [UIView animateWithDuration:1.0 delay:0.0 options:UIViewAnimationOptionBeginFromCurrentState
+  [UIView animateWithDuration:0.3 delay:0.0 options:UIViewAnimationOptionBeginFromCurrentState
                    animations:^(void) {
     CGPoint pointInGrid = [self calculatePointFromIndex:index];
        CGRect newRectForCard = [self.cardsGrid frameOfCellAtRow:pointInGrid.y inColumn:pointInGrid.x];
