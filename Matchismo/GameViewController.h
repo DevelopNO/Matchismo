@@ -44,6 +44,7 @@ static const CGFloat WIDTH_HEIGHT_RATIO = 0.66;
 - (int) initialNumberOfCards;
 - (CGPoint) calculatePointFromIndex: (NSUInteger) index;
 - (BOOL)isNull:(id <CardView>)cardView;
+- (void) repositionCards;
 
 @end
 

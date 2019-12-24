@@ -227,6 +227,12 @@
   
 }
 
+- (void) viewDidAppear:(BOOL)animated
+{
+  [self setGridDimensions:[self.cardViews count]];
+  [self repositionCards];
+}
+
 -(CGPoint) rightBottomCornerOrigin
 {
   return CGPointMake( self.CardsSpace.frame.size.width - self.cardsGrid.cellSize.width, self.CardsSpace.frame.size.height - self.cardsGrid.cellSize.height);
@@ -237,8 +243,46 @@
   self.cardsGrid = [[Grid alloc] init];
   self.CardsSpace.backgroundColor = nil;
   self.CardsSpace.opaque = NO;
+  [self subscribeToLayoutChange];
 }
 
+  - (void) subscribeToLayoutChange
+  {
+    [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
+    [[NSNotificationCenter defaultCenter]
+       addObserver:self selector:@selector(recalculateGrid:)
+       name:UIDeviceOrientationDidChangeNotification
+       object:[UIDevice currentDevice]];
+  }
+
+  - (void) recalculateGrid:(NSNotification *)note
+  {
+    NSLog(@"width: %f height: %f", self.CardsSpace.frame.size.width, self.CardsSpace.frame.size.height);
+    NSLog(@"general view: width: %f height: %f", self.view.frame.size.width, self.view.frame.size.height);
+    [self setGridDimensions:[self.cardViews count]];
+    [self repositionCards];
+  }
+
+- (void) animateRedrawing: (NSUInteger) index
+{
+
+  [UIView animateWithDuration:1.0 delay:0.0 options:UIViewAnimationOptionBeginFromCurrentState
+                   animations:^(void) {
+    CGPoint pointInGrid = [self calculatePointFromIndex:index];
+       CGRect newRectForCard = [self.cardsGrid frameOfCellAtRow:pointInGrid.y inColumn:pointInGrid.x];
+       UIView *cardView = self.cardViews[index];
+       cardView.frame = newRectForCard;
+    
+  }completion:nil];
+}
+
+- (void) repositionCards
+{
+  for(NSUInteger i = 0; i < [self.cardViews count]; ++i)
+  {
+    [self animateRedrawing:i];
+  }
+}
 
 - (void)animateCreation:(UIView *)cardView rect:(CGRect )rect delay: (CGFloat) delay
 {

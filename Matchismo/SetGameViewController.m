@@ -157,16 +157,6 @@ static const NSUInteger MAX_NUMBER_OF_CARDS = 81;
   
 }
 
-- (void) repositionCards
-{
-  for(NSUInteger i = 0; i < [self.cardViews count]; ++i)
-  {
-    CGPoint pointInGrid = [self calculatePointFromIndex:i];
-    CGRect newRectForCard = [self.cardsGrid frameOfCellAtRow:pointInGrid.y inColumn:pointInGrid.x];
-    UIView *cardView = self.cardViews[i];
-    cardView.frame = newRectForCard;
-  }
-}
 
 #pragma mark - Create cards
 
@@ -252,24 +242,6 @@ static const NSUInteger MAX_NUMBER_OF_CARDS = 81;
   [super viewDidLoad];
   [self setGridDimensions];
   [self createCards];
-  [self subscribeToLayoutChange];
-}
-
-- (void) subscribeToLayoutChange
-{
-  [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
-  [[NSNotificationCenter defaultCenter]
-     addObserver:self selector:@selector(recalculateGrid:)
-     name:UIDeviceOrientationDidChangeNotification
-     object:[UIDevice currentDevice]];
-}
-
-- (void) recalculateGrid:(NSNotification *)note
-{
-  NSLog(@"width: %f height: %f", self.CardsSpace.frame.size.width, self.CardsSpace.frame.size.height);
-  NSLog(@"general view: width: %f height: %f", self.view.frame.size.width, self.view.frame.size.height);
-  [self setGridDimensions:[self.cardViews count]];
-  [self repositionCards];
 }
 
 # pragma mark Redeal
