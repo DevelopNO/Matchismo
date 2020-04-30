@@ -231,6 +231,7 @@
 {
   [self setGridDimensions:[self.cardViews count]];
   [self repositionCards];
+  self.cardsAreBunched = NO;
 }
 
 -(CGPoint) rightBottomCornerOrigin
@@ -261,6 +262,8 @@
     NSLog(@"general view: width: %f height: %f", self.view.frame.size.width, self.view.frame.size.height);
     [self setGridDimensions:[self.cardViews count]];
     [self repositionCards];
+    self.cardsAreBunched = NO;
+    
   }
 
 - (void) animateRedrawing: (NSUInteger) index

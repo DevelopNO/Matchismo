@@ -156,6 +156,7 @@ const CGFloat HORIZONTAL_SPACE_RATIO = 3.0 / 18.0;
       [stripes moveToPoint:CGPointMake( drawingRect.origin.x + barPosition, drawingRect.origin.y )];
       [stripes addLineToPoint:CGPointMake( drawingRect.origin.x + barPosition, drawingRect.origin.y + drawingRect.size.height)];
   }
+  stripes.lineWidth = self.bounds.size.width / 100.0;
   [stripes stroke];
 }
 
